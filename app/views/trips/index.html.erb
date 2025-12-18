@@ -1,6 +1,7 @@
 <div class="trips-page" style="max-width: 960px; margin: 0 auto; padding: 24px 16px 32px;">
-  <header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px;">
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
     <h1 style="font-size: 24px; font-weight: 700; color: #111827; margin: 0;">マイ旅一覧</h1>
+    <%= render "tabs", active_tab: @active_tab %>
   </header>
 
   <% if @trips.present? %>
@@ -8,8 +9,14 @@
       <%= render @trips %>
     </div>
   <% else %>
+    <% empty_title =
+      case @active_tab
+      when "upcoming" then "今後の旅はまだありません"
+      when "past" then "過去の旅はまだありません"
+      else "まだ旅行がありません"
+      end %>
     <div class="empty-state" style="border: 1px dashed #d1d5db; border-radius: 12px; padding: 24px; text-align: center; background: #f9fafb;">
-      <p style="font-size: 18px; font-weight: 600; color: #111827; margin: 0 0 8px;">まだ旅行がありません</p>
+      <p style="font-size: 18px; font-weight: 600; color: #111827; margin: 0 0 8px;"><%= empty_title %></p>
       <p style="font-size: 14px; color: #6b7280; margin: 0;">旅を登録するとここに表示されます。</p>
     </div>
   <% end %>
