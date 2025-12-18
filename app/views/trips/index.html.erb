@@ -1,0 +1,16 @@
+<div class="trips-page" style="max-width: 960px; margin: 0 auto; padding: 24px 16px 32px;">
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px;">
+    <h1 style="font-size: 24px; font-weight: 700; color: #111827; margin: 0;">マイ旅一覧</h1>
+  </header>
+
+  <% if @trips.present? %>
+    <div class="trip-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+      <%= render @trips %>
+    </div>
+  <% else %>
+    <div class="empty-state" style="border: 1px dashed #d1d5db; border-radius: 12px; padding: 24px; text-align: center; background: #f9fafb;">
+      <p style="font-size: 18px; font-weight: 600; color: #111827; margin: 0 0 8px;">まだ旅行がありません</p>
+      <p style="font-size: 14px; color: #6b7280; margin: 0;">旅を登録するとここに表示されます。</p>
+    </div>
+  <% end %>
+</div>
