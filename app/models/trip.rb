@@ -1,6 +1,11 @@
 class Trip < ApplicationRecord
   belongs_to :user
 
+  validates :title, :start_date, :end_date, presence: true
+
+  validate :end_date_after_or_equal_start_date
+
+
   # Tabs for Trips index
   TABS = %w[all upcoming past].freeze
 
@@ -23,4 +28,15 @@ class Trip < ApplicationRecord
       order(start_date: :desc)
     end
   }
+
+  private
+
+  def end_date_after_or_equal_start_date
+    return if start_date.blank? || end_date.blank?
+
+    if end_date < start_date
+      errors.add(:end_date, "終了日は開始日以降の日付を選択してください")
+    end
+  end
+
 end
