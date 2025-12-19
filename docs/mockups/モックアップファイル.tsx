@@ -1577,7 +1577,12 @@ const TripPlanApp = () => {
         packingList: []
       };
       setTrips([...trips, newTripData]);
-      setCurrentPage('trips');
+      
+      // 修正: 新規作成後は詳細ページへ遷移
+      setSelectedTrip(newTripData);
+      setCurrentPage('trip-detail');
+      setActiveTab('itinerary'); // タブも初期化
+      
       showFlash('新しい旅を作成しました');
     }
   };
