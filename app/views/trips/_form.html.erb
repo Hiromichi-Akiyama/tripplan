@@ -1,13 +1,31 @@
-<%= form_with model: trip do |form| %>
+<%= form_with model: trip, html: { novalidate: true } do |form| %>
   <% submit_label = trip.persisted? ? "更新する" : "作成する" %>
   <% submit_loading = trip.persisted? ? "更新中..." : "作成中..." %>
+  <% title_error = trip.errors[:title].present? %>
+  <% start_error = trip.errors[:start_date].present? %>
+  <% end_error = trip.errors[:end_date].present? %>
+  <% title_error_message = trip.errors.full_messages_for(:title).first %>
+  <% start_error_message = trip.errors.full_messages_for(:start_date).first %>
+  <% end_error_message = trip.errors.full_messages_for(:end_date).first %>
   <div style="display: grid; gap: 16px;">
     <div>
       <label for="<%= form.field_id(:title) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 6px;">
         タイトル
         <span style="color: #dc2626; font-size: 12px; margin-left: 4px;">必須</span>
       </label>
-      <%= form.text_field :title, required: true, placeholder: "例: 初夏の京都旅", style: "width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 15px; color: #111827; background: #fff; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);" %>
+      <%= form.text_field :title, placeholder: "例: 初夏の京都旅", style: [
+        "width: 100%",
+        "padding: 12px",
+        "border: 1px solid #{title_error ? '#fca5a5' : '#d1d5db'}",
+        "border-radius: 10px",
+        "font-size: 15px",
+        "color: #111827",
+        "background: #fff",
+        "box-shadow: inset 0 1px 2px rgba(0,0,0,0.02)"
+      ].join('; ') %>
+      <% if title_error %>
+        <p style="color: #b91c1c; font-size: 12px; margin: 6px 0 0;"><%= title_error_message %></p>
+      <% end %>
     </div>
 
     <div>
@@ -21,7 +39,19 @@
           開始日
           <span style="color: #dc2626; font-size: 12px; margin-left: 4px;">必須</span>
         </label>
-        <%= form.date_field :start_date, required: true, style: "width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 15px; color: #111827; background: #fff; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);" %>
+        <%= form.date_field :start_date, style: [
+          "width: 100%",
+          "padding: 12px",
+          "border: 1px solid #{start_error ? '#fca5a5' : '#d1d5db'}",
+          "border-radius: 10px",
+          "font-size: 15px",
+          "color: #111827",
+          "background: #fff",
+          "box-shadow: inset 0 1px 2px rgba(0,0,0,0.02)"
+        ].join('; ') %>
+        <% if start_error %>
+          <p style="color: #b91c1c; font-size: 12px; margin: 6px 0 0;"><%= start_error_message %></p>
+        <% end %>
       </div>
 
       <div>
@@ -29,7 +59,19 @@
           終了日
           <span style="color: #dc2626; font-size: 12px; margin-left: 4px;">必須</span>
         </label>
-        <%= form.date_field :end_date, required: true, style: "width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 15px; color: #111827; background: #fff; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);" %>
+        <%= form.date_field :end_date, style: [
+          "width: 100%",
+          "padding: 12px",
+          "border: 1px solid #{end_error ? '#fca5a5' : '#d1d5db'}",
+          "border-radius: 10px",
+          "font-size: 15px",
+          "color: #111827",
+          "background: #fff",
+          "box-shadow: inset 0 1px 2px rgba(0,0,0,0.02)"
+        ].join('; ') %>
+        <% if end_error %>
+          <p style="color: #b91c1c; font-size: 12px; margin: 6px 0 0;"><%= end_error_message %></p>
+        <% end %>
       </div>
     </div>
 
