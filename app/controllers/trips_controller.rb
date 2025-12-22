@@ -20,6 +20,7 @@ class TripsController < ApplicationController
     if @trip.save
       redirect_to trip_path(@trip), notice: "旅行を作成しました"
     else
+      flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
       render :new, status: :unprocessable_entity
     end
   end
@@ -31,6 +32,7 @@ class TripsController < ApplicationController
     if @trip.update(trip_params)
       redirect_to trip_path(@trip), notice: "旅行を更新しました"
     else
+      flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
       render :edit, status: :unprocessable_entity
     end
   end
