@@ -1,0 +1,44 @@
+<%= form_with model: trip do |form| %>
+  <div style="display: grid; gap: 16px;">
+    <div>
+      <label for="<%= form.field_id(:title) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 6px;">
+        タイトル
+        <span style="color: #dc2626; font-size: 12px; margin-left: 4px;">必須</span>
+      </label>
+      <%= form.text_field :title, required: true, placeholder: "例: 初夏の京都旅", style: "width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 15px; color: #111827; background: #fff; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);" %>
+    </div>
+
+    <div>
+      <label for="<%= form.field_id(:destination) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 6px;">目的地</label>
+      <%= form.text_field :destination, placeholder: "例: 京都 / パリ / 沖縄", style: "width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 15px; color: #111827; background: #fff; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);" %>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
+      <div>
+        <label for="<%= form.field_id(:start_date) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 6px;">
+          開始日
+          <span style="color: #dc2626; font-size: 12px; margin-left: 4px;">必須</span>
+        </label>
+        <%= form.date_field :start_date, required: true, style: "width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 15px; color: #111827; background: #fff; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);" %>
+      </div>
+
+      <div>
+        <label for="<%= form.field_id(:end_date) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 6px;">
+          終了日
+          <span style="color: #dc2626; font-size: 12px; margin-left: 4px;">必須</span>
+        </label>
+        <%= form.date_field :end_date, required: true, style: "width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 15px; color: #111827; background: #fff; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);" %>
+      </div>
+    </div>
+
+    <div>
+      <label for="<%= form.field_id(:color) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 6px;">カラー</label>
+      <%= form.color_field :color, style: "width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 10px; background: #fff; height: 44px;" %>
+      <p style="font-size: 12px; color: #6b7280; margin: 6px 0 0;">テーマカラーを設定できます（任意）</p>
+    </div>
+
+    <div style="display: flex; justify-content: flex-end; margin-top: 4px;">
+      <%= form.submit "作成する", style: "display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 18px; background: #2563eb; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 25px rgba(37,99,235,0.18); width: 100%; max-width: 240px; transition: transform 0.08s ease, box-shadow 0.08s ease;", data: { turbo_submits_with: "作成中..." } %>
+    </div>
+  </div>
+<% end %>
