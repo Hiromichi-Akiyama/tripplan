@@ -1,0 +1,14 @@
+ja:
+  errors:
+    messages:
+      blank: "を入力してください"
+
+  activerecord:
+    attributes:
+      trip:
+        title: "タイトル"
+        start_date: "開始日"
+        end_date: "終了日"
+        destination: "目的地"
+        color: "カラー"
+        notes: "メモ"
