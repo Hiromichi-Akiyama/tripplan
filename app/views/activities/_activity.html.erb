@@ -1,0 +1,31 @@
+<% date_label = activity.date&.strftime("%Y/%m/%d") %>
+<% start_label = activity.start_time&.strftime("%H:%M") %>
+<% end_label   = activity.end_time&.strftime("%H:%M") %>
+<% time_text =
+  if start_label && end_label
+    "#{start_label} - #{end_label}"
+  elsif start_label
+    "#{start_label} 〜"
+  elsif end_label
+    "〜 #{end_label}"
+  else
+    "時刻未設定"
+  end %>
+
+<div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 14px; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.03); display: grid; gap: 6px;">
+  <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 8px; flex-wrap: wrap;">
+    <p style="margin: 0; font-size: 13px; color: #6b7280;">日付: <span style="color: #111827; font-weight: 600;"><%= date_label %></span></p>
+    <p style="margin: 0; font-size: 13px; color: #6b7280;">時刻: <span style="color: #111827; font-weight: 600;"><%= time_text %></span></p>
+  </div>
+
+  <p style="margin: 0; font-size: 16px; font-weight: 700; color: #111827; line-height: 1.4;"><%= activity.title %></p>
+
+  <div style="display: flex; gap: 12px; flex-wrap: wrap; font-size: 13px; color: #4b5563;">
+    <% if activity.location.present? %>
+      <span style="display: inline-flex; align-items: center; gap: 6px; background: #f3f4f6; border-radius: 9999px; padding: 6px 10px;">📍 <%= activity.location %></span>
+    <% end %>
+    <% if activity.cost.present? %>
+      <span style="display: inline-flex; align-items: center; gap: 6px; background: #eef2ff; color: #4338ca; border-radius: 9999px; padding: 6px 10px;">💰 <%= activity.cost %></span>
+    <% end %>
+  </div>
+</div>
