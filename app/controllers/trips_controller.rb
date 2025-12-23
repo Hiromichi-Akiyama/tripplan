@@ -8,6 +8,7 @@ class TripsController < ApplicationController
   end
 
   def show
+    @activities = @trip.activities.ordered_for_timeline
   end
 
   def new
