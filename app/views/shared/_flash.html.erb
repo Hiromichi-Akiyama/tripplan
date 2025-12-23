@@ -1,0 +1,15 @@
+<% if flash.present? %>
+  <div style="position: sticky; top: 0; z-index: 50; padding: 12px 16px;">
+    <% flash.each do |type, message| %>
+      <% next if message.blank? %>
+      <% is_notice = type.to_sym == :notice %>
+      <% bg_color = is_notice ? "#ecfdf3" : "#fef2f2" %>
+      <% text_color = is_notice ? "#065f46" : "#991b1b" %>
+      <% border_color = is_notice ? "#6ee7b7" : "#fecaca" %>
+      <div style="margin: 0 auto 8px; max-width: 960px; border: 1px solid <%= border_color %>; background: <%= bg_color %>; color: <%= text_color %>; border-radius: 10px; padding: 12px 14px; font-size: 14px; line-height: 1.4; box-shadow: 0 6px 20px rgba(0,0,0,0.04);">
+        <strong style="margin-right: 6px;"><%= is_notice ? "成功" : "エラー" %>:</strong>
+        <span><%= message %></span>
+      </div>
+    <% end %>
+  </div>
+<% end %>

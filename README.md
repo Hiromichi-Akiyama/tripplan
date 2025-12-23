@@ -1,24 +1,126 @@
-# README
+# TripPlan
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Plan. Pack. Go.  
+旅行の「計画・準備・実行」を、ひとつのモダンなUIにまとめる旅行計画アプリ。
 
-Things you may want to cover:
+---
 
-* Ruby version
+## 概要
 
-* System dependencies
+TripPlan は、旅行計画に必要な **旅程・持ち物・メモ** を一元管理できる  
+モバイルファーストな Web アプリケーションです。
 
-* Configuration
+個人旅行から少人数グループ旅行まで、  
+「情報が散らばる」「確認が面倒」といった課題を解消します。
 
-* Database creation
+---
 
-* Database initialization
+## 解決する課題
 
-* How to run the test suite
+- 旅行情報が複数のアプリ・メモ・スプレッドシートに分散する
+- グループ旅行で最新情報の共有が大変
+- 旅行中にスマホで素早く確認できない
 
-* Services (job queues, cache servers, search engines, etc.)
+---
 
-* Deployment instructions
+## 主な機能（MVP）
 
-* ...
+### 認証
+- ユーザー登録 / ログイン
+- パスワードリセット（メール）
+
+### マイ旅
+- マイ旅一覧（すべて / 今後 / 過去）
+- 旅の作成・編集・削除（確認ダイアログあり）
+
+### 旅詳細
+- 旅程（Activities）
+  - 日別表示
+  - 自動ソート
+- 持ち物リスト
+  - カテゴリ固定
+  - チェック機能
+- メモ（旅単位で1つ）
+
+---
+
+## 技術スタック
+
+- Ruby on Rails 7
+- Hotwire（Turbo / Stimulus）
+- Devise
+- MySQL
+- Render
+
+---
+
+## アーキテクチャ
+
+- サーバーサイドレンダリング（SSR）中心
+- Turbo Streams による部分更新
+- レスポンシブ Web（PWA 非対応）
+
+---
+
+## 業務ルール（抜粋）
+
+### Trip
+- start_date / end_date は必須
+- start_date <= end_date
+- 削除時は関連データを物理削除
+
+### Activity
+- 必須：title / date
+- 任意：start_time / location / cost / memo
+- 自動ソート：
+  1. 日付
+  2. 開始時刻あり → なし
+  3. 開始時刻昇順
+  4. display_order
+
+### 持ち物
+- 固定カテゴリ（衣類・電子機器など）
+- 未チェック → チェック済み順
+- チェック済みはグレーアウト表示
+
+---
+
+## 非機能要件
+
+- 初期表示：3秒以内
+- 操作反映：1秒以内
+- HTTPS 強制
+- Rails 標準の CSRF / XSS 対策
+
+---
+
+## 今後の予定
+
+- 公開リンク（閲覧専用）
+- 並び替え（ドラッグ＆ドロップ）
+- 持ち物カテゴリのカスタマイズ
+- 共同編集機能
+
+---
+
+## AI支援開発について（重要）
+
+本プロジェクトでは、フロントエンド実装に **Codex** を利用しています。
+
+以下のファイルは **AI（Codex）への指示書** であり、  
+通常の開発作業では **編集しないでください**。
+
+- `docs/codex-first-prompt.md`  
+  → Codex に最初に与える指示プロンプト
+
+- `docs/frontend-brief.md`  
+  → Codex が参照するフロントエンド仕様書
+
+これらのファイルは **アプリケーションの実行には関与せず**、  
+AI支援開発を円滑に進めるためのドキュメントです。
+
+---
+
+## ライセンス
+
+本プロジェクトは、ポートフォリオおよび学習目的で作成されています。

@@ -1,0 +1,25 @@
+<% tabs = [
+  { key: "all", label: "すべて" },
+  { key: "upcoming", label: "今後の旅" },
+  { key: "past", label: "過去の旅" }
+] %>
+
+<div style="display: flex; gap: 8px; flex-wrap: wrap;">
+  <% tabs.each do |tab| %>
+    <% active = tab[:key] == active_tab %>
+    <%= link_to trips_path(tab: tab[:key]), style: [
+      "padding: 10px 14px",
+      "border-radius: 9999px",
+      "font-size: 14px",
+      "font-weight: 600",
+      "text-decoration: none",
+      "border: 1px solid #{active ? '#2563eb' : '#e5e7eb'}",
+      "color: #{active ? '#0f172a' : '#4b5563'}",
+      "background: #{active ? '#eff6ff' : '#ffffff'}",
+      "box-shadow: #{active ? '0 6px 20px rgba(37, 99, 235, 0.12)' : 'none'}",
+      "transition: all 0.15s ease"
+    ].join('; ') do %>
+      <%= tab[:label] %>
+    <% end %>
+  <% end %>
+</div>
