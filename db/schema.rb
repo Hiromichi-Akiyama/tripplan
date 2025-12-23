@@ -10,7 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_17_012900) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_23_012429) do
+  create_table "activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "trip_id", null: false
+    t.string "title", null: false
+    t.date "date", null: false
+    t.time "start_time"
+    t.time "end_time"
+    t.string "location"
+    t.integer "cost"
+    t.text "memo"
+    t.string "address"
+    t.string "url"
+    t.string "booking_code"
+    t.integer "display_order", default: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trip_id"], name: "index_activities_on_trip_id"
+  end
+
   create_table "trips", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "title", null: false
@@ -37,5 +55,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_17_012900) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "activities", "trips"
   add_foreign_key "trips", "users"
 end
