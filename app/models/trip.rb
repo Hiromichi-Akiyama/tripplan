@@ -30,6 +30,10 @@ class Trip < ApplicationRecord
     end
   }
 
+  def self.find_by_user_and_id(user, id)
+    user.trips.find(id)
+  end
+
   private
 
   def end_date_after_or_equal_start_date

@@ -39,11 +39,11 @@ class ActivitiesController < ApplicationController
   private
 
   def set_trip
-    @trip = current_user.trips.find(params[:trip_id])
+    @trip = Trip.find_by_user_and_id(current_user, params[:trip_id])
   end
 
   def set_activity
-    @activity = @trip.activities.find(params[:id])
+    @activity = Activity.find_by_trip_and_id(@trip, params[:id])
   end
 
   def activity_params

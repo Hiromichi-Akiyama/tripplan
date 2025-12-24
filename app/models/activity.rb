@@ -11,4 +11,8 @@ class Activity < ApplicationRecord
       .order(display_order: :asc)
   }
 
+  def self.find_by_trip_and_id(trip, id)
+    trip.activities.find(id)
+  end
+
 end
