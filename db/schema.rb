@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_23_012429) do
+ActiveRecord::Schema[7.1].define(version: 2025_12_26_024837) do
   create_table "activities", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "trip_id", null: false
     t.string "title", null: false
@@ -27,6 +27,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_23_012429) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trip_id"], name: "index_activities_on_trip_id"
+  end
+
+  create_table "packing_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "trip_id", null: false
+    t.string "name", null: false
+    t.string "category"
+    t.boolean "checked", default: false, null: false
+    t.integer "display_order", default: 1, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trip_id"], name: "index_packing_items_on_trip_id"
   end
 
   create_table "trips", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -56,5 +67,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_23_012429) do
   end
 
   add_foreign_key "activities", "trips"
+  add_foreign_key "packing_items", "trips"
   add_foreign_key "trips", "users"
 end
