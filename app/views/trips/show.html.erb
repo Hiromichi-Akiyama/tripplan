@@ -83,4 +83,31 @@
       </div>
     <% end %>
   </div>
+
+  <div style="margin-top: 24px;">
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 12px;">
+      <h2 style="font-size: 20px; font-weight: 800; color: #111827; margin: 0;">持ち物</h2>
+      <%= link_to "＋ 持ち物を追加", new_trip_packing_item_path(@trip), style: [
+        "padding: 10px 14px",
+        "border-radius: 10px",
+        "border: 1px solid #2563eb",
+        "background: #eff6ff",
+        "color: #1d4ed8",
+        "font-size: 14px",
+        "font-weight: 700",
+        "text-decoration: none",
+        "box-shadow: 0 2px 6px rgba(37,99,235,0.12)"
+      ].join('; ') %>
+    </div>
+    <% if @packing_items.present? %>
+      <div style="display: grid; gap: 10px;">
+        <%= render @packing_items %>
+      </div>
+    <% else %>
+      <div style="border: 1px dashed #d1d5db; border-radius: 12px; padding: 16px; background: #f9fafb; text-align: center;">
+        <p style="margin: 0 0 6px; font-size: 15px; font-weight: 700; color: #111827;">まだ持ち物がありません</p>
+        <p style="margin: 0; font-size: 13px; color: #6b7280;">追加するとここに表示されます。</p>
+      </div>
+    <% end %>
+  </div>
 </div>
