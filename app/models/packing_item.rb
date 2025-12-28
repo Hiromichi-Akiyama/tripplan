@@ -14,4 +14,8 @@ class PackingItem < ApplicationRecord
       .order(id: :asc)
   }
 
+  def self.find_by_trip_and_id(trip, id)
+    trip.packing_items.find(id)
+  end
+
 end
