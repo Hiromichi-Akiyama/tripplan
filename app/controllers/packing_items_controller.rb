@@ -4,18 +4,15 @@ class PackingItemsController < ApplicationController
   before_action :set_trip
   before_action :set_packing_item, only: %i[update destroy]
 
-  def new
-    @packing_item = @trip.packing_items.build
-  end
-
   def create
     @packing_item = @trip.packing_items.build(packing_item_create_params)
 
     if @packing_item.save
       redirect_to trip_path(@trip), notice: "持ち物を作成しました"
     else
-      flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
-      render :new, status: :unprocessable_entity
+      @activities = @trip.activities.ordered_for_timeline
+      @packing_items = @trip.packing_items.ordered_for_list
+      render "trips/show", status: :unprocessable_entity
     end
   end
 

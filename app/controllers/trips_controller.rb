@@ -10,6 +10,7 @@ class TripsController < ApplicationController
   def show
     @activities = @trip.activities.ordered_for_timeline
     @packing_items = @trip.packing_items.ordered_for_list
+    @packing_item = @trip.packing_items.build
   end
 
   def new
