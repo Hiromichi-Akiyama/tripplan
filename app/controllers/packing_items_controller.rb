@@ -10,6 +10,7 @@ class PackingItemsController < ApplicationController
     if @packing_item.save
       redirect_to trip_path(@trip), notice: "持ち物を作成しました"
     else
+      flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
       @activities = @trip.activities.ordered_for_timeline
       @packing_items = @trip.packing_items.ordered_for_list
       render "trips/show", status: :unprocessable_entity
@@ -20,13 +21,13 @@ class PackingItemsController < ApplicationController
     if @packing_item.update(packing_item_checked_params)
       redirect_to trip_path(@trip)
     else
-      redirect_to trip_path(@trip), alert: "更新に失敗しました" 
+      redirect_to trip_path(@trip), alert: "更新に失敗しました"
     end
   end
 
   def destroy
     @packing_item.destroy
-    redirect_to trip_path(@trip)
+    redirect_to trip_path(@trip), notice: "持ち物を削除しました"
   end
 
   private
