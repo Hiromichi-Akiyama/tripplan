@@ -98,7 +98,7 @@ ER: https://dbdiagram.io/...
 ### activities
 
 > 旅程（スケジュール）  
-> date と time を統合し **datetime の開始・終了**で持つ（`date_start_time`, `date_end_time`）。
+> date と time を分けて **date（必須） + time（任意）**で持つ（`date`, `start_time`, `end_time`）。
 
 #### Columns
 
@@ -106,8 +106,9 @@ ER: https://dbdiagram.io/...
 |---|---|---:|---:|---|
 | id | bigint | false |  | PK |
 | trip_id | bigint | false |  | FK -> trips.id |
-| date_start_time | datetime | true |  | 日付は必須だが、時刻は任意（※下記参照） |
-| date_end_time | datetime | true |  | 任意 |
+| date | date | false |  | 日付（必須） |
+| start_time | time | true |  | 開始時刻（任意） |
+| end_time | time | true |  | 終了時刻（任意） |
 | title | string | false |  | 必須 |
 | location | string | true |  | 任意 |
 | cost | integer | true |  | 円、0以上（NULL許容） |
@@ -123,25 +124,22 @@ ER: https://dbdiagram.io/...
 
 - `index_activities_on_trip_id`
 - ソート/一覧最適化（推奨）  
-  - `index_activities_on_trip_id_and_date_start_time`
+  - `index_activities_on_trip_id_and_date`
   - `index_activities_on_trip_id_and_display_order`
 
 #### Validations / Rules
 
-- 必須：`title`
-- 「日付」は必須だが、時刻は任意のため以下の運用を採用：
-  - 日付のみ入力の場合：`date_start_time` は **当日 00:00** で保存する（表示時は「時刻なし」扱いにする）
-  - 時刻ありの場合：`date_start_time` に正確な日時を保存する
-- `cost` は **0以上の整数**（マイナス不可）
-- 通貨は **円のみ**
+- 必須：`title`, `date`
+- `start_time` / `end_time` は任意
+- `end_time` を入れる場合は `start_time` も必須（将来のルールとして検討可）
 
 #### Sorting Rule (MVP)
 
 Activity 一覧の表示順は以下：
 
-1. `date_start_time` の **日付** 昇順  
-2. `date_start_time` に「時刻あり」→「時刻なし」  
-3. （時刻ありの中で）時刻昇順  
+1. `date` 昇順  
+2. 同一日付内：`start_time` に「時刻あり」→「時刻なし」  
+3. （時刻ありの中で）`start_time` 昇順  
 4. `display_order` 昇順
 
 > ※「時刻なし」は同一日の末尾にまとめる。

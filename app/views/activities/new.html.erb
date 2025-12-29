@@ -1,0 +1,12 @@
+<div style="max-width: 840px; margin: 0 auto; padding: 24px 16px 32px;">
+  <div style="margin-bottom: 12px;">
+    <%= link_to "← Trip詳細に戻る", trip_path(@trip), style: "color: #2563eb; text-decoration: none; font-size: 14px; font-weight: 600;" %>
+  </div>
+
+  <h1 style="font-size: 24px; font-weight: 800; color: #111827; margin: 0 0 12px;">旅程を追加</h1>
+  <p style="font-size: 14px; color: #6b7280; margin: 0 0 16px;">日付や時間、場所を入力してアクティビティを追加できます。</p>
+
+  <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 18px 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);">
+    <%= render "form", trip: @trip, activity: @activity %>
+  </div>
+</div>
