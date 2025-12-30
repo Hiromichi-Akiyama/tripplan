@@ -1,7 +1,8 @@
 ja:
   errors:
+    format: "%{attribute}%{message}"
     messages:
-      blank: "%{attribute}を入力してください"
+      blank: "を入力してください"
 
   activerecord:
     attributes:

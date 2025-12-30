@@ -1,6 +1,8 @@
 <%= form_with model: [trip, packing_item], html: { novalidate: true, style: "margin: 0;" } do |form| %>
   <% name_error = packing_item.errors[:name].present? %>
   <% category_error = packing_item.errors[:category].present? %>
+  <% name_error_message = packing_item.errors.full_messages_for(:name).first %>
+  <% category_error_message = packing_item.errors.full_messages_for(:category).first %>
 
   <div style="display: grid; gap: 10px;">
     <div style="display: grid; grid-template-columns: 1.5fr 1fr auto; gap: 10px; align-items: start;">
@@ -16,7 +18,7 @@
           "box-shadow: inset 0 1px 2px rgba(0,0,0,0.02)"
         ].join('; ') %>
         <% if name_error %>
-          <p style="color: #b91c1c; font-size: 12px; margin: 6px 0 0;"><%= packing_item.errors[:name].first %></p>
+          <p style="color: #b91c1c; font-size: 12px; margin: 6px 0 0;"><%= name_error_message %></p>
         <% end %>
       </div>
 
@@ -32,7 +34,7 @@
           "box-shadow: inset 0 1px 2px rgba(0,0,0,0.02)"
         ].join('; ') %>
         <% if category_error %>
-          <p style="color: #b91c1c; font-size: 12px; margin: 6px 0 0;"><%= packing_item.errors[:category].first %></p>
+          <p style="color: #b91c1c; font-size: 12px; margin: 6px 0 0;"><%= category_error_message %></p>
         <% end %>
       </div>
 
