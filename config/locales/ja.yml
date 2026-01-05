@@ -20,3 +20,5 @@ ja:
         location: "場所"
         cost: "費用"
         memo: "メモ"
+      packing_item:
+        name: "アイテム名"
