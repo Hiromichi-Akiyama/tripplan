@@ -11,6 +11,7 @@ class TripsController < ApplicationController
     @activities = @trip.activities.ordered_for_timeline
     @packing_items = @trip.packing_items.ordered_for_list
     @packing_item = @trip.packing_items.build
+    @default_tab = params[:tab]
   end
 
   def new
@@ -33,10 +34,22 @@ class TripsController < ApplicationController
 
   def update
     if @trip.update(trip_params)
-      redirect_to trip_path(@trip), notice: "旅行を更新しました"
+      if params[:source] == "memo"
+        redirect_to trip_path(@trip, tab: "memo"), notice: "メモを保存しました"
+      else
+        redirect_to trip_path(@trip), notice: "旅行を更新しました"
+      end
     else
       flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
-      render :edit, status: :unprocessable_entity
+      if params[:source] == "memo"
+        @activities = @trip.activities.ordered_for_timeline
+        @packing_items = @trip.packing_items.ordered_for_list
+        @packing_item = @trip.packing_items.build
+        @default_tab = "memo"
+        render :show, status: :unprocessable_entity
+      else
+        render :edit, status: :unprocessable_entity
+      end
     end
   end
 
