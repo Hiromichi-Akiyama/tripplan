@@ -51,6 +51,7 @@ TripPlan は、旅行計画に必要な **旅程・持ち物・メモ** を一�
 - Devise
 - MySQL
 - Render
+- RSpec
 
 ---
 
