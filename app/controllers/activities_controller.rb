@@ -5,7 +5,7 @@ class ActivitiesController < ApplicationController
   before_action :set_activity, only: %i[edit update destroy]
 
   def new
-    @activity = @trip.activities.build
+    @activity = @trip.activities.build(date: params[:date])
   end
 
   def create

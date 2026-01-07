@@ -1,4 +1,5 @@
 class TripsController < ApplicationController
+  include ItineraryDataPreparable
   before_action :authenticate_user!
   before_action :set_trip, only: %i[show edit update destroy]
 
@@ -12,6 +13,7 @@ class TripsController < ApplicationController
     @packing_items = @trip.packing_items.ordered_for_list
     @packing_item = @trip.packing_items.build
     @default_tab = params[:tab]
+    prepare_itinerary_data
   end
 
   def new
@@ -46,6 +48,7 @@ class TripsController < ApplicationController
         @packing_items = @trip.packing_items.ordered_for_list
         @packing_item = @trip.packing_items.build
         @default_tab = "memo"
+        prepare_itinerary_data
         render :show, status: :unprocessable_entity
       else
         render :edit, status: :unprocessable_entity

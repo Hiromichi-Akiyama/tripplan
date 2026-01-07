@@ -1,4 +1,5 @@
 class PackingItemsController < ApplicationController
+  include ItineraryDataPreparable
 
   before_action :authenticate_user!
   before_action :set_trip
@@ -13,6 +14,7 @@ class PackingItemsController < ApplicationController
       flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
       @activities = @trip.activities.ordered_for_timeline
       @packing_items = @trip.packing_items.ordered_for_list
+      prepare_itinerary_data
       render "trips/show", status: :unprocessable_entity
     end
   end
@@ -47,5 +49,4 @@ class PackingItemsController < ApplicationController
   def packing_item_checked_params
     params.require(:packing_item).permit(:checked)
   end
-
 end

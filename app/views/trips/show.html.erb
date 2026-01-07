@@ -110,29 +110,80 @@
     </div>
 
     <div role="tabpanel" id="tab-panel-itinerary" aria-labelledby="tab-itinerary" data-tabs-target="panel" data-tab-id="itinerary" style="<%= panel_style %>">
-      <div style="display: grid; gap: 14px;">
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
-          <h2 style="font-size: 20px; font-weight: 800; color: #111827; margin: 0;">旅程</h2>
-          <%= link_to "＋ 活動を追加", new_trip_activity_path(@trip), style: [
-            "padding: 10px 14px",
-            "border-radius: 12px",
-            "border: none",
-            "background: #3b82f6",
-            "color: #ffffff",
-            "font-size: 14px",
-            "font-weight: 700",
-            "text-decoration: none",
-            "box-shadow: 0 6px 16px rgba(59,130,246,0.2)"
-          ].join('; ') %>
-        </div>
-        <% if @activities.present? %>
-          <div style="display: grid; gap: 12px;">
-            <%= render @activities %>
-          </div>
+      <style>
+        .itinerary-row:hover {
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        }
+
+        .itinerary-add:hover {
+          border-color: #60a5fa;
+          color: #3b82f6;
+          background: #eff6ff;
+        }
+
+        @media (max-width: 640px) {
+          .itinerary-row {
+            flex-direction: column;
+            align-items: stretch;
+          }
+
+          .itinerary-row-time {
+            width: auto !important;
+          }
+
+          .itinerary-row-content {
+            min-width: 0 !important;
+          }
+
+          .itinerary-row-meta {
+            width: 100%;
+            justify-content: flex-end;
+            margin-left: 0 !important;
+          }
+        }
+      </style>
+      <div style="display: grid; gap: 24px;">
+        <% if @trip_days.present? %>
+          <% @trip_days.each_with_index do |day, index| %>
+            <% day_activities = @activities_by_date[day] || [] %>
+            <% date_label = day.respond_to?(:year) ? "#{day.year}年#{day.month}月#{day.day}日" : "日付未設定" %>
+            <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 24px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); display: grid; gap: 16px;">
+              <div style="display: flex; align-items: baseline; gap: 12px;">
+                <h2 style="font-size: 24px; font-weight: 800; color: #111827; margin: 0;"><%= index + 1 %>日目</h2>
+                <span style="font-size: 14px; color: #6b7280;">(<%= date_label %>)</span>
+              </div>
+              <div style="display: grid; gap: 16px;">
+                <% if day_activities.present? %>
+                  <%= render partial: "activities/timeline_row", collection: day_activities, as: :activity %>
+                <% else %>
+                  <div style="padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #9ca3af;">
+                    <p style="margin: 0; font-size: 14px;">予定はまだありません。『＋この日の活動を追加』から登録しましょう。</p>
+                  </div>
+                <% end %>
+              </div>
+              <%= link_to "＋ この日の活動を追加", new_trip_activity_path(@trip, date: day.to_s), class: "itinerary-add", style: [
+                "margin-top: 4px",
+                "width: 100%",
+                "padding: 12px",
+                "border: 2px dashed #d1d5db",
+                "border-radius: 16px",
+                "color: #6b7280",
+                "background: #ffffff",
+                "font-size: 16px",
+                "font-weight: 600",
+                "text-decoration: none",
+                "display: inline-flex",
+                "align-items: center",
+                "justify-content: center",
+                "gap: 8px",
+                "transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease"
+              ].join('; ') %>
+            </div>
+          <% end %>
         <% else %>
-          <div style="border: 1px dashed #d1d5db; border-radius: 18px; padding: 20px; background: #f9fafb; text-align: center;">
+          <div style="border: 1px dashed #d1d5db; border-radius: 24px; padding: 24px; background: #f9fafb; text-align: center;">
             <p style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: #111827;">まだ旅程がありません</p>
-            <p style="margin: 0; font-size: 13px; color: #6b7280;">予定を追加するとここに表示されます。</p>
+            <p style="margin: 0; font-size: 13px; color: #6b7280;">日付が設定されると旅程が表示されます。</p>
           </div>
         <% end %>
       </div>
