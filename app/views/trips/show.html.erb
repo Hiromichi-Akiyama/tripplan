@@ -217,6 +217,17 @@
             <p style="margin: 0; font-size: 13px; color: #6b7280;">日付が設定されると旅程が表示されます。</p>
           </div>
         <% end %>
+
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 24px; padding: 20px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
+          <div>
+            <p style="margin: 0 0 6px; font-size: 14px; color: #6b7280; font-weight: 700;">合計活動数</p>
+            <p style="margin: 0; font-size: 24px; font-weight: 800; color: #111827; line-height: 1.2; font-variant-numeric: tabular-nums;"><%= @total_activities %>件</p>
+          </div>
+          <div style="text-align: right;">
+            <p style="margin: 0 0 6px; font-size: 14px; color: #6b7280; font-weight: 700;">合計費用</p>
+            <p style="margin: 0; font-size: 24px; font-weight: 800; color: #111827; line-height: 1.2; font-variant-numeric: tabular-nums;"><%= number_to_currency(@total_cost, unit: "¥", precision: 0) %></p>
+          </div>
+        </div>
       </div>
     </div>
 

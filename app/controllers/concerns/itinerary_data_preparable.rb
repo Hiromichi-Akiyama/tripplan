@@ -5,6 +5,8 @@ module ItineraryDataPreparable
 
   def prepare_itinerary_data
     @activities_by_date = @activities.group_by(&:date)
+    @total_activities = @activities.size
+    @total_cost = @activities.sum(:cost)
     if @trip.start_date.present? && @trip.end_date.present? && @trip.start_date <= @trip.end_date
       @trip_days = (@trip.start_date..@trip.end_date).to_a
     else
