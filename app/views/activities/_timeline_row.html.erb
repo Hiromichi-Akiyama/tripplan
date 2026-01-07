@@ -23,26 +23,26 @@
   "transition: box-shadow 0.2s ease"
 ].join('; ') do %>
   <div class="itinerary-row-time" style="flex: 0 0 auto; width: 160px; color: #374151; font-weight: 600; font-size: 15px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums;">
-    <span>🕒</span>
+    <%= icon("clock", size: 16) %>
     <%= time_label %>
   </div>
   <div class="itinerary-row-content" style="flex: 1; min-width: 160px;">
     <p style="margin: 0 0 4px; font-size: 16px; font-weight: 700; color: #111827; line-height: 1.4;"><%= activity.title %></p>
     <% if activity.location.present? %>
       <p style="margin: 0; font-size: 14px; color: #6b7280; display: inline-flex; align-items: center; gap: 6px;">
-        <span>📍</span>
+        <%= icon("map_pin", size: 14) %>
         <span><%= activity.location %></span>
       </p>
     <% end %>
   </div>
-  <div class="itinerary-row-meta" style="display: flex; align-items: center; gap: 12px; margin-left: auto;">
+  <div class="itinerary-row-meta" style="display: flex; align-items: flex-start; gap: 12px; margin-left: auto; align-self: stretch; position: relative; padding-right: 40px;">
     <% if activity.cost.present? %>
-      <div style="flex-shrink: 0; text-align: right;">
+      <div class="itinerary-row-cost" style="flex-shrink: 0; text-align: right;">
         <p style="margin: 0; font-size: 16px; font-weight: 700; color: #111827;">
           <%= number_to_currency(activity.cost, unit: "¥", precision: 0) %>
         </p>
       </div>
     <% end %>
-    <span style="color: #9ca3af; font-size: 20px; line-height: 1; align-self: center;">&gt;</span>
+    <span class="itinerary-row-chevron" style="color: #9ca3af; font-size: 20px; line-height: 1; position: absolute; right: 6px; top: 50%; transform: translateY(-50%);">&gt;</span>
   </div>
 <% end %>

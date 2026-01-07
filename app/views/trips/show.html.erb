@@ -4,39 +4,68 @@
     <%= link_to "← 一覧に戻る", trips_path, style: "color: #2563eb; text-decoration: none; font-size: 14px; font-weight: 600;" %>
   </div>
 
-  <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 20px; padding: 20px; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04); margin-bottom: 18px;">
-    <div style="height: 6px; border-radius: 9999px; background: linear-gradient(135deg, <%= trip_color %> 0%, #f3f4f6 100%); margin-bottom: 14px;"></div>
+  <% date_text =
+    if @trip.start_date.present? && @trip.end_date.present?
+      "#{@trip.start_date.strftime('%Y年%m月%d日')}〜#{@trip.end_date.strftime('%Y年%m月%d日')}"
+    elsif @trip.start_date.present?
+      @trip.start_date.strftime('%Y年%m月%d日')
+    elsif @trip.end_date.present?
+      @trip.end_date.strftime('%Y年%m月%d日')
+    else
+      "未設定"
+    end %>
+
+  <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 24px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); margin-bottom: 18px;">
+    <div style="height: 8px; border-radius: 9999px; background: linear-gradient(135deg, <%= trip_color %> 0%, #f3f4f6 100%); margin-bottom: 18px;"></div>
     <div style="display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap;">
       <div>
-        <h1 style="font-size: 28px; font-weight: 800; color: #111827; margin: 0 0 6px;"><%= @trip.title %></h1>
-        <p style="font-size: 16px; color: #6b7280; margin: 0 0 4px;">目的地: <span style="color: #111827; font-weight: 600;"><%= @trip.destination.presence || "未設定" %></span></p>
-        <p style="font-size: 14px; color: #6b7280; margin: 0;">期間: <span style="color: #111827;"><%= [@trip.start_date&.strftime("%Y/%m/%d"), @trip.end_date&.strftime("%Y/%m/%d")].compact.join(" 〜 ") %></span></p>
+        <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0 0 10px;"><%= @trip.title %></h1>
+        <p style="font-size: 16px; color: #6b7280; margin: 0 0 6px; display: flex; align-items: center; gap: 8px;">
+          <%= icon("map_pin", size: 18) %>
+          <span style="color: #111827; font-weight: 600;"><%= @trip.destination.presence || "未設定" %></span>
+        </p>
+        <p style="font-size: 15px; color: #6b7280; margin: 0; display: flex; align-items: center; gap: 8px;">
+          <%= icon("calendar", size: 18) %>
+          <span style="color: #111827;"><%= date_text %></span>
+        </p>
       </div>
       <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-        <%= link_to "編集", edit_trip_path(@trip), style: [
-          "padding: 8px 12px",
+        <%= link_to edit_trip_path(@trip), style: [
+          "padding: 8px 14px",
           "border-radius: 12px",
           "border: 1px solid #e5e7eb",
           "background: #f3f4f6",
           "color: #374151",
           "font-size: 14px",
           "font-weight: 600",
-          "text-decoration: none"
-        ].join('; ') %>
+          "text-decoration: none",
+          "display: inline-flex",
+          "align-items: center",
+          "gap: 6px"
+        ].join('; ') do %>
+          <%= icon("pencil", size: 16) %>
+          編集
+        <% end %>
 
-        <%= button_to "削除", trip_path(@trip), method: :delete,
+        <%= button_to trip_path(@trip), method: :delete,
           data: { turbo_confirm: "この旅行を削除しますか？" },
           form: { style: "margin: 0;" },
           style: [
-            "padding: 8px 12px",
+            "padding: 8px 14px",
             "border-radius: 12px",
             "border: 1px solid #fecaca",
             "background: #fef2f2",
             "color: #dc2626",
             "font-size: 14px",
-            "font-weight: 700",
-            "cursor: pointer"
-          ].join('; ') %>
+            "font-weight: 600",
+            "cursor: pointer",
+            "display: inline-flex",
+            "align-items: center",
+            "gap: 6px"
+        ].join('; ') do %>
+          <%= icon("trash", size: 16) %>
+          削除
+        <% end %>
       </div>
     </div>
   </div>
@@ -164,6 +193,8 @@
               <%= link_to "＋ この日の活動を追加", new_trip_activity_path(@trip, date: day.to_s), class: "itinerary-add", style: [
                 "margin-top: 4px",
                 "width: 100%",
+                "max-width: 100%",
+                "box-sizing: border-box",
                 "padding: 12px",
                 "border: 2px dashed #d1d5db",
                 "border-radius: 16px",
