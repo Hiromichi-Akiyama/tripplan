@@ -1,5 +1,6 @@
 class PackingItemsController < ApplicationController
   include ItineraryDataPreparable
+  include PackingItemsGroupable
 
   before_action :authenticate_user!
   before_action :set_trip
@@ -15,15 +16,16 @@ class PackingItemsController < ApplicationController
       @activities = @trip.activities.ordered_for_timeline
       @packing_items = @trip.packing_items.ordered_for_list
       prepare_itinerary_data
+      prepare_packing_items_by_category
       render "trips/show", status: :unprocessable_entity
     end
   end
 
   def update
     if @packing_item.update(packing_item_checked_params)
-      redirect_to trip_path(@trip)
+      redirect_to trip_path(@trip, tab: "packing")
     else
-      redirect_to trip_path(@trip), alert: "更新に失敗しました"
+      redirect_to trip_path(@trip, tab: "packing"), alert: "更新に失敗しました"
     end
   end
 

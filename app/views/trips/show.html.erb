@@ -240,8 +240,20 @@
           <%= render "packing_items/inline_form", trip: @trip, packing_item: @packing_item || @trip.packing_items.build %>
         </div>
         <% if @packing_items.present? %>
-          <div style="display: grid; gap: 10px;">
-            <%= render @packing_items %>
+          <div style="display: grid; gap: 16px;">
+            <% @packing_category_order.each do |category| %>
+              <% items = @packing_items_by_category[category] %>
+              <% next if items.blank? %>
+              <div style="display: grid; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #374151;"><%= category %></h3>
+                  <div style="flex: 1; height: 1px; background: #e5e7eb;"></div>
+                </div>
+                <div style="display: grid; gap: 10px;">
+                  <%= render partial: "packing_items/row", collection: items, as: :packing_item %>
+                </div>
+              </div>
+            <% end %>
           </div>
         <% else %>
           <div style="border: 1px dashed #d1d5db; border-radius: 18px; padding: 20px; background: #f9fafb; text-align: center;">
