@@ -539,7 +539,7 @@ const TripsIndexPage = ({ trips, onSelectTrip, onNewTrip, onMenuOpen, onBackToLa
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
           <div onClick={onBackToLanding} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
             <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
               <MapPin className="text-white" size={20} />
@@ -710,7 +710,7 @@ const NewTripPage = ({ initialData, onSave, onCancel }) => {
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
           <div onClick={onCancel} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
             <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
               <MapPin className="text-white" size={20} />
@@ -722,7 +722,7 @@ const NewTripPage = ({ initialData, onSave, onCancel }) => {
           </button>
         </div>
       </header>
-      <div className="max-w-3xl mx-auto px-4 md:px-8 py-8 md:py-12">
+      <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="mb-6">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{initialData ? '旅を編集' : '新しい旅を作成'}</h1>
         </div>
@@ -884,7 +884,7 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel }) => {
 
   const handleChange = (field, value) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-     if (errors[field]) {
+      if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: null }));
     }
   };
@@ -914,7 +914,7 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel }) => {
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
           <div onClick={onCancel} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
             <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
               <MapPin className="text-white" size={20} />
@@ -925,7 +925,7 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel }) => {
         </div>
       </header>
 
-      <div className="max-w-3xl mx-auto px-4 md:px-8 py-8 md:py-12">
+      <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="mb-6">
           <nav className="text-sm text-gray-500 mb-4">
             {selectedTrip?.title} &gt; 旅程 &gt; {initialData.id ? '活動を編集' : '活動を追加'}
@@ -1109,7 +1109,7 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
           <div onClick={onBack} className="flex items-center gap-2 cursor-pointer hover:opacity-80">
             <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center"><MapPin className="text-white" size={20} /></div>
             <span className="text-2xl font-bold text-gray-900">TripPlan</span>
@@ -1117,7 +1117,7 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
           <button onClick={onBack} className="text-gray-600 hover:text-gray-900 font-medium">← マイ旅一覧に戻る</button>
         </div>
       </header>
-      <div className="max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-12">
+      <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8 mb-6">
           {/* グラデーションを適用 */}
           <div className="h-2 rounded-full mb-6" style={{ background: generateGradient(selectedTrip.color) }} />
@@ -1310,7 +1310,7 @@ const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, on
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
           <div onClick={onBack} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
             <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center"><MapPin className="text-white" size={20} /></div>
             <span className="text-2xl font-bold text-gray-900">TripPlan</span>
@@ -1319,7 +1319,7 @@ const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, on
         </div>
       </header>
 
-      <div className="max-w-3xl mx-auto px-4 md:px-8 py-8 md:py-12">
+      <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <nav className="text-sm text-gray-500 mb-6">
           <span onClick={onBack} className="hover:text-gray-700 cursor-pointer">{selectedTrip?.title}</span>
           {' > '}
@@ -1426,7 +1426,7 @@ const ProfilePage = ({ currentUser, onUpdateProfile, onBack }) => {
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-8 py-4 flex items-center gap-4">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex items-center gap-4">
           <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
             <ArrowLeft size={24} className="text-gray-600" />
           </button>
@@ -1434,7 +1434,7 @@ const ProfilePage = ({ currentUser, onUpdateProfile, onBack }) => {
         </div>
       </header>
 
-      <div className="max-w-3xl mx-auto px-4 md:px-8 py-8 md:py-12">
+      <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
           <form onSubmit={handleSubmit}>
             <div className="space-y-6">
