@@ -85,6 +85,7 @@ const EmptyState = ({ icon: Icon, title, description, action }) => (
   </div>
 );
 
+// フラッシュメッセージコンポーネント
 const FlashMessage = ({ message, type, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -94,11 +95,11 @@ const FlashMessage = ({ message, type, onClose }) => {
   }, [onClose]);
 
   return (
-    <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-full shadow-lg flex items-center gap-2 animate-in slide-in-from-top-4 fade-in duration-300 ${
+    <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-full shadow-lg flex items-center gap-2 animate-in slide-in-from-top-4 fade-in duration-300 w-11/12 max-w-md ${
       type === 'error' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
     }`}>
-      {type === 'error' ? <AlertCircle size={20} /> : <Check size={20} />}
-      <span className="font-medium">{message}</span>
+      {type === 'error' ? <AlertCircle size={20} className="flex-shrink-0" /> : <Check size={20} className="flex-shrink-0" />}
+      <span className="font-medium text-sm md:text-base">{message}</span>
     </div>
   );
 };
@@ -123,12 +124,12 @@ const SideMenu = ({ isOpen, onClose, currentUser, onNavigate, onLogout }) => {
         
         <div className="p-6 border-b border-gray-100">
           <div className="flex items-center gap-3 mb-2">
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-lg">
+            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-lg flex-shrink-0">
               {currentUser?.name?.[0] || 'G'}
             </div>
-            <div>
-              <p className="font-bold text-gray-900">{currentUser?.name || 'ゲストユーザー'}</p>
-              <p className="text-xs text-gray-500">{currentUser?.email || ''}</p>
+            <div className="min-w-0">
+              <p className="font-bold text-gray-900 truncate">{currentUser?.name || 'ゲストユーザー'}</p>
+              <p className="text-xs text-gray-500 truncate">{currentUser?.email || ''}</p>
             </div>
           </div>
           <button 
@@ -176,32 +177,32 @@ const SideMenu = ({ isOpen, onClose, currentUser, onNavigate, onLogout }) => {
 const LandingPage = ({ onLogin, onSignup, onDemo }) => (
   <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
     <header className="bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
             <MapPin className="text-white" size={20} />
           </div>
           <span className="text-2xl font-bold text-gray-900">TripPlan</span>
         </div>
-        <div className="flex gap-4">
-          <button onClick={onLogin} className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors">ログイン</button>
-          <button onClick={onSignup} className="px-6 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 font-medium transition-all">新規登録</button>
+        <div className="flex gap-2 md:gap-4">
+          <button onClick={onLogin} className="px-3 md:px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors text-sm md:text-base">ログイン</button>
+          <button onClick={onSignup} className="px-4 md:px-6 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 font-medium transition-all text-sm md:text-base">新規登録</button>
         </div>
       </div>
     </header>
-    <div className="max-w-7xl mx-auto px-8 py-20">
-      <div className="text-center mb-16">
-        <h1 className="text-6xl font-bold text-gray-900 mb-6">計画。準備。出発。</h1>
-        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">旅程管理・宿泊・スポット・持ち物リストを1つのアプリで。</p>
-        <div className="flex gap-4 justify-center">
+    <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-20">
+      <div className="text-center mb-12 md:mb-16">
+        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4 md:mb-6">計画。準備。出発。</h1>
+        <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">旅程管理・宿泊・スポット・持ち物リストを1つのアプリで。</p>
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button onClick={onLogin} className="px-8 py-4 bg-blue-500 text-white rounded-2xl hover:bg-blue-600 font-semibold text-lg transition-all shadow-lg hover:shadow-xl">プランを始める</button>
           <button onClick={onDemo} className="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-2xl hover:border-gray-400 font-semibold text-lg transition-all">デモを見る</button>
         </div>
       </div>
 
       {/* 機能カード */}
-      <div className="grid md:grid-cols-3 gap-8 mt-20">
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mt-12 md:mt-20">
+        <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
           <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center mb-4">
             <Calendar className="text-blue-600" size={24} />
           </div>
@@ -211,7 +212,7 @@ const LandingPage = ({ onLogin, onSignup, onDemo }) => (
           </p>
         </div>
 
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+        <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
           <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center mb-4">
             <Package className="text-green-600" size={24} />
           </div>
@@ -221,7 +222,7 @@ const LandingPage = ({ onLogin, onSignup, onDemo }) => (
           </p>
         </div>
 
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+        <div className="bg-white p-6 md:p-8 rounded-3xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
           <div className="w-12 h-12 bg-purple-100 rounded-2xl flex items-center justify-center mb-4">
             <span className="text-2xl">📝</span>
           </div>
@@ -235,8 +236,6 @@ const LandingPage = ({ onLogin, onSignup, onDemo }) => (
   </div>
 );
 
-// ... LoginPage, SignupPage, ResetPasswordPage は変更なしのため省略せず維持します ...
-// (省略: LoginPage, SignupPage, ResetPasswordPage のコードはそのまま)
 const LoginPage = ({ onLoginSuccess, onNavigateToSignup, onNavigateToReset, onBack }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -258,7 +257,7 @@ const LoginPage = ({ onLoginSuccess, onNavigateToSignup, onNavigateToReset, onBa
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center px-4">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md">
         <div onClick={onBack} className="flex items-center justify-center gap-2 mb-8 cursor-pointer hover:opacity-80 transition-opacity">
           <div className="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
@@ -281,7 +280,7 @@ const LoginPage = ({ onLoginSuccess, onNavigateToSignup, onNavigateToReset, onBa
                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="••••••••" className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.password ? 'border-red-500' : 'border-gray-300'}`} />
                 {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password}</p>}
               </div>
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between flex-wrap gap-2">
                 <label className="flex items-center gap-2 cursor-pointer">
                   <input type="checkbox" checked={remember} onChange={(e) => setRemember(e.target.checked)} className="w-4 h-4 rounded border-gray-300 text-blue-500 focus:ring-2 focus:ring-blue-500" />
                   <span className="text-sm text-gray-700">ログイン状態を保持</span>
@@ -339,30 +338,106 @@ const SignupPage = ({ onSignupSuccess, onNavigateToLogin, onBack }) => {
           <p className="text-gray-600 mb-6">アカウントを作成して旅行の計画を始めましょう</p>
           <form onSubmit={handleSubmit}>
             <div className="space-y-4">
+              {/* メールアドレス */}
               <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">メールアドレス <span className="text-red-500">*</span></label>
-                <input type="email" value={form.email} onChange={(e) => setForm({...form, email: e.target.value})} placeholder="example@email.com" className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.email ? 'border-red-500' : 'border-gray-300'}`} />
-                {errors.email && <p className="text-sm text-red-500 mt-1">{errors.email}</p>}
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  メールアドレス <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({...form, email: e.target.value})}
+                  placeholder="example@email.com"
+                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.email ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                />
+                {errors.email && (
+                  <p className="text-sm text-red-500 mt-1">{errors.email}</p>
+                )}
               </div>
+
+              {/* パスワード */}
               <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">パスワード <span className="text-red-500">*</span></label>
-                <input type="password" value={form.password} onChange={(e) => setForm({...form, password: e.target.value})} placeholder="8文字以上、英数字を含む" className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.password ? 'border-red-500' : 'border-gray-300'}`} />
-                {errors.password && <p className="text-sm text-red-500 mt-1">{errors.password}</p>}
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  パスワード <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="password"
+                  value={form.password}
+                  onChange={(e) => setForm({...form, password: e.target.value})}
+                  placeholder="8文字以上、英数字を含む"
+                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.password ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                />
+                {errors.password && (
+                  <p className="text-sm text-red-500 mt-1">{errors.password}</p>
+                )}
+                <p className="text-xs text-gray-500 mt-1">8文字以上、英字と数字を含めてください</p>
               </div>
+
+              {/* パスワード（確認） */}
               <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">パスワード（確認） <span className="text-red-500">*</span></label>
-                <input type="password" value={form.passwordConfirm} onChange={(e) => setForm({...form, passwordConfirm: e.target.value})} placeholder="もう一度入力してください" className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.passwordConfirm ? 'border-red-500' : 'border-gray-300'}`} />
-                {errors.passwordConfirm && <p className="text-sm text-red-500 mt-1">{errors.passwordConfirm}</p>}
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  パスワード（確認） <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="password"
+                  value={form.passwordConfirm}
+                  onChange={(e) => setForm({...form, passwordConfirm: e.target.value})}
+                  placeholder="もう一度入力してください"
+                  className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                    errors.passwordConfirm ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                />
+                {errors.passwordConfirm && (
+                  <p className="text-sm text-red-500 mt-1">{errors.passwordConfirm}</p>
+                )}
               </div>
+
+              {/* 名前（任意） */}
               <div>
-                <label className="block text-sm font-semibold text-gray-900 mb-2">名前 <span className="text-gray-500 text-xs">（任意）</span></label>
-                <input type="text" value={form.name} onChange={(e) => setForm({...form, name: e.target.value})} placeholder="山田太郎" className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <label className="block text-sm font-semibold text-gray-900 mb-2">
+                  名前 <span className="text-gray-500 text-xs">（任意）</span>
+                </label>
+                <input
+                  type="text"
+                  value={form.name}
+                  onChange={(e) => setForm({...form, name: e.target.value})}
+                  placeholder="山田太郎"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                <p className="text-xs text-gray-500 mt-1">後から設定することもできます</p>
               </div>
-              <button type="submit" className="w-full px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 font-semibold transition-all shadow-sm hover:shadow-md">新規登録</button>
+
+              {/* 新規登録ボタン */}
+              <button
+                type="submit"
+                className="w-full px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 font-semibold transition-all shadow-sm hover:shadow-md"
+              >
+                新規登録
+              </button>
             </div>
           </form>
+
+          {/* 利用規約 */}
+          <p className="text-xs text-gray-500 mt-4 text-center">
+            登録することで、<a href="#" className="text-blue-600 hover:underline">利用規約</a>と
+            <a href="#" className="text-blue-600 hover:underline">プライバシーポリシー</a>に同意したものとみなされます
+          </p>
+
+          {/* ログインリンク */}
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">すでにアカウントをお持ちの方は<button onClick={onNavigateToLogin} className="text-blue-600 hover:text-blue-700 font-semibold ml-1">ログイン</button></p>
+            <p className="text-sm text-gray-600">
+              すでにアカウントをお持ちの方は
+              <button
+                onClick={onNavigateToLogin}
+                className="text-blue-600 hover:text-blue-700 font-semibold ml-1"
+              >
+                ログイン
+              </button>
+            </p>
           </div>
         </div>
         <div className="mt-4 text-center">
@@ -452,22 +527,19 @@ const TripsIndexPage = ({ trips, onSelectTrip, onNewTrip, onMenuOpen, onBackToLa
       return true;
     })
     .sort((a, b) => {
-      // 企画書の仕様に合わせてソート
+      const dateA = new Date(a.startDate);
+      const dateB = new Date(b.startDate);
+      
       if (filter === 'upcoming') {
-        // 今後の旅：近い順（昇順）
-        return new Date(a.startDate) - new Date(b.startDate);
-      } else if (filter === 'past') {
-        // 過去の旅：終了日が新しい順（降順）
-        return new Date(b.endDate) - new Date(a.endDate);
+        return dateA - dateB;
       }
-      // すべて：開始日が新しい順（降順）
-      return new Date(b.startDate) - new Date(a.startDate);
+      return dateB - dateA;
     });
 
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
-        <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
           <div onClick={onBackToLanding} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
             <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
               <MapPin className="text-white" size={20} />
@@ -481,16 +553,16 @@ const TripsIndexPage = ({ trips, onSelectTrip, onNewTrip, onMenuOpen, onBackToLa
           </div>
         </div>
       </header>
-      <div className="max-w-4xl mx-auto px-8 py-12">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-900">マイ旅一覧</h1>
-          <button onClick={onNewTrip} className="px-6 py-3 bg-blue-500 text-white rounded-2xl hover:bg-blue-600 font-semibold transition-all shadow-sm hover:shadow-md flex items-center gap-2">
+      <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">マイ旅一覧</h1>
+          <button onClick={onNewTrip} className="px-6 py-3 bg-blue-500 text-white rounded-2xl hover:bg-blue-600 font-semibold transition-all shadow-sm hover:shadow-md flex items-center gap-2 w-full sm:w-auto justify-center">
             <Plus size={20} />
             新しい旅
           </button>
         </div>
         {trips.length > 0 && (
-          <div className="flex gap-3 mb-8">
+          <div className="flex flex-wrap gap-3 mb-8">
             <button 
               onClick={() => setFilter('all')}
               className={`px-4 py-2 rounded-full font-medium transition-colors ${filter === 'all' ? 'bg-blue-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
@@ -648,9 +720,9 @@ const NewTripPage = ({ initialData, onSave, onCancel }) => {
           <button onClick={onCancel} className="text-gray-600 hover:text-gray-900 font-medium">← マイ旅一覧に戻る</button>
         </div>
       </header>
-      <div className="max-w-3xl mx-auto px-8 py-12">
+      <div className="max-w-3xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="mb-6">
-          <h1 className="text-4xl font-bold text-gray-900">{initialData ? '旅を編集' : '新しい旅を作成'}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{initialData ? '旅を編集' : '新しい旅を作成'}</h1>
         </div>
         <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
           <form onSubmit={handleSubmit}>
@@ -677,7 +749,7 @@ const NewTripPage = ({ initialData, onSave, onCancel }) => {
                 />
                 {errors.destination && <p className="text-sm text-red-500 mt-1">{errors.destination}</p>}
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 mb-2">開始日 <span className="text-red-500">*</span></label>
                   <input
@@ -851,12 +923,12 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel }) => {
         </div>
       </header>
 
-      <div className="max-w-3xl mx-auto px-8 py-12">
+      <div className="max-w-3xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="mb-6">
           <nav className="text-sm text-gray-500 mb-4">
             {selectedTrip?.title} &gt; 旅程 &gt; {initialData.id ? '活動を編集' : '活動を追加'}
           </nav>
-          <h1 className="text-4xl font-bold text-gray-900">{initialData.id ? '活動を編集' : '活動を追加'}</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{initialData.id ? '活動を編集' : '活動を追加'}</h1>
         </div>
 
         <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
@@ -879,9 +951,7 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel }) => {
                   <input type="date" value={formData.date} onChange={(e) => handleChange('date', e.target.value)} className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.date ? 'border-red-500' : 'border-gray-300'}`} />
                   {errors.date && <p className="text-sm text-red-500 mt-1">{errors.date}</p>}
                 </div>
-                
-                {/* 時刻選択UI（セレクトボックス） */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-semibold text-gray-900 mb-2">開始時刻</label>
                     <div className="flex gap-2 items-center">
@@ -927,7 +997,6 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel }) => {
                     </div>
                   </div>
                 </div>
-
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 mb-2">場所</label>
                   <input type="text" value={formData.location} onChange={(e) => handleChange('location', e.target.value)} placeholder="例：札幌市中央区" className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500" />
@@ -1038,7 +1107,7 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
   return (
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
           <div onClick={onBack} className="flex items-center gap-2 cursor-pointer hover:opacity-80">
             <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center"><MapPin className="text-white" size={20} /></div>
             <span className="text-2xl font-bold text-gray-900">TripPlan</span>
@@ -1046,13 +1115,13 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
           <button onClick={onBack} className="text-gray-600 hover:text-gray-900 font-medium">← マイ旅一覧に戻る</button>
         </div>
       </header>
-      <div className="max-w-6xl mx-auto px-8 py-12">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8 mb-6">
           {/* グラデーションを適用 */}
           <div className="h-2 rounded-full mb-6" style={{ background: generateGradient(selectedTrip.color) }} />
-          <div className="flex justify-between items-start mb-4">
+          <div className="flex flex-col md:flex-row justify-between items-start mb-4 gap-4">
             <div>
-              <h1 className="text-4xl font-bold text-gray-900 mb-2">{selectedTrip.title}</h1>
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{selectedTrip.title}</h1>
               <p className="text-xl text-gray-600 flex items-center gap-2"><MapPin size={20} />{selectedTrip.destination}</p>
               <p className="text-gray-500 flex items-center gap-2 mt-2"><Calendar size={18} />{selectedTrip.dateRange}</p>
             </div>
@@ -1062,10 +1131,10 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
             </div>
           </div>
         </div>
-        <div className="flex gap-2 mb-6">
-          <button onClick={() => setActiveTab('itinerary')} className={`px-6 py-3 rounded-2xl font-semibold transition-all ${activeTab === 'itinerary' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}>旅程</button>
-          <button onClick={() => setActiveTab('packing')} className={`px-6 py-3 rounded-2xl font-semibold transition-all ${activeTab === 'packing' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}>持ち物</button>
-          <button onClick={() => setActiveTab('notes')} className={`px-6 py-3 rounded-2xl font-semibold transition-all ${activeTab === 'notes' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}>メモ</button>
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+          <button onClick={() => setActiveTab('itinerary')} className={`px-6 py-3 rounded-2xl font-semibold transition-all whitespace-nowrap ${activeTab === 'itinerary' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}>旅程</button>
+          <button onClick={() => setActiveTab('packing')} className={`px-6 py-3 rounded-2xl font-semibold transition-all whitespace-nowrap ${activeTab === 'packing' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}>持ち物</button>
+          <button onClick={() => setActiveTab('notes')} className={`px-6 py-3 rounded-2xl font-semibold transition-all whitespace-nowrap ${activeTab === 'notes' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-600 hover:text-gray-900'}`}>メモ</button>
           <div className="flex-1" />
         </div>
         
@@ -1082,14 +1151,20 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
                   </div>
                   <div className="space-y-4">
                     {dayActivities.length > 0 ? dayActivities.map((activity, idx) => (
-                      <div key={idx} onClick={() => onEditActivity(activity)} className="flex gap-4 p-4 border border-gray-200 rounded-2xl hover:shadow-md cursor-pointer transition-all">
-                        <div className="flex-shrink-0 w-32 text-gray-700 font-medium"><Clock size={16} className="inline mr-2" />{activity.time}</div>
-                        <div className="flex-shrink-0"><CategoryIcon category={activity.category} /></div>
-                        <div className="flex-1"><h3 className="font-semibold text-gray-900 mb-1">{activity.title}</h3><p className="text-sm text-gray-600 flex items-center gap-2"><MapPin size={14} />{activity.location}</p></div>
-                        <div className="flex-shrink-0 text-right">
+                      <div key={idx} onClick={() => onEditActivity(activity)} className="flex flex-col sm:flex-row gap-2 sm:gap-4 p-4 border border-gray-200 rounded-2xl hover:shadow-md cursor-pointer transition-all">
+                        <div className="flex items-center gap-2 sm:w-32 sm:block sm:flex-shrink-0 text-gray-700 font-medium">
+                          <Clock size={16} className="inline sm:mr-2" />{activity.time}
+                        </div>
+                        <div className="hidden sm:block flex-shrink-0"><CategoryIcon category={activity.category} /></div>
+                        <div className="flex-1">
+                           <div className="flex items-center gap-2 sm:hidden mb-1"><CategoryIcon category={activity.category} /><span className="font-semibold">{activity.title}</span></div>
+                           <h3 className="hidden sm:block font-semibold text-gray-900 mb-1">{activity.title}</h3>
+                           <p className="text-sm text-gray-600 flex items-center gap-2"><MapPin size={14} />{activity.location}</p>
+                        </div>
+                        <div className="flex-shrink-0 text-left sm:text-right mt-2 sm:mt-0">
                           <p className="font-semibold text-gray-900 flex items-center gap-1"><DollarSign size={16} className="hidden" />{activity.cost ? `¥${Number(activity.cost).toLocaleString()}` : '¥0'}</p>
                         </div>
-                        <ChevronRight size={20} className="text-gray-400 self-center" />
+                        <ChevronRight size={20} className="text-gray-400 self-center hidden sm:block" />
                       </div>
                     )) : <div className="py-6 flex flex-col items-center justify-center text-gray-400"><p className="text-sm">予定はまだありません。『+この日の活動を追加』から登録しましょう。</p></div>}
                   </div>
@@ -1118,7 +1193,7 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
             <h2 className="text-2xl font-bold text-gray-900 mb-6">持ち物リスト</h2>
             
             {/* アイテム追加フォーム */}
-            <div className="flex gap-3 mb-6 p-4 bg-gray-50 rounded-2xl">
+            <div className="flex flex-col sm:flex-row gap-3 mb-6 p-4 bg-gray-50 rounded-2xl">
               <input 
                 type="text" 
                 placeholder="アイテム名"
@@ -1170,7 +1245,7 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
             </div>
 
             {currentPackingList.length === 0 ? (
-              <EmptyState icon={ClipboardList} title="リストが空です" description="忘れ物を防ぐために、まずは必需品から追加してみましょう。" />
+              <EmptyState icon={ClipboardList} title="リストが空です" description="リストが空です。忘れ物を防ぐために、まずは必需品から追加してみましょう。" />
             ) : (
               <div className="space-y-6">
                 {categoryOrder.map(cat => {
@@ -1227,6 +1302,9 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
   );
 };
 
+// ... ActivityDetailPage, ProfilePage, TripPlanApp ...
+// (省略: ActivityDetailPage, ProfilePage, TripPlanApp のコードはそのまま)
+
 const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, onDelete }) => {
   if (!selectedActivity) return null;
 
@@ -1242,7 +1320,7 @@ const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, on
         </div>
       </header>
 
-      <div className="max-w-3xl mx-auto px-8 py-12">
+      <div className="max-w-3xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <nav className="text-sm text-gray-500 mb-6">
           <span onClick={onBack} className="hover:text-gray-700 cursor-pointer">{selectedTrip?.title}</span>
           {' > '}
@@ -1357,7 +1435,7 @@ const ProfilePage = ({ currentUser, onUpdateProfile, onBack }) => {
         </div>
       </header>
 
-      <div className="max-w-3xl mx-auto px-8 py-12">
+      <div className="max-w-3xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
           <form onSubmit={handleSubmit}>
             <div className="space-y-6">
@@ -1577,12 +1655,7 @@ const TripPlanApp = () => {
         packingList: []
       };
       setTrips([...trips, newTripData]);
-      
-      // 修正: 新規作成後は詳細ページへ遷移
-      setSelectedTrip(newTripData);
-      setCurrentPage('trip-detail');
-      setActiveTab('itinerary'); // タブも初期化
-      
+      setCurrentPage('trips');
       showFlash('新しい旅を作成しました');
     }
   };
