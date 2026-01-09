@@ -1,0 +1,83 @@
+<div style="min-height: 100vh; background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);">
+  <style>
+    .landing-hero-title {
+      font-size: 40px;
+      line-height: 1.1;
+    }
+
+    .landing-features {
+      display: grid;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .landing-hero-title {
+        font-size: 56px;
+      }
+
+      .landing-features {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+  </style>
+
+  <header style="background: #ffffff; border-bottom: 1px solid #e5e7eb;">
+    <div style="max-width: 1120px; margin: 0 auto; padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="width: 36px; height: 36px; background: #3b82f6; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: #ffffff;">
+          <%= icon("map_pin", size: 20) %>
+        </div>
+        <span style="font-size: 24px; font-weight: 800; color: #111827;">TripPlan</span>
+      </div>
+      <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
+        <% if user_signed_in? %>
+          <%= link_to "マイ旅一覧", trips_path, style: "padding: 10px 16px; border-radius: 12px; color: #374151; text-decoration: none; font-weight: 600;" %>
+          <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, style: "padding: 10px 16px; border-radius: 12px; background: #f3f4f6; color: #111827; text-decoration: none; font-weight: 600;" %>
+        <% else %>
+          <%= link_to "ログイン", new_user_session_path, style: "padding: 10px 16px; border-radius: 12px; color: #374151; text-decoration: none; font-weight: 600;" %>
+          <%= link_to "新規登録", new_user_registration_path, style: "padding: 10px 18px; border-radius: 14px; background: #3b82f6; color: #ffffff; text-decoration: none; font-weight: 700; box-shadow: 0 6px 14px rgba(59,130,246,0.2);" %>
+        <% end %>
+      </div>
+    </div>
+  </header>
+
+  <main style="max-width: 1120px; margin: 0 auto; padding: 64px 24px 80px;">
+    <section style="text-align: center; margin-bottom: 64px;">
+      <h1 class="landing-hero-title" style="margin: 0 0 20px; font-weight: 800; color: #111827;">計画。準備。出発。</h1>
+      <p style="margin: 0 auto 28px; max-width: 640px; font-size: 18px; color: #6b7280; line-height: 1.6;">
+        旅程管理・宿泊・スポット・持ち物リストを1つのアプリで。
+      </p>
+      <% start_path = user_signed_in? ? trips_path : new_user_registration_path %>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <%= link_to "プランを始める", start_path, style: "padding: 14px 28px; border-radius: 16px; background: #3b82f6; color: #ffffff; text-decoration: none; font-weight: 700; font-size: 16px; box-shadow: 0 10px 24px rgba(59,130,246,0.25);" %>
+        <%= link_to "デモを見る", trips_path, style: "padding: 14px 28px; border-radius: 16px; border: 2px solid #d1d5db; color: #374151; text-decoration: none; font-weight: 700; font-size: 16px;" %>
+      </div>
+    </section>
+
+    <section class="landing-features">
+      <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 28px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);">
+        <div style="width: 48px; height: 48px; border-radius: 16px; background: #dbeafe; color: #2563eb; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+          <%= icon("calendar", size: 24) %>
+        </div>
+        <h3 style="margin: 0 0 10px; font-size: 20px; font-weight: 800; color: #111827;">旅程管理</h3>
+        <p style="margin: 0; color: #6b7280; line-height: 1.6;">日ごとに活動・時間・場所を整理して、旅程を一箇所で管理できます。</p>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 28px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);">
+        <div style="width: 48px; height: 48px; border-radius: 16px; background: #dcfce7; color: #16a34a; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+          <%= icon("package", size: 24) %>
+        </div>
+        <h3 style="margin: 0 0 10px; font-size: 20px; font-weight: 800; color: #111827;">持ち物リスト</h3>
+        <p style="margin: 0; color: #6b7280; line-height: 1.6;">必需品を忘れません。荷造りしながらチェックリストで確認できます。</p>
+      </div>
+
+      <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 28px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);">
+        <div style="width: 48px; height: 48px; border-radius: 16px; background: #f3e8ff; color: #7c3aed; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+          <%= icon("note", size: 24) %>
+        </div>
+        <h3 style="margin: 0 0 10px; font-size: 20px; font-weight: 800; color: #111827;">メモ機能</h3>
+        <p style="margin: 0; color: #6b7280; line-height: 1.6;">旅の計画、アイデア、注意事項を自由に書き留めて管理できます。</p>
+      </div>
+    </section>
+  </main>
+</div>

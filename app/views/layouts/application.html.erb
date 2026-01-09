@@ -11,6 +11,9 @@
   </head>
 
   <body>
+    <% unless (controller_name == "pages" && action_name == "home") || devise_controller? %>
+      <%= render "shared/app_header" %>
+    <% end %>
     <%= render "shared/flash" %>
     <%= yield %>
   </body>
