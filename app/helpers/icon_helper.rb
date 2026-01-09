@@ -34,6 +34,11 @@ module IconHelper
                  tag.path(d: "M18 6L6 18"),
                  tag.path(d: "M6 6l12 12")
                ]
+             when "plus"
+               [
+                 tag.path(d: "M12 5v14"),
+                 tag.path(d: "M5 12h14")
+               ]
              else
                []
              end

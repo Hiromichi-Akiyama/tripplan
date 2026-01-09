@@ -8,15 +8,15 @@
   <% tabs.each do |tab| %>
     <% active = tab[:key] == active_tab %>
     <%= link_to trips_path(tab: tab[:key]), style: [
-      "padding: 10px 14px",
+      "padding: 8px 14px",
       "border-radius: 9999px",
       "font-size: 14px",
       "font-weight: 600",
       "text-decoration: none",
       "border: 1px solid #{active ? '#2563eb' : '#e5e7eb'}",
-      "color: #{active ? '#0f172a' : '#4b5563'}",
-      "background: #{active ? '#eff6ff' : '#ffffff'}",
-      "box-shadow: #{active ? '0 6px 20px rgba(37, 99, 235, 0.12)' : 'none'}",
+      "color: #{active ? '#ffffff' : '#374151'}",
+      "background: #{active ? '#3b82f6' : '#ffffff'}",
+      "box-shadow: #{active ? '0 6px 16px rgba(59,130,246,0.2)' : 'none'}",
       "transition: all 0.15s ease"
     ].join('; ') do %>
       <%= tab[:label] %>

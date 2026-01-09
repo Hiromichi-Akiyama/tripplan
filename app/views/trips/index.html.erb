@@ -1,11 +1,70 @@
-<div class="trips-page" style="max-width: 960px; margin: 0 auto; padding: 24px 16px 32px;">
-  <header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; flex-wrap: wrap;">
-    <h1 style="font-size: 24px; font-weight: 700; color: #111827; margin: 0;">マイ旅一覧</h1>
-    <%= render "tabs", active_tab: @active_tab %>
+<div class="trips-page" style="max-width: 960px; margin: 0 auto; padding: 32px 16px 48px;">
+  <style>
+    .trip-card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .trip-card-color {
+      width: 100%;
+      height: 160px;
+      flex-shrink: 0;
+    }
+
+    .trip-card-chevron {
+      display: none;
+    }
+
+    .trip-card:hover {
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.08);
+    }
+
+    @media (min-width: 768px) {
+      .trip-card {
+        flex-direction: row;
+        align-items: stretch;
+      }
+
+      .trip-card-color {
+        width: 220px;
+        height: auto;
+        flex: 0 0 220px;
+        align-self: stretch;
+      }
+
+      .trip-card-chevron {
+        display: flex;
+      }
+    }
+  </style>
+
+  <header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; flex-wrap: wrap;">
+    <h1 style="font-size: 30px; font-weight: 800; color: #111827; margin: 0;">マイ旅一覧</h1>
+    <%= link_to new_trip_path, style: [
+      "padding: 12px 18px",
+      "border-radius: 18px",
+      "background: #3b82f6",
+      "color: #ffffff",
+      "font-size: 15px",
+      "font-weight: 700",
+      "text-decoration: none",
+      "display: inline-flex",
+      "align-items: center",
+      "gap: 8px",
+      "box-shadow: 0 6px 14px rgba(59,130,246,0.2)"
+    ].join('; ') do %>
+      <%= icon("plus", size: 18) %>
+      新しい旅
+    <% end %>
   </header>
 
+  <div style="margin-bottom: 20px;">
+    <%= render "tabs", active_tab: @active_tab %>
+  </div>
+
   <% if @trips.present? %>
-    <div class="trip-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px;">
+    <div class="trip-list" style="display: grid; gap: 20px;">
       <%= render @trips %>
     </div>
   <% else %>
@@ -15,8 +74,11 @@
       when "past" then "過去の旅はまだありません"
       else "まだ旅行がありません"
       end %>
-    <div class="empty-state" style="border: 1px dashed #d1d5db; border-radius: 12px; padding: 24px; text-align: center; background: #f9fafb;">
-      <p style="font-size: 18px; font-weight: 600; color: #111827; margin: 0 0 8px;"><%= empty_title %></p>
+    <div class="empty-state" style="border: 2px dashed #e5e7eb; border-radius: 24px; padding: 32px; text-align: center; background: #f9fafb;">
+      <div style="width: 60px; height: 60px; border-radius: 9999px; background: #ffffff; border: 1px solid #e5e7eb; display: inline-flex; align-items: center; justify-content: center; color: #9ca3af; margin-bottom: 16px;">
+        <%= icon("map_pin", size: 26) %>
+      </div>
+      <p style="font-size: 18px; font-weight: 700; color: #111827; margin: 0 0 8px;"><%= empty_title %></p>
       <p style="font-size: 14px; color: #6b7280; margin: 0;">旅を登録するとここに表示されます。</p>
     </div>
   <% end %>
