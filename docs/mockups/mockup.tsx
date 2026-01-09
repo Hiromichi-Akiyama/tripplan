@@ -638,7 +638,7 @@ const TripsIndexPage = ({ trips, onSelectTrip, onNewTrip, onMenuOpen, onBackToLa
   );
 };
 
-const NewTripPage = ({ initialData, onSave, onCancel }) => {
+const NewTripPage = ({ initialData, onSave, onCancel, onNavigateToTrips }) => {
   const [formData, setFormData] = useState({
     title: '',
     destination: '',
@@ -723,6 +723,23 @@ const NewTripPage = ({ initialData, onSave, onCancel }) => {
         </div>
       </header>
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
+        <nav className="text-sm text-gray-500 mb-6 flex items-center flex-wrap gap-1">
+          {initialData ? (
+             <>
+               <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
+               {' > '}
+               <span onClick={onCancel} className="hover:text-gray-700 cursor-pointer hover:underline">{initialData.title}</span>
+               {' > '}
+               <span className="text-gray-900 font-medium">編集</span>
+             </>
+          ) : (
+             <>
+               <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
+               {' > '}
+               <span className="text-gray-900 font-medium">新しい旅を作成</span>
+             </>
+          )}
+        </nav>
         <div className="mb-6">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{initialData ? '旅を編集' : '新しい旅を作成'}</h1>
         </div>
@@ -839,7 +856,7 @@ const NewTripPage = ({ initialData, onSave, onCancel }) => {
   );
 };
 
-const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel }) => {
+const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNavigateToTrips }) => {
   const [formData, setFormData] = useState({
     title: '',
     date: '',
@@ -927,8 +944,14 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel }) => {
 
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="mb-6">
-          <nav className="text-sm text-gray-500 mb-4">
-            {selectedTrip?.title} &gt; 旅程 &gt; {initialData.id ? '活動を編集' : '活動を追加'}
+          <nav className="text-sm text-gray-500 mb-6 flex items-center flex-wrap gap-1">
+            <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
+            {' > '}
+            <span onClick={onCancel} className="hover:text-gray-700 cursor-pointer hover:underline">{selectedTrip?.title}</span>
+            {' > '}
+            <span onClick={onCancel} className="hover:text-gray-700 cursor-pointer hover:underline">旅程</span>
+            {' > '}
+            <span className="text-gray-900 font-medium">{initialData.id ? '活動を編集' : '活動を追加'}</span>
           </nav>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{initialData.id ? '活動を編集' : '活動を追加'}</h1>
         </div>
@@ -1118,6 +1141,11 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
         </div>
       </header>
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
+        <nav className="text-sm text-gray-500 mb-6">
+          <span onClick={onBack} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
+          {' > '}
+          <span className="text-gray-900 font-medium">{selectedTrip.title}</span>
+        </nav>
         <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8 mb-6">
           {/* グラデーションを適用 */}
           <div className="h-2 rounded-full mb-6" style={{ background: generateGradient(selectedTrip.color) }} />
@@ -1304,7 +1332,7 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
   );
 };
 
-const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, onDelete }) => {
+const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, onDelete, onNavigateToTrips }) => {
   if (!selectedActivity) return null;
 
   return (
@@ -1320,10 +1348,12 @@ const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, on
       </header>
 
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
-        <nav className="text-sm text-gray-500 mb-6">
-          <span onClick={onBack} className="hover:text-gray-700 cursor-pointer">{selectedTrip?.title}</span>
+        <nav className="text-sm text-gray-500 mb-6 flex items-center flex-wrap gap-1">
+          <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
           {' > '}
-          <span onClick={onBack} className="hover:text-gray-700 cursor-pointer">旅程</span>
+          <span onClick={onBack} className="hover:text-gray-700 cursor-pointer hover:underline">{selectedTrip?.title}</span>
+          {' > '}
+          <span onClick={onBack} className="hover:text-gray-700 cursor-pointer hover:underline">旅程</span>
           {' > '}
           <span className="text-gray-900 font-medium">活動詳細</span>
         </nav>
@@ -1408,7 +1438,7 @@ const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, on
   );
 };
 
-const ProfilePage = ({ currentUser, onUpdateProfile, onBack }) => {
+const ProfilePage = ({ currentUser, onUpdateProfile, onBack, onNavigateToTrips }) => {
   const [formData, setFormData] = useState({
     name: currentUser?.name || '',
     email: currentUser?.email || '',
@@ -1435,6 +1465,11 @@ const ProfilePage = ({ currentUser, onUpdateProfile, onBack }) => {
       </header>
 
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
+        <nav className="text-sm text-gray-500 mb-6 flex items-center flex-wrap gap-1">
+          <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
+          {' > '}
+          <span className="text-gray-900 font-medium">プロフィール編集</span>
+        </nav>
         <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
           <form onSubmit={handleSubmit}>
             <div className="space-y-6">
@@ -1788,6 +1823,7 @@ const TripPlanApp = () => {
               setCurrentPage('trips'); 
             }
           }} 
+          onNavigateToTrips={() => setCurrentPage('trips')}
         />
       )}
       {currentPage === 'trip-detail' && (
@@ -1813,6 +1849,7 @@ const TripPlanApp = () => {
           selectedTrip={selectedTrip}
           onSave={handleSaveActivity}
           onCancel={() => setCurrentPage(editingActivity ? 'activity-detail' : 'trip-detail')}
+          onNavigateToTrips={() => setCurrentPage('trips')}
         />
       )}
       {currentPage === 'activity-detail' && (
@@ -1821,6 +1858,7 @@ const TripPlanApp = () => {
           selectedTrip={selectedTrip}
           onBack={() => setCurrentPage('trip-detail')}
           onEdit={() => handleEditActivityStart(selectedActivity)}
+          onNavigateToTrips={() => setCurrentPage('trips')}
           onDelete={() => {
              if (window.confirm('この活動を削除しますか？')) {
                 const newActivities = sampleActivities.filter(a => a.id !== selectedActivity.id);
@@ -1854,6 +1892,7 @@ const TripPlanApp = () => {
           currentUser={currentUser} 
           onUpdateProfile={handleUpdateProfile}
           onBack={() => setCurrentPage('trips')}
+          onNavigateToTrips={() => setCurrentPage('trips')}
         />
       )}
     </div>
