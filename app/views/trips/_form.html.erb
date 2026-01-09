@@ -7,7 +7,7 @@
   <% title_error_message = trip.errors.full_messages_for(:title).first %>
   <% start_error_message = trip.errors.full_messages_for(:start_date).first %>
   <% end_error_message = trip.errors.full_messages_for(:end_date).first %>
-  <% colors = ["#4c6ef5", "#f06595", "#cc5de8", "#ff922b", "#20c997", "#10b981", "#6366f1"] %>
+  <% colors = ["#f06595", "#cc5de8", "#ff922b", "#20c997", "#10b981", "#6366f1", "#4c6ef5"] %>
   <% selected_color = trip.color.presence || colors.first %>
   <% custom_selected = !colors.include?(selected_color) %>
   <% base_input_style = [
@@ -81,6 +81,11 @@
           .theme-color-swatch:hover {
             transform: scale(1.07);
           }
+
+          .theme-color-button.is-selected {
+            border-color: #9ca3af;
+            box-shadow: 0 0 0 2px rgba(156, 163, 175, 0.3);
+          }
         </style>
 
         <label style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">テーマカラー</label>
@@ -93,11 +98,8 @@
                 <span class="theme-color-swatch <%= 'is-selected' if selected %>" data-theme-color-target="swatch" data-color="<%= color %>" style="background: <%= color %>;"></span>
               </label>
             <% end %>
-            <label for="color_custom" style="position: relative; cursor: pointer; display: inline-flex;">
-              <%= form.radio_button :color, selected_color, checked: custom_selected, id: "color_custom", data: { theme_color_target: "radio customRadio", action: "theme-color#select" }, style: "position: absolute; opacity: 0; pointer-events: none;" %>
-              <span class="theme-color-swatch <%= 'is-selected' if custom_selected %>" data-theme-color-target="customSwatch" style="background: <%= selected_color %>;"></span>
-            </label>
-            <button type="button" data-action="theme-color#openPicker" style="padding: 10px 12px; border-radius: 10px; border: 1px solid #e5e7eb; background: #ffffff; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer;">カスタム</button>
+            <%= form.radio_button :color, selected_color, checked: custom_selected, id: "color_custom", data: { theme_color_target: "radio customRadio", action: "theme-color#select" }, style: "position: absolute; opacity: 0; pointer-events: none;" %>
+            <button type="button" class="theme-color-button <%= 'is-selected' if custom_selected %>" data-theme-color-target="customButton" data-action="theme-color#openPicker" style="padding: 10px 12px; border-radius: 10px; border: 1px solid #e5e7eb; background: #ffffff; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer;">カスタム</button>
           </div>
 
           <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 16px; flex-wrap: wrap;">

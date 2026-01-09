@@ -5,7 +5,7 @@ export default class extends Controller {
     "radio",
     "swatch",
     "customRadio",
-    "customSwatch",
+    "customButton",
     "picker",
     "previewBar"
   ]
@@ -50,14 +50,14 @@ export default class extends Controller {
       }
     })
 
-    if (this.hasCustomSwatchTarget) {
-      this.customSwatchTarget.style.background = color
-      const customSelected = !matched
-      this.customSwatchTarget.classList.toggle("is-selected", customSelected)
-      if (this.hasCustomRadioTarget) {
-        this.customRadioTarget.value = color
-        this.customRadioTarget.checked = customSelected
-      }
+    const customSelected = !matched
+    if (this.hasCustomButtonTarget) {
+      this.customButtonTarget.classList.toggle("is-selected", customSelected)
+    }
+
+    if (this.hasCustomRadioTarget) {
+      this.customRadioTarget.value = color
+      this.customRadioTarget.checked = customSelected
     }
 
     if (matchedRadio) {
