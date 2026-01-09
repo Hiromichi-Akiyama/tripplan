@@ -1,0 +1,125 @@
+<div style="max-width: 768px; margin: 0 auto; padding: 32px 24px 48px;">
+  <div style="margin-bottom: 16px;">
+    <%= link_to "← 旅の詳細に戻る", trip_path(@trip, tab: "itinerary"), style: "color: #6b7280; text-decoration: none; font-size: 14px; font-weight: 600;" %>
+  </div>
+
+  <nav style="font-size: 13px; color: #6b7280; margin-bottom: 20px;">
+    <%= @trip.title %> &gt; 旅程 &gt; 活動詳細
+  </nav>
+
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 20px;">
+    <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0;">活動詳細</h1>
+    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+      <%= link_to edit_trip_activity_path(@trip, @activity), style: [
+        "padding: 8px 14px",
+        "border-radius: 12px",
+        "border: 1px solid #e5e7eb",
+        "background: #f3f4f6",
+        "color: #374151",
+        "font-size: 14px",
+        "font-weight: 600",
+        "text-decoration: none",
+        "display: inline-flex",
+        "align-items: center",
+        "gap: 6px"
+      ].join('; ') do %>
+        <%= icon("pencil", size: 16) %>
+        編集
+      <% end %>
+      <%= button_to trip_activity_path(@trip, @activity), method: :delete,
+        data: { turbo_confirm: "この旅程を削除しますか？" },
+        form: { style: "margin: 0;" },
+        style: [
+          "padding: 8px 14px",
+          "border-radius: 12px",
+          "border: 1px solid #fecaca",
+          "background: #fef2f2",
+          "color: #dc2626",
+          "font-size: 14px",
+          "font-weight: 600",
+          "cursor: pointer",
+          "display: inline-flex",
+          "align-items: center",
+          "gap: 6px"
+        ].join('; ') do %>
+        <%= icon("trash", size: 16) %>
+        削除
+      <% end %>
+    </div>
+  </div>
+
+  <% date_text = @activity.date.present? ? @activity.date.strftime("%Y/%m/%d") : "未設定" %>
+  <% start_time_text = @activity.start_time.present? ? @activity.start_time.strftime("%H:%M") : "未設定" %>
+  <% end_time_text = @activity.end_time.present? ? @activity.end_time.strftime("%H:%M") : "未設定" %>
+  <% cost_text = @activity.cost.present? ? number_to_currency(@activity.cost, unit: "¥", precision: 0) : "¥0" %>
+
+  <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 32px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);">
+    <div style="margin-bottom: 28px;">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
+        <h2 style="margin: 0; font-size: 20px; font-weight: 800; color: #111827;">基本情報</h2>
+        <span style="font-size: 12px; color: #2563eb; background: #eff6ff; padding: 4px 10px; border-radius: 9999px; font-weight: 600;">旅程に表示されます</span>
+      </div>
+
+      <div style="display: grid; gap: 18px;">
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">タイトル</label>
+          <div style="padding: 12px 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; color: #111827;"><%= @activity.title %></div>
+        </div>
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">日付</label>
+          <div style="padding: 12px 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; color: #111827;"><%= date_text %></div>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">開始時刻</label>
+            <div style="padding: 12px 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; color: #111827;"><%= start_time_text %></div>
+          </div>
+          <div>
+            <label style="display: block; font-size: 13px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">終了時刻</label>
+            <div style="padding: 12px 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; color: #111827;"><%= end_time_text %></div>
+          </div>
+        </div>
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">場所</label>
+          <div style="padding: 12px 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; color: #111827;"><%= @activity.location.presence || "未設定" %></div>
+        </div>
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">費用</label>
+          <div style="padding: 12px 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; color: #111827;"><%= cost_text %></div>
+        </div>
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">メモ</label>
+          <div style="padding: 12px 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; color: #111827; min-height: 100px; white-space: pre-wrap;"><%= @activity.memo.presence || "未設定" %></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding-top: 24px; border-top: 1px solid #e5e7eb;">
+      <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
+        <h2 style="margin: 0; font-size: 20px; font-weight: 800; color: #111827;">詳細情報</h2>
+        <span style="font-size: 12px; color: #6b7280; background: #f3f4f6; padding: 4px 10px; border-radius: 9999px; font-weight: 600;">任意・詳細ページのみ表示</span>
+      </div>
+
+      <div style="display: grid; gap: 18px;">
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">住所</label>
+          <div style="padding: 12px 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; color: #111827;"><%= @activity.address.presence || "未設定" %></div>
+        </div>
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">URL</label>
+          <div style="padding: 12px 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px;">
+            <% if @activity.url.present? %>
+              <%= link_to @activity.url, @activity.url, target: "_blank", rel: "noopener", style: "color: #2563eb; text-decoration: none; word-break: break-all;" %>
+            <% else %>
+              <span style="color: #111827;">未設定</span>
+            <% end %>
+          </div>
+        </div>
+        <div>
+          <label style="display: block; font-size: 13px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">予約番号</label>
+          <div style="padding: 12px 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; color: #111827; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace;"><%= @activity.booking_code.presence || "未設定" %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
