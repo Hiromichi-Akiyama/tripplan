@@ -717,7 +717,9 @@ const NewTripPage = ({ initialData, onSave, onCancel }) => {
             </div>
             <span className="text-2xl font-bold text-gray-900">TripPlan</span>
           </div>
-          <button onClick={onCancel} className="text-gray-600 hover:text-gray-900 font-medium">← マイ旅一覧に戻る</button>
+          <button onClick={onCancel} className="text-gray-600 hover:text-gray-900 font-medium">
+            {initialData ? '← 旅の詳細に戻る' : '← マイ旅一覧に戻る'}
+          </button>
         </div>
       </header>
       <div className="max-w-3xl mx-auto px-4 md:px-8 py-8 md:py-12">
@@ -823,11 +825,11 @@ const NewTripPage = ({ initialData, onSave, onCancel }) => {
                 </div>
               </div>
 
-              <div className="flex gap-4 pt-4">
-                <button type="submit" className="flex-1 px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 font-semibold transition-all shadow-sm hover:shadow-md">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-4">
+                <button type="submit" className="w-full sm:flex-1 px-6 py-3 bg-blue-500 text-white rounded-xl hover:bg-blue-600 font-semibold transition-all shadow-sm hover:shadow-md">
                   {initialData ? '変更を保存' : '作成する'}
                 </button>
-                <button type="button" onClick={onCancel} className="px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:border-gray-400 font-semibold transition-all">キャンセル</button>
+                <button type="button" onClick={onCancel} className="w-full sm:w-auto px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:border-gray-400 font-semibold transition-all">キャンセル</button>
               </div>
             </div>
           </form>
@@ -955,45 +957,45 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel }) => {
                   <div>
                     <label className="block text-sm font-semibold text-gray-900 mb-2">開始時刻</label>
                     <div className="flex gap-2 items-center">
-                       <select 
-                         value={formData.startTime ? formData.startTime.split(':')[0] : ''} 
-                         onChange={(e) => handleTimeChange('startTime', 'hour', e.target.value)}
-                         className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-                       >
-                         <option value="">--</option>
-                         {hourOptions.map(h => <option key={h} value={h}>{h}</option>)}
-                       </select>
-                       <span>:</span>
-                       <select 
-                         value={formData.startTime ? formData.startTime.split(':')[1] : ''} 
-                         onChange={(e) => handleTimeChange('startTime', 'minute', e.target.value)}
-                         disabled={!formData.startTime}
-                         className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-400"
-                       >
-                         {minuteOptions.map(m => <option key={m} value={m}>{m}</option>)}
-                       </select>
+                        <select 
+                          value={formData.startTime ? formData.startTime.split(':')[0] : ''} 
+                          onChange={(e) => handleTimeChange('startTime', 'hour', e.target.value)}
+                          className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                          <option value="">--</option>
+                          {hourOptions.map(h => <option key={h} value={h}>{h}</option>)}
+                        </select>
+                        <span>:</span>
+                        <select 
+                          value={formData.startTime ? formData.startTime.split(':')[1] : ''} 
+                          onChange={(e) => handleTimeChange('startTime', 'minute', e.target.value)}
+                          disabled={!formData.startTime}
+                          className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-400"
+                        >
+                          {minuteOptions.map(m => <option key={m} value={m}>{m}</option>)}
+                        </select>
                     </div>
                   </div>
                   <div>
                     <label className="block text-sm font-semibold text-gray-900 mb-2">終了時刻</label>
                     <div className="flex gap-2 items-center">
-                       <select 
-                         value={formData.endTime ? formData.endTime.split(':')[0] : ''} 
-                         onChange={(e) => handleTimeChange('endTime', 'hour', e.target.value)}
-                         className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
-                       >
-                         <option value="">--</option>
-                         {hourOptions.map(h => <option key={h} value={h}>{h}</option>)}
-                       </select>
-                       <span>:</span>
-                       <select 
-                         value={formData.endTime ? formData.endTime.split(':')[1] : ''} 
-                         onChange={(e) => handleTimeChange('endTime', 'minute', e.target.value)}
-                         disabled={!formData.endTime}
-                         className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-400"
-                       >
-                         {minuteOptions.map(m => <option key={m} value={m}>{m}</option>)}
-                       </select>
+                        <select 
+                          value={formData.endTime ? formData.endTime.split(':')[0] : ''} 
+                          onChange={(e) => handleTimeChange('endTime', 'hour', e.target.value)}
+                          className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                          <option value="">--</option>
+                          {hourOptions.map(h => <option key={h} value={h}>{h}</option>)}
+                        </select>
+                        <span>:</span>
+                        <select 
+                          value={formData.endTime ? formData.endTime.split(':')[1] : ''} 
+                          onChange={(e) => handleTimeChange('endTime', 'minute', e.target.value)}
+                          disabled={!formData.endTime}
+                          className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100 disabled:text-gray-400"
+                        >
+                          {minuteOptions.map(m => <option key={m} value={m}>{m}</option>)}
+                        </select>
                     </div>
                   </div>
                 </div>
@@ -1302,9 +1304,6 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
   );
 };
 
-// ... ActivityDetailPage, ProfilePage, TripPlanApp ...
-// (省略: ActivityDetailPage, ProfilePage, TripPlanApp のコードはそのまま)
-
 const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, onDelete }) => {
   if (!selectedActivity) return null;
 
@@ -1330,14 +1329,14 @@ const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, on
         </nav>
 
         <div className="flex justify-between items-start mb-6">
-          <h1 className="text-4xl font-bold text-gray-900">活動詳細</h1>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900">活動詳細</h1>
           <div className="flex gap-3">
-            <button onClick={onEdit} className="px-4 py-2 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 font-medium transition-colors flex items-center gap-2"><Edit2 size={16} />編集</button>
-            <button onClick={onDelete} className="px-4 py-2 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 font-medium transition-colors flex items-center gap-2"><Trash2 size={16} />削除</button>
+            <button onClick={onEdit} className="px-3 md:px-4 py-2 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 font-medium transition-colors flex items-center gap-2 text-sm md:text-base"><Edit2 size={16} />編集</button>
+            <button onClick={onDelete} className="px-3 md:px-4 py-2 bg-red-50 text-red-600 rounded-xl hover:bg-red-100 font-medium transition-colors flex items-center gap-2 text-sm md:text-base"><Trash2 size={16} />削除</button>
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
+        <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-5 md:p-8">
           <div className="mb-8">
             <div className="flex items-center gap-2 mb-6">
               <h2 className="text-xl font-bold text-gray-900">基本情報</h2>
@@ -1347,33 +1346,33 @@ const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, on
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-semibold text-gray-500 mb-2">タイトル</label>
-                <div className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.title}</p></div>
+                <div className="px-3 md:px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.title}</p></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-500 mb-2">日付</label>
-                <div className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.date || '未設定'}</p></div>
+                <div className="px-3 md:px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.date || '未設定'}</p></div>
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-semibold text-gray-500 mb-2">開始時刻</label>
-                  <div className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.time?.split('–')[0]?.trim() || '未設定'}</p></div>
+                  <div className="px-3 md:px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.time?.split('–')[0]?.trim() || '未設定'}</p></div>
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-500 mb-2">終了時刻</label>
-                  <div className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.time?.split('–')[1]?.trim() || '未設定'}</p></div>
+                  <div className="px-3 md:px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.time?.split('–')[1]?.trim() || '未設定'}</p></div>
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-500 mb-2">場所</label>
-                <div className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.location || '未設定'}</p></div>
+                <div className="px-3 md:px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.location || '未設定'}</p></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-500 mb-2">費用</label>
-                <div className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.cost || '¥0'}</p></div>
+                <div className="px-3 md:px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.cost || '¥0'}</p></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-500 mb-2">メモ</label>
-                <div className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl min-h-[100px]"><p className="text-gray-900 whitespace-pre-wrap">{selectedActivity.memo || '未設定'}</p></div>
+                <div className="px-3 md:px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl min-h-[100px]"><p className="text-gray-900 whitespace-pre-wrap">{selectedActivity.memo || '未設定'}</p></div>
               </div>
             </div>
           </div>
@@ -1387,19 +1386,19 @@ const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, on
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-semibold text-gray-500 mb-2">住所</label>
-                <div className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.address || '未設定'}</p></div>
+                <div className="px-3 md:px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900">{selectedActivity.address || '未設定'}</p></div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-500 mb-2">URL</label>
-                <div className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
+                <div className="px-3 md:px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl">
                   {selectedActivity.url ? (
-                    <a href={selectedActivity.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 hover:underline flex items-center gap-2">{selectedActivity.url}<ExternalLink size={16} /></a>
+                    <a href={selectedActivity.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-700 hover:underline flex items-center gap-2 break-all">{selectedActivity.url}<ExternalLink size={16} className="flex-shrink-0" /></a>
                   ) : <p className="text-gray-900">未設定</p>}
                 </div>
               </div>
               <div>
                 <label className="block text-sm font-semibold text-gray-500 mb-2">予約番号</label>
-                <div className="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900 font-mono">{selectedActivity.bookingCode || '未設定'}</p></div>
+                <div className="px-3 md:px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl"><p className="text-gray-900 font-mono">{selectedActivity.bookingCode || '未設定'}</p></div>
               </div>
             </div>
           </div>
@@ -1500,7 +1499,7 @@ const TripPlanApp = () => {
       ]
     },
     // ... 他の旅データは省略せずに記述する必要がありますが、ここでは簡略化のため維持
-     {
+      {
       id: 2,
       title: '沖縄 ビーチリゾート',
       destination: '那覇・石垣島',
@@ -1829,7 +1828,7 @@ const TripPlanApp = () => {
                 setCurrentPage('trip-detail');
                 setActiveTab('itinerary');
                 showFlash('活動を削除しました', 'error');
-              }
+             }
           }}
         />
       )}
