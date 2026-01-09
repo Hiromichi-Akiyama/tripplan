@@ -1,88 +1,126 @@
 <%= form_with model: trip, html: { novalidate: true } do |form| %>
-  <% submit_label = trip.persisted? ? "更新する" : "作成する" %>
-  <% submit_loading = trip.persisted? ? "更新中..." : "作成中..." %>
+  <% submit_label = trip.persisted? ? "変更を保存" : "作成する" %>
+  <% submit_loading = trip.persisted? ? "保存中..." : "作成中..." %>
   <% title_error = trip.errors[:title].present? %>
   <% start_error = trip.errors[:start_date].present? %>
   <% end_error = trip.errors[:end_date].present? %>
   <% title_error_message = trip.errors.full_messages_for(:title).first %>
   <% start_error_message = trip.errors.full_messages_for(:start_date).first %>
   <% end_error_message = trip.errors.full_messages_for(:end_date).first %>
-  <div style="display: grid; gap: 16px;">
-    <div>
-      <label for="<%= form.field_id(:title) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 6px;">
-        タイトル
-        <span style="color: #dc2626; font-size: 12px; margin-left: 4px;">必須</span>
-      </label>
-      <%= form.text_field :title, placeholder: "例: 初夏の京都旅", style: [
-        "width: 100%",
-        "padding: 12px",
-        "border: 1px solid #{title_error ? '#fca5a5' : '#d1d5db'}",
-        "border-radius: 10px",
-        "font-size: 15px",
-        "color: #111827",
-        "background: #fff",
-        "box-shadow: inset 0 1px 2px rgba(0,0,0,0.02)"
-      ].join('; ') %>
-      <% if title_error %>
-        <p style="color: #b91c1c; font-size: 12px; margin: 6px 0 0;"><%= title_error_message %></p>
-      <% end %>
-    </div>
+  <% colors = ["#4c6ef5", "#f06595", "#cc5de8", "#ff922b", "#20c997", "#10b981", "#6366f1"] %>
+  <% selected_color = trip.color.presence || colors.first %>
+  <% custom_selected = !colors.include?(selected_color) %>
+  <% base_input_style = [
+    "width: 100%",
+    "padding: 12px 16px",
+    "border-radius: 12px",
+    "font-size: 15px",
+    "color: #111827",
+    "background: #fff",
+    "box-shadow: inset 0 1px 2px rgba(0,0,0,0.02)",
+    "box-sizing: border-box"
+  ] %>
+  <% cancel_path = trip.persisted? ? trip_path(trip) : trips_path %>
 
-    <div>
-      <label for="<%= form.field_id(:destination) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 6px;">目的地</label>
-      <%= form.text_field :destination, placeholder: "例: 京都 / パリ / 沖縄", style: "width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 10px; font-size: 15px; color: #111827; background: #fff; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);" %>
-    </div>
-
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;">
+  <div style="display: grid; gap: 24px;">
+    <div style="display: grid; gap: 20px;">
       <div>
-        <label for="<%= form.field_id(:start_date) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 6px;">
-          開始日
-          <span style="color: #dc2626; font-size: 12px; margin-left: 4px;">必須</span>
+        <label for="<%= form.field_id(:title) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">
+          旅のタイトル <span style="color: #ef4444;">*</span>
         </label>
-        <%= form.date_field :start_date, style: [
-          "width: 100%",
-          "padding: 12px",
-          "border: 1px solid #{start_error ? '#fca5a5' : '#d1d5db'}",
-          "border-radius: 10px",
-          "font-size: 15px",
-          "color: #111827",
-          "background: #fff",
-          "box-shadow: inset 0 1px 2px rgba(0,0,0,0.02)"
-        ].join('; ') %>
-        <% if start_error %>
-          <p style="color: #b91c1c; font-size: 12px; margin: 6px 0 0;"><%= start_error_message %></p>
+        <%= form.text_field :title, placeholder: "例：北海道 冬の旅", style: (base_input_style + ["border: 1px solid #{title_error ? '#fca5a5' : '#d1d5db'}"]).join('; ') %>
+        <% if title_error %>
+          <p style="color: #ef4444; font-size: 12px; margin: 6px 0 0;"><%= title_error_message %></p>
         <% end %>
       </div>
 
       <div>
-        <label for="<%= form.field_id(:end_date) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 6px;">
-          終了日
-          <span style="color: #dc2626; font-size: 12px; margin-left: 4px;">必須</span>
+        <label for="<%= form.field_id(:destination) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">
+          目的地
         </label>
-        <%= form.date_field :end_date, style: [
-          "width: 100%",
-          "padding: 12px",
-          "border: 1px solid #{end_error ? '#fca5a5' : '#d1d5db'}",
-          "border-radius: 10px",
-          "font-size: 15px",
-          "color: #111827",
-          "background: #fff",
-          "box-shadow: inset 0 1px 2px rgba(0,0,0,0.02)"
-        ].join('; ') %>
-        <% if end_error %>
-          <p style="color: #b91c1c; font-size: 12px; margin: 6px 0 0;"><%= end_error_message %></p>
-        <% end %>
+        <%= form.text_field :destination, placeholder: "例：札幌・小樽", style: (base_input_style + ["border: 1px solid #d1d5db"]).join('; ') %>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+        <div>
+          <label for="<%= form.field_id(:start_date) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">
+            開始日 <span style="color: #ef4444;">*</span>
+          </label>
+          <%= form.date_field :start_date, style: (base_input_style + ["border: 1px solid #{start_error ? '#fca5a5' : '#d1d5db'}"]).join('; ') %>
+          <% if start_error %>
+            <p style="color: #ef4444; font-size: 12px; margin: 6px 0 0;"><%= start_error_message %></p>
+          <% end %>
+        </div>
+
+        <div>
+          <label for="<%= form.field_id(:end_date) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">
+            終了日 <span style="color: #ef4444;">*</span>
+          </label>
+          <%= form.date_field :end_date, style: (base_input_style + ["border: 1px solid #{end_error ? '#fca5a5' : '#d1d5db'}"]).join('; ') %>
+          <% if end_error %>
+            <p style="color: #ef4444; font-size: 12px; margin: 6px 0 0;"><%= end_error_message %></p>
+          <% end %>
+        </div>
+      </div>
+
+      <div data-controller="theme-color">
+        <style>
+          .theme-color-swatch {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: inline-block;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+          }
+
+          .theme-color-swatch.is-selected {
+            box-shadow: 0 0 0 3px #ffffff, 0 0 0 5px #9ca3af;
+            transform: scale(1.04);
+          }
+
+          .theme-color-swatch:hover {
+            transform: scale(1.07);
+          }
+        </style>
+
+        <label style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">テーマカラー</label>
+        <div style="display: grid; gap: 16px;">
+          <div style="display: flex; gap: 12px; flex-wrap: wrap; align-items: center;">
+            <% colors.each do |color| %>
+              <% selected = selected_color == color %>
+              <label for="color_<%= color.delete('#') %>" style="position: relative; cursor: pointer; display: inline-flex;">
+                <%= form.radio_button :color, color, checked: selected, id: "color_#{color.delete('#')}", data: { theme_color_target: "radio", action: "theme-color#select" }, style: "position: absolute; opacity: 0; pointer-events: none;" %>
+                <span class="theme-color-swatch <%= 'is-selected' if selected %>" data-theme-color-target="swatch" data-color="<%= color %>" style="background: <%= color %>;"></span>
+              </label>
+            <% end %>
+            <label for="color_custom" style="position: relative; cursor: pointer; display: inline-flex;">
+              <%= form.radio_button :color, selected_color, checked: custom_selected, id: "color_custom", data: { theme_color_target: "radio customRadio", action: "theme-color#select" }, style: "position: absolute; opacity: 0; pointer-events: none;" %>
+              <span class="theme-color-swatch <%= 'is-selected' if custom_selected %>" data-theme-color-target="customSwatch" style="background: <%= selected_color %>;"></span>
+            </label>
+            <button type="button" data-action="theme-color#openPicker" style="padding: 10px 12px; border-radius: 10px; border: 1px solid #e5e7eb; background: #ffffff; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer;">カスタム</button>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 16px; flex-wrap: wrap;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+              <%= tag.input type: "color", value: selected_color, name: "", data: { theme_color_target: "picker", action: "input->theme-color#customChange" }, style: "width: 56px; height: 56px; padding: 4px; border-radius: 12px; cursor: pointer; background: #ffffff; border: 1px solid #e5e7eb;" %>
+              <span style="font-size: 12px; color: #6b7280;">選択中</span>
+            </div>
+            <div style="flex: 1; min-width: 200px;">
+              <p style="margin: 0 0 6px; font-size: 13px; font-weight: 600; color: #111827;">プレビュー</p>
+              <div data-theme-color-target="previewBar" style="height: 8px; border-radius: 9999px; background: linear-gradient(135deg, <%= selected_color %> 0%, #f3f4f6 100%); margin-bottom: 10px;"></div>
+              <div style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 10px; background: #dcfce7; color: #15803d; font-size: 12px; font-weight: 600;">
+                適用済み
+                <span aria-hidden="true">✓</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div>
-      <label for="<%= form.field_id(:color) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 6px;">カラー</label>
-      <%= form.color_field :color, style: "width: 100%; padding: 10px; border: 1px solid #d1d5db; border-radius: 10px; background: #fff; height: 44px;" %>
-      <p style="font-size: 12px; color: #6b7280; margin: 6px 0 0;">テーマカラーを設定できます（任意）</p>
-    </div>
-
-    <div style="display: flex; justify-content: flex-end; margin-top: 4px;">
-      <%= form.submit submit_label, style: "display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 18px; background: #2563eb; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 25px rgba(37,99,235,0.18); width: 100%; max-width: 240px; transition: transform 0.08s ease, box-shadow 0.08s ease;", data: { turbo_submits_with: submit_loading } %>
+    <div style="display: flex; gap: 12px; flex-wrap: wrap; padding-top: 8px;">
+      <%= form.submit submit_label, style: "flex: 1 1 220px; padding: 12px 18px; background: #3b82f6; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 14px rgba(59,130,246,0.2);", data: { turbo_submits_with: submit_loading } %>
+      <%= link_to "キャンセル", cancel_path, style: "flex: 0 0 auto; padding: 12px 18px; border: 2px solid #d1d5db; color: #374151; border-radius: 12px; text-decoration: none; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center;" %>
     </div>
   </div>
 <% end %>

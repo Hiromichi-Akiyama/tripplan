@@ -1,12 +1,13 @@
-<div class="trip-form-page" style="max-width: 840px; margin: 0 auto; padding: 24px 16px 32px;">
-  <div style="margin-bottom: 12px;">
-    <%= link_to "← 一覧に戻る", trips_path, style: "color: #2563eb; text-decoration: none; font-size: 14px; font-weight: 600;" %>
+<div class="trip-form-page" style="max-width: 768px; margin: 0 auto; padding: 32px 24px 48px;">
+  <div style="margin-bottom: 16px;">
+    <%= link_to "← マイ旅一覧に戻る", trips_path, style: "color: #6b7280; text-decoration: none; font-size: 14px; font-weight: 600;" %>
   </div>
 
-  <h1 style="font-size: 26px; font-weight: 800; color: #111827; margin: 0 0 8px;">旅を作成</h1>
-  <p style="font-size: 14px; color: #6b7280; margin: 0 0 16px;">タイトルと日付を入力すると旅を登録できます。後から編集も可能です。</p>
+  <div style="margin-bottom: 24px;">
+    <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0;">新しい旅を作成</h1>
+  </div>
 
-  <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 18px 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);">
+  <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 32px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);">
     <%= render "form", trip: @trip %>
   </div>
 </div>
