@@ -9,14 +9,16 @@
 <% end %>
 
 <header style="position: sticky; top: 0; z-index: 40; background: #ffffff; border-bottom: 1px solid #e5e7eb;">
-  <div style="max-width: 1120px; margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;">
-    <%= link_to trips_path, style: "display: inline-flex; align-items: center; gap: 10px; text-decoration: none;" do %>
-      <span style="width: 36px; height: 36px; background: #3b82f6; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: #ffffff;">
-        <%= icon("map_pin", size: 20) %>
-      </span>
-      <span style="font-size: 22px; font-weight: 800; color: #111827;">TripPlan</span>
-    <% end %>
+  <%= render "shared/container" do %>
+    <div class="tp-header-inner">
+      <%= link_to trips_path, style: "display: inline-flex; align-items: center; gap: 10px; text-decoration: none;" do %>
+        <span style="width: 36px; height: 36px; background: #3b82f6; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; color: #ffffff;">
+          <%= icon("map_pin", size: 20) %>
+        </span>
+        <span style="font-size: 22px; font-weight: 800; color: #111827;">TripPlan</span>
+      <% end %>
 
-    <%= link_to "← 戻る", safe_back_url, style: "color: #6b7280; text-decoration: none; font-size: 14px; font-weight: 600;" %>
-  </div>
+      <%= link_to "← 戻る", safe_back_url, style: "color: #6b7280; text-decoration: none; font-size: 14px; font-weight: 600;" %>
+    </div>
+  <% end %>
 </header>

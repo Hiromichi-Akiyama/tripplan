@@ -13,3 +13,44 @@
  *= require_tree .
  *= require_self
  */
+
+:root {
+  --app-container-width: 896px;
+  --app-container-padding-x: 16px;
+  --app-container-padding-x-md: 32px;
+  --app-page-padding-y: 32px;
+  --app-page-padding-y-md: 48px;
+  --app-page-padding-bottom-md: 64px;
+  --app-header-padding-y: 16px;
+}
+
+.tp-container {
+  max-width: var(--app-container-width);
+  margin: 0 auto;
+  padding: 0 var(--app-container-padding-x);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.tp-page {
+  padding: var(--app-page-padding-y) 0 48px;
+}
+
+.tp-header-inner {
+  padding: var(--app-header-padding-y) 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: nowrap;
+}
+
+@media (min-width: 768px) {
+  .tp-container {
+    padding: 0 var(--app-container-padding-x-md);
+  }
+
+  .tp-page {
+    padding: var(--app-page-padding-y-md) 0 var(--app-page-padding-bottom-md);
+  }
+}
