@@ -856,7 +856,7 @@ const NewTripPage = ({ initialData, onSave, onCancel, onNavigateToTrips }) => {
   );
 };
 
-const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNavigateToTrips }) => {
+const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNavigateToTrips, onNavigateToTripDetail }) => {
   const [formData, setFormData] = useState({
     title: '',
     date: '',
@@ -947,7 +947,7 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNaviga
           <nav className="text-sm text-gray-500 mb-6 flex items-center flex-wrap gap-1">
             <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
             {' > '}
-            <span onClick={onCancel} className="hover:text-gray-700 cursor-pointer hover:underline">{selectedTrip?.title}</span>
+            <span onClick={onNavigateToTripDetail} className="hover:text-gray-700 cursor-pointer hover:underline">{selectedTrip?.title}</span>
             {' > '}
             <span onClick={onCancel} className="hover:text-gray-700 cursor-pointer hover:underline">旅程</span>
             {' > '}
@@ -1850,6 +1850,7 @@ const TripPlanApp = () => {
           onSave={handleSaveActivity}
           onCancel={() => setCurrentPage(editingActivity ? 'activity-detail' : 'trip-detail')}
           onNavigateToTrips={() => setCurrentPage('trips')}
+          onNavigateToTripDetail={() => setCurrentPage('trip-detail')}
         />
       )}
       {currentPage === 'activity-detail' && (
