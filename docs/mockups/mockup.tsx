@@ -540,11 +540,13 @@ const TripsIndexPage = ({ trips, onSelectTrip, onNewTrip, onMenuOpen, onBackToLa
     <div className="min-h-screen bg-gray-50">
       <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
-          <div onClick={onBackToLanding} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-              <MapPin className="text-white" size={20} />
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                <MapPin className="text-white" size={20} />
+              </div>
+              <span className="text-2xl font-bold text-gray-900">TripPlan</span>
             </div>
-            <span className="text-2xl font-bold text-gray-900">TripPlan</span>
           </div>
           <div className="flex items-center gap-4">
             <button onClick={onMenuOpen} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
@@ -638,7 +640,7 @@ const TripsIndexPage = ({ trips, onSelectTrip, onNewTrip, onMenuOpen, onBackToLa
   );
 };
 
-const NewTripPage = ({ initialData, onSave, onCancel, onNavigateToTrips }) => {
+const NewTripPage = ({ initialData, onSave, onCancel, onNavigateToTrips, onMenuOpen }) => {
   const [formData, setFormData] = useState({
     title: '',
     destination: '',
@@ -709,37 +711,45 @@ const NewTripPage = ({ initialData, onSave, onCancel, onNavigateToTrips }) => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
-          <div onClick={onCancel} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-              <MapPin className="text-white" size={20} />
+          <div className="flex items-center gap-4">
+            <div onClick={onNavigateToTrips} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                <MapPin className="text-white" size={20} />
+              </div>
+              <span className="text-2xl font-bold text-gray-900 hidden sm:block">TripPlan</span>
             </div>
-            <span className="text-2xl font-bold text-gray-900">TripPlan</span>
           </div>
-          <button onClick={onCancel} className="text-gray-600 hover:text-gray-900 font-medium">
-            {initialData ? '← 旅の詳細に戻る' : '← マイ旅一覧に戻る'}
+          <button onClick={onMenuOpen} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+            <Menu size={24} className="text-gray-700" />
           </button>
         </div>
       </header>
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
-        <nav className="text-sm text-gray-500 mb-6 flex items-center flex-wrap gap-1">
-          {initialData ? (
-             <>
-               <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
-               {' > '}
-               <span onClick={onCancel} className="hover:text-gray-700 cursor-pointer hover:underline">{initialData.title}</span>
-               {' > '}
-               <span className="text-gray-900 font-medium">編集</span>
-             </>
-          ) : (
-             <>
-               <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
-               {' > '}
-               <span className="text-gray-900 font-medium">新しい旅を作成</span>
-             </>
-          )}
-        </nav>
+        <div className="flex items-center gap-4 mb-6">
+          <button onClick={onCancel} className="p-2 -ml-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">
+            <ArrowLeft size={24} />
+          </button>
+          <nav className="text-sm text-gray-500 flex items-center flex-wrap gap-1">
+            {initialData ? (
+               <>
+                 <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
+                 {' > '}
+                 <span onClick={onCancel} className="hover:text-gray-700 cursor-pointer hover:underline">{initialData.title}</span>
+                 {' > '}
+                 <span className="text-gray-900 font-medium">編集</span>
+               </>
+            ) : (
+               <>
+                 <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
+                 {' > '}
+                 <span className="text-gray-900 font-medium">新しい旅を作成</span>
+               </>
+            )}
+          </nav>
+        </div>
+        
         <div className="mb-6">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{initialData ? '旅を編集' : '新しい旅を作成'}</h1>
         </div>
@@ -856,7 +866,7 @@ const NewTripPage = ({ initialData, onSave, onCancel, onNavigateToTrips }) => {
   );
 };
 
-const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNavigateToTrips, onNavigateToTripDetail }) => {
+const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNavigateToTrips, onNavigateToTripDetail, onMenuOpen }) => {
   const [formData, setFormData] = useState({
     title: '',
     date: '',
@@ -930,21 +940,28 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNaviga
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
-          <div onClick={onCancel} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-              <MapPin className="text-white" size={20} />
+          <div className="flex items-center gap-4">
+            <div onClick={onNavigateToTrips} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                <MapPin className="text-white" size={20} />
+              </div>
+              <span className="text-2xl font-bold text-gray-900 hidden sm:block">TripPlan</span>
             </div>
-            <span className="text-2xl font-bold text-gray-900">TripPlan</span>
           </div>
-          <button onClick={onCancel} className="text-gray-600 hover:text-gray-900 font-medium">← 詳細に戻る</button>
+          <button onClick={onMenuOpen} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+            <Menu size={24} className="text-gray-700" />
+          </button>
         </div>
       </header>
 
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
-        <div className="mb-6">
-          <nav className="text-sm text-gray-500 mb-6 flex items-center flex-wrap gap-1">
+        <div className="flex items-center gap-4 mb-6">
+          <button onClick={onCancel} className="p-2 -ml-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">
+            <ArrowLeft size={24} />
+          </button>
+          <nav className="text-sm text-gray-500 flex items-center flex-wrap gap-1">
             <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
             {' > '}
             <span onClick={onNavigateToTripDetail} className="hover:text-gray-700 cursor-pointer hover:underline">{selectedTrip?.title}</span>
@@ -957,6 +974,9 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNaviga
             )}
             <span className="text-gray-900 font-medium">{initialData.id ? '活動を編集' : '活動を追加'}</span>
           </nav>
+        </div>
+
+        <div className="mb-6">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{initialData.id ? '活動を編集' : '活動を追加'}</h1>
         </div>
 
@@ -1082,7 +1102,7 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNaviga
   );
 };
 
-const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit, onDelete, activeTab, setActiveTab, onAddActivity, onEditActivity, onDeleteActivity, onUpdatePackingList }) => {
+const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit, onDelete, activeTab, setActiveTab, onAddActivity, onEditActivity, onDeleteActivity, onUpdatePackingList, onMenuOpen }) => {
   // 追加: マウント時にトップへスクロール
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -1135,21 +1155,31 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
-          <div onClick={onBack} className="flex items-center gap-2 cursor-pointer hover:opacity-80">
-            <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center"><MapPin className="text-white" size={20} /></div>
-            <span className="text-2xl font-bold text-gray-900">TripPlan</span>
+          <div className="flex items-center gap-4">
+            <div onClick={onBack} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center"><MapPin className="text-white" size={20} /></div>
+              <span className="text-2xl font-bold text-gray-900 hidden sm:block">TripPlan</span>
+            </div>
           </div>
-          <button onClick={onBack} className="text-gray-600 hover:text-gray-900 font-medium">← マイ旅一覧に戻る</button>
+          <button onClick={onMenuOpen} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+            <Menu size={24} className="text-gray-700" />
+          </button>
         </div>
       </header>
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
-        <nav className="text-sm text-gray-500 mb-6">
-          <span onClick={onBack} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
-          {' > '}
-          <span className="text-gray-900 font-medium">{selectedTrip.title}</span>
-        </nav>
+        <div className="flex items-center gap-4 mb-6">
+          <button onClick={onBack} className="p-2 -ml-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">
+            <ArrowLeft size={24} />
+          </button>
+          <nav className="text-sm text-gray-500 flex items-center flex-wrap gap-1">
+            <span onClick={onBack} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
+            {' > '}
+            <span className="text-gray-900 font-medium">{selectedTrip.title}</span>
+          </nav>
+        </div>
+
         <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8 mb-6">
           {/* グラデーションを適用 */}
           <div className="h-2 rounded-full mb-6" style={{ background: generateGradient(selectedTrip.color) }} />
@@ -1336,29 +1366,43 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
   );
 };
 
-const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, onDelete, onNavigateToTrips }) => {
+const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, onDelete, onNavigateToTrips, onMenuOpen }) => {
+  // 追加: マウント時にトップへスクロール
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   if (!selectedActivity) return null;
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200">
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
         <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
-          <div onClick={onBack} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center"><MapPin className="text-white" size={20} /></div>
-            <span className="text-2xl font-bold text-gray-900">TripPlan</span>
+          <div className="flex items-center gap-4">
+            <div onClick={onNavigateToTrips} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center"><MapPin className="text-white" size={20} /></div>
+              <span className="text-2xl font-bold text-gray-900 hidden sm:block">TripPlan</span>
+            </div>
           </div>
-          <button onClick={onBack} className="text-gray-600 hover:text-gray-900 font-medium">← 旅の詳細に戻る</button>
+          <button onClick={onMenuOpen} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+            <Menu size={24} className="text-gray-700" />
+          </button>
         </div>
       </header>
 
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
-        <nav className="text-sm text-gray-500 mb-6 flex items-center flex-wrap gap-1">
-          <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
-          {' > '}
-          <span onClick={onBack} className="hover:text-gray-700 cursor-pointer hover:underline">{selectedTrip?.title}</span>
-          {' > '}
-          <span className="text-gray-900 font-medium">活動詳細</span>
-        </nav>
+        <div className="flex items-center gap-4 mb-6">
+          <button onClick={onBack} className="p-2 -ml-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">
+            <ArrowLeft size={24} />
+          </button>
+          <nav className="text-sm text-gray-500 flex items-center flex-wrap gap-1">
+            <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
+            {' > '}
+            <span onClick={onBack} className="hover:text-gray-700 cursor-pointer hover:underline">{selectedTrip?.title}</span>
+            {' > '}
+            <span className="text-gray-900 font-medium">活動詳細</span>
+          </nav>
+        </div>
 
         <div className="flex justify-between items-start mb-6">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900">活動詳細</h1>
@@ -1440,7 +1484,7 @@ const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, on
   );
 };
 
-const ProfilePage = ({ currentUser, onUpdateProfile, onBack, onNavigateToTrips }) => {
+const ProfilePage = ({ currentUser, onUpdateProfile, onBack, onNavigateToTrips, onMenuOpen }) => {
   const [formData, setFormData] = useState({
     name: currentUser?.name || '',
     email: currentUser?.email || '',
@@ -1457,21 +1501,33 @@ const ProfilePage = ({ currentUser, onUpdateProfile, onBack, onNavigateToTrips }
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex items-center gap-4">
-          <button onClick={onBack} className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-            <ArrowLeft size={24} className="text-gray-600" />
+      <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-4">
+            <div onClick={onNavigateToTrips} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
+              <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+                <MapPin className="text-white" size={20} />
+              </div>
+              <span className="text-2xl font-bold text-gray-900 hidden sm:block">TripPlan</span>
+            </div>
+          </div>
+          <button onClick={onMenuOpen} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+            <Menu size={24} className="text-gray-700" />
           </button>
-          <span className="text-xl font-bold text-gray-900">プロフィール編集</span>
         </div>
       </header>
 
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
-        <nav className="text-sm text-gray-500 mb-6 flex items-center flex-wrap gap-1">
-          <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
-          {' > '}
-          <span className="text-gray-900 font-medium">プロフィール編集</span>
-        </nav>
+        <div className="flex items-center gap-4 mb-6">
+          <button onClick={onBack} className="p-2 -ml-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">
+            <ArrowLeft size={24} />
+          </button>
+          <nav className="text-sm text-gray-500 flex items-center flex-wrap gap-1">
+            <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
+            {' > '}
+            <span className="text-gray-900 font-medium">プロフィール編集</span>
+          </nav>
+        </div>
         <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
           <form onSubmit={handleSubmit}>
             <div className="space-y-6">
@@ -1826,6 +1882,7 @@ const TripPlanApp = () => {
             }
           }} 
           onNavigateToTrips={() => setCurrentPage('trips')}
+          onMenuOpen={() => setIsMenuOpen(true)}
         />
       )}
       {currentPage === 'trip-detail' && (
@@ -1843,6 +1900,7 @@ const TripPlanApp = () => {
             setCurrentPage('activity-detail'); 
           }}
           onUpdatePackingList={handleUpdatePackingList}
+          onMenuOpen={() => setIsMenuOpen(true)}
         />
       )}
       {(currentPage === 'new-activity' || currentPage === 'edit-activity') && (
@@ -1853,6 +1911,7 @@ const TripPlanApp = () => {
           onCancel={() => setCurrentPage(editingActivity ? 'activity-detail' : 'trip-detail')}
           onNavigateToTrips={() => setCurrentPage('trips')}
           onNavigateToTripDetail={() => setCurrentPage('trip-detail')}
+          onMenuOpen={() => setIsMenuOpen(true)}
         />
       )}
       {currentPage === 'activity-detail' && (
@@ -1871,6 +1930,7 @@ const TripPlanApp = () => {
                 showFlash('活動を削除しました', 'error');
              }
           }}
+          onMenuOpen={() => setIsMenuOpen(true)}
         />
       )}
       <SideMenu 
@@ -1896,6 +1956,7 @@ const TripPlanApp = () => {
           onUpdateProfile={handleUpdateProfile}
           onBack={() => setCurrentPage('trips')}
           onNavigateToTrips={() => setCurrentPage('trips')}
+          onMenuOpen={() => setIsMenuOpen(true)}
         />
       )}
     </div>
