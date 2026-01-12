@@ -1522,13 +1522,24 @@ const ProfilePage = ({ currentUser, onUpdateProfile, onBack, onNavigateToTrips, 
           <button onClick={onBack} className="p-2 -ml-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">
             <ArrowLeft size={24} />
           </button>
+          {/* パンくずリストを復活 */}
           <nav className="text-sm text-gray-500 flex items-center flex-wrap gap-1">
             <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
             {' > '}
             <span className="text-gray-900 font-medium">プロフィール編集</span>
           </nav>
         </div>
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8">
+        
+        {/* タイトルサイズを調整し、アバターを追加してリッチにする */}
+        <div className="mb-8 flex flex-col items-center">
+           <div className="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-3xl mb-4 border-4 border-white shadow-sm">
+              {formData.name?.[0] || 'U'}
+           </div>
+           <h1 className="text-2xl font-bold text-gray-900">プロフィール編集</h1>
+           <p className="text-gray-500 text-sm mt-1">アカウント情報を更新します</p>
+        </div>
+
+        <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-8 max-w-2xl mx-auto">
           <form onSubmit={handleSubmit}>
             <div className="space-y-6">
               <div>
