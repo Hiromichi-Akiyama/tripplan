@@ -1,7 +1,9 @@
 <div class="trip-form-page">
-  <div style="margin-bottom: 16px;">
-    <%= link_to "← 旅の詳細に戻る", trip_path(@trip), style: "color: #6b7280; text-decoration: none; font-size: 14px; font-weight: 600;" %>
-  </div>
+  <%= render "shared/breadcrumbs", items: [
+    { label: "マイ旅一覧", path: trips_path },
+    { label: @trip.title, path: trip_path(@trip) },
+    { label: "旅を編集" }
+  ] %>
 
   <div style="margin-bottom: 24px;">
     <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0;">旅を編集</h1>

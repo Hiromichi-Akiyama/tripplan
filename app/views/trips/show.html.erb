@@ -1,8 +1,6 @@
 <% trip_color = @trip.color.presence || "#e5e7eb" %>
 <div class="trip-detail-page">
-  <div style="margin-bottom: 12px;">
-    <%= link_to "← 一覧に戻る", trips_path, style: "color: #2563eb; text-decoration: none; font-size: 14px; font-weight: 600;" %>
-  </div>
+  <%= render "shared/breadcrumbs", items: [{ label: "マイ旅一覧", path: trips_path }, { label: @trip.title }] %>
 
   <% date_text =
     if @trip.start_date.present? && @trip.end_date.present?

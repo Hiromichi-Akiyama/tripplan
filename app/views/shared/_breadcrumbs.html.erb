@@ -1,0 +1,14 @@
+<% if items.present? %>
+  <nav class="tp-breadcrumbs" aria-label="パンくずリスト">
+    <% items.each_with_index do |item, index| %>
+      <% if index.positive? %>
+        <span class="tp-breadcrumbs__sep">&gt;</span>
+      <% end %>
+      <% if item[:path].present? && index < items.length - 1 %>
+        <%= link_to item[:label], item[:path], class: "tp-breadcrumbs__link" %>
+      <% else %>
+        <span class="tp-breadcrumbs__current"><%= item[:label] %></span>
+      <% end %>
+    <% end %>
+  </nav>
+<% end %>
