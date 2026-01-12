@@ -949,8 +949,12 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNaviga
             {' > '}
             <span onClick={onNavigateToTripDetail} className="hover:text-gray-700 cursor-pointer hover:underline">{selectedTrip?.title}</span>
             {' > '}
-            <span onClick={onCancel} className="hover:text-gray-700 cursor-pointer hover:underline">旅程</span>
-            {' > '}
+            {initialData.id && (
+              <>
+                <span onClick={onCancel} className="hover:text-gray-700 cursor-pointer hover:underline">活動詳細</span>
+                {' > '}
+              </>
+            )}
             <span className="text-gray-900 font-medium">{initialData.id ? '活動を編集' : '活動を追加'}</span>
           </nav>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{initialData.id ? '活動を編集' : '活動を追加'}</h1>
@@ -1352,8 +1356,6 @@ const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, on
           <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
           {' > '}
           <span onClick={onBack} className="hover:text-gray-700 cursor-pointer hover:underline">{selectedTrip?.title}</span>
-          {' > '}
-          <span onClick={onBack} className="hover:text-gray-700 cursor-pointer hover:underline">旅程</span>
           {' > '}
           <span className="text-gray-900 font-medium">活動詳細</span>
         </nav>
