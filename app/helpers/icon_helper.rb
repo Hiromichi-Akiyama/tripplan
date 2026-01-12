@@ -52,6 +52,23 @@ module IconHelper
                  tag.line(x1: 16, y1: 13, x2: 8, y2: 13),
                  tag.line(x1: 16, y1: 17, x2: 8, y2: 17)
                ]
+             when "menu"
+               [
+                 tag.line(x1: 3, y1: 6, x2: 21, y2: 6),
+                 tag.line(x1: 3, y1: 12, x2: 21, y2: 12),
+                 tag.line(x1: 3, y1: 18, x2: 21, y2: 18)
+               ]
+             when "log_out"
+               [
+                 tag.path(d: "M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"),
+                 tag.path(d: "M16 17l5-5-5-5"),
+                 tag.line(x1: 21, y1: 12, x2: 9, y2: 12)
+               ]
+             when "arrow_left"
+               [
+                 tag.line(x1: 19, y1: 12, x2: 5, y2: 12),
+                 tag.path(d: "M12 19l-7-7 7-7")
+               ]
              else
                []
              end

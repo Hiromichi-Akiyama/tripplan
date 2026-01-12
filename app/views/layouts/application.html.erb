@@ -10,7 +10,7 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body data-controller="menu">
     <%= render "shared/flash" %>
     <% show_app_shell = !((controller_name == "pages" && action_name == "home") || devise_controller?) %>
     <% if show_app_shell %>
@@ -23,5 +23,6 @@
     <% else %>
       <%= yield %>
     <% end %>
+    <%= render "shared/hamburger_menu" %>
   </body>
 </html>

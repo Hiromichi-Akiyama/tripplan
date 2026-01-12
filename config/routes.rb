@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users
   root "pages#home"
+  resource :profile, only: %i[edit update]
 
   resources :trips, only: %i[index show new create edit update destroy] do
     resources :activities, only: %i[show new create edit update destroy]

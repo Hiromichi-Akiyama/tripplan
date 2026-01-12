@@ -1,0 +1,54 @@
+<% user_name =
+  if current_user&.name.present?
+    current_user.name
+  elsif current_user&.email.present?
+    current_user.email
+  else
+    "ゲストユーザー"
+  end %>
+<% user_email = current_user&.email.presence || "" %>
+<% avatar_letter = user_name.strip[0]&.upcase || "G" %>
+
+<div class="tp-drawer" data-menu-target="root" aria-hidden="true">
+  <div class="tp-drawer__backdrop" data-menu-target="backdrop" data-action="click->menu#close"></div>
+  <aside class="tp-drawer__panel" data-menu-target="panel" role="dialog" aria-modal="true" aria-label="メニュー">
+    <div class="tp-drawer__header">
+      <span class="tp-drawer__title">メニュー</span>
+      <button type="button" class="tp-drawer__close" data-action="menu#close" aria-label="閉じる">
+        <%= icon("x", size: 18) %>
+      </button>
+    </div>
+
+    <div class="tp-drawer__profile">
+      <div class="tp-drawer__profile-row">
+        <div class="tp-drawer__avatar"><%= avatar_letter %></div>
+        <div class="tp-drawer__profile-meta">
+          <p class="tp-drawer__profile-name"><%= user_name %></p>
+          <% if user_email.present? %>
+            <p class="tp-drawer__profile-email"><%= user_email %></p>
+          <% end %>
+        </div>
+      </div>
+      <%= link_to "プロフィールを編集", edit_profile_path, class: "tp-drawer__profile-link" %>
+    </div>
+
+    <nav class="tp-drawer__nav">
+      <%= link_to trips_path, class: "tp-drawer__nav-link" do %>
+        <%= icon("map_pin", size: 20) %>
+        マイ旅一覧
+      <% end %>
+    </nav>
+
+    <div class="tp-drawer__footer">
+      <% if user_signed_in? %>
+        <%= button_to destroy_user_session_path, method: :delete, form: { style: "margin: 0;" }, class: "tp-drawer__logout" do %>
+          <%= icon("log_out", size: 18) %>
+          ログアウト
+        <% end %>
+      <% else %>
+        <%= link_to "ログイン", new_user_session_path, class: "tp-drawer__logout tp-drawer__login" %>
+        <%= link_to "新規登録", new_user_registration_path, class: "tp-drawer__logout tp-drawer__signup" %>
+      <% end %>
+    </div>
+  </aside>
+</div>
