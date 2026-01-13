@@ -1,5 +1,127 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Package, Share2, Plus, Clock, DollarSign, ExternalLink, ChevronRight, Menu, X, Edit2, Trash2, User, Settings, Archive, HelpCircle, LogOut, ArrowLeft, ClipboardList, Plane, Check, AlertCircle, Info, Home } from 'lucide-react';
+import { Calendar, MapPin, Package, Share2, Plus, Clock, DollarSign, ExternalLink, ChevronRight, Menu, X, Edit2, Trash2, User, Settings, Archive, HelpCircle, LogOut, ArrowLeft, ClipboardList, Plane, Check, AlertCircle, Info, Home, RefreshCw } from 'lucide-react';
+
+// --- 定数データ (リセット用) ---
+const INITIAL_TRIPS = [
+  {
+    id: 1,
+    title: '北海道 冬の旅',
+    destination: '札幌・小樽',
+    dateRange: '2026年2月10日〜14日',
+    startDate: '2026-02-10',
+    endDate: '2026-02-14',
+    color: '#4c6ef5', // Indigo
+    packingList: [
+      { id: 1, name: 'ダウンジャケット', category: '衣類', checked: true },
+      { id: 2, name: '手袋', category: '衣類', checked: true },
+      { id: 3, name: 'カイロ', category: 'その他', checked: true },
+      { id: 4, name: 'スノーブーツ', category: '衣類', checked: false },
+      { id: 5, name: 'カメラ', category: '電子機器', checked: false },
+      { id: 6, name: 'モバイルバッテリー', category: '電子機器', checked: false }
+    ]
+  },
+  {
+    id: 2,
+    title: '沖縄 ビーチリゾート',
+    destination: '那覇・石垣島',
+    dateRange: '2026年5月20日〜25日',
+    startDate: '2026-05-20',
+    endDate: '2026-05-25',
+    color: '#f06595', // Pink
+    packingList: [
+      { id: 1, name: '水着', category: '衣類', checked: true },
+      { id: 2, name: 'サングラス', category: '衣類', checked: true },
+      { id: 3, name: '日焼け止め', category: '洗面用具', checked: true },
+      { id: 4, name: 'ビーチサンダル', category: '衣類', checked: false },
+      { id: 5, name: '防水スマホケース', category: '電子機器', checked: false },
+      { id: 6, name: 'タオル', category: '洗面用具', checked: false }
+    ]
+  },
+  {
+    id: 3,
+    title: '京都 紅葉巡り',
+    destination: '京都・奈良',
+    dateRange: '2026年11月10日〜15日',
+    startDate: '2026-11-10',
+    endDate: '2026-11-15',
+    color: '#cc5de8', // Grape
+    packingList: [
+      { id: 1, name: '御朱印帳', category: 'その他', checked: true },
+      { id: 2, name: '歩きやすい靴', category: '衣類', checked: true },
+      { id: 3, name: 'ハンカチ', category: '衣類', checked: true },
+      { id: 4, name: 'ガイドブック', category: '書類', checked: false },
+      { id: 5, name: '折り畳み傘', category: 'その他', checked: false },
+      { id: 6, name: '自撮り棒', category: '電子機器', checked: false }
+    ]
+  },
+  {
+    id: 4,
+    title: '東京 週末旅行',
+    destination: '東京',
+    dateRange: '2024年12月10日〜12日',
+    startDate: '2024-12-10',
+    endDate: '2024-12-12',
+    color: '#ff922b', // Orange
+    packingList: [
+      { id: 1, name: 'Suica/ICカード', category: '書類', checked: true },
+      { id: 2, name: '常備薬', category: '医薬品', checked: true },
+      { id: 3, name: '化粧ポーチ', category: '洗面用具', checked: true },
+      { id: 4, name: 'モバイルバッテリー', category: '電子機器', checked: false },
+      { id: 5, name: 'エコバッグ', category: 'その他', checked: false },
+      { id: 6, name: '着替え', category: '衣類', checked: false }
+    ]
+  },
+  {
+    id: 5,
+    title: 'ソウル グルメツアー',
+    destination: 'ソウル',
+    dateRange: '2023年9月15日〜18日',
+    startDate: '2023-09-15',
+    endDate: '2023-09-18',
+    color: '#20c997', // Teal
+    packingList: [
+      { id: 1, name: 'パスポート', category: '書類', checked: true },
+      { id: 2, name: '変換プラグ', category: '電子機器', checked: true },
+      { id: 3, name: 'クレジットカード', category: '書類', checked: true },
+      { id: 4, name: '胃腸薬', category: '医薬品', checked: false },
+      { id: 5, name: '翻訳アプリ', category: '電子機器', checked: false },
+      { id: 6, name: 'ウェットティッシュ', category: '洗面用具', checked: false }
+    ]
+  }
+];
+
+const INITIAL_ACTIVITIES = [
+  { id: 101, tripId: 1, date: '2026-02-10', time: '09:00–11:00', category: 'transport', title: 'フライト 羽田→新千歳', location: '羽田空港', cost: '15000', memo: 'ANA 55便' },
+  { id: 102, tripId: 1, date: '2026-02-10', time: '12:00–13:00', category: 'meal', title: '海鮮丼ランチ', location: '新千歳空港', cost: '2500', memo: '空港内の有名店で' },
+  { id: 103, tripId: 1, date: '2026-02-10', time: '15:00–17:00', category: 'sightseeing', title: '札幌時計台・大通公園', location: '札幌市中央区', cost: '200', memo: '雪まつり見学' },
+  { id: 104, tripId: 1, date: '2026-02-11', time: '10:00–12:00', category: 'sightseeing', title: '小樽運河クルーズ', location: '小樽市', cost: '1800', memo: '冬の景色を楽しむ' },
+  { id: 105, tripId: 1, date: '2026-02-11', time: '13:00–14:30', category: 'meal', title: '小樽寿司ランチ', location: '寿司屋通り', cost: '3500', memo: '予約済み' },
+  { id: 106, tripId: 1, date: '2026-02-11', time: '15:30–17:00', category: 'sightseeing', title: 'オルゴール堂', location: '小樽市', cost: '0', memo: 'お土産購入' },
+  { id: 201, tripId: 2, date: '2026-05-20', time: '11:00–14:00', category: 'transport', title: 'フライト 成田→那覇', location: '成田空港', cost: '12000', memo: 'LCC利用' },
+  { id: 202, tripId: 2, date: '2026-05-20', time: '15:00–16:00', category: 'meal', title: 'ソーキそば', location: '那覇市内', cost: '800', memo: '到着後の軽食' },
+  { id: 203, tripId: 2, date: '2026-05-20', time: '17:00–18:00', category: 'sightseeing', title: '国際通り散策', location: '那覇市', cost: '0', memo: 'お土産の下見' },
+  { id: 204, tripId: 2, date: '2026-05-21', time: '09:00–12:00', category: 'sightseeing', title: '美ら海水族館', location: '本部町', cost: '2180', memo: '朝一で行く' },
+  { id: 205, tripId: 2, date: '2026-05-21', time: '13:00–14:00', category: 'meal', title: 'カフェランチ', location: '本部町', cost: '1500', memo: '海の見えるカフェ' },
+  { id: 206, tripId: 2, date: '2026-05-21', time: '15:00–17:00', category: 'sightseeing', title: 'エメラルドビーチ', location: '本部町', cost: '0', memo: '海水浴' },
+  { id: 301, tripId: 3, date: '2026-11-10', time: '10:00–12:00', category: 'sightseeing', title: '清水寺', location: '京都市東山区', cost: '400', memo: '紅葉ライトアップ前' },
+  { id: 302, tripId: 3, date: '2026-11-10', time: '12:30–13:30', category: 'meal', title: '湯豆腐ランチ', location: '清水周辺', cost: '3000', memo: '混雑予想' },
+  { id: 303, tripId: 3, date: '2026-11-10', time: '14:00–16:00', category: 'sightseeing', title: '高台寺', location: '京都市東山区', cost: '600', memo: '庭園散策' },
+  { id: 304, tripId: 3, date: '2026-11-11', time: '09:00–11:00', category: 'sightseeing', title: '嵐山・渡月橋', location: '京都市右京区', cost: '0', memo: '早朝散歩' },
+  { id: 305, tripId: 3, date: '2026-11-11', time: '11:30–12:30', category: 'meal', title: '京料理ランチ', location: '嵐山', cost: '4000', memo: '予約必須' },
+  { id: 306, tripId: 3, date: '2026-11-11', time: '13:00–15:00', category: 'sightseeing', title: '天龍寺', location: '京都市右京区', cost: '500', memo: '世界遺産' },
+  { id: 401, tripId: 4, date: '2024-12-10', time: '10:00–12:00', category: 'sightseeing', title: '浅草寺', location: '台東区浅草', cost: '0', memo: '雷門で写真撮影' },
+  { id: 402, tripId: 4, date: '2024-12-10', time: '12:30–13:30', category: 'meal', title: 'もんじゃ焼き', location: '月島', cost: '2000', memo: '人気店へ' },
+  { id: 403, tripId: 4, date: '2024-12-10', time: '15:00–18:00', category: 'sightseeing', title: 'スカイツリー', location: '墨田区', cost: '3000', memo: '展望台予約済み' },
+  { id: 404, tripId: 4, date: '2024-12-11', time: '09:00–18:00', category: 'sightseeing', title: 'ディズニーランド', location: '千葉県浦安市', cost: '8400', memo: '一日中遊ぶ' },
+  { id: 405, tripId: 4, date: '2024-12-11', time: '19:00–20:30', category: 'meal', title: 'パーク内ディナー', location: 'TDL', cost: '4000', memo: 'ショーを見ながら' },
+  { id: 406, tripId: 4, date: '2024-12-11', time: '21:00–22:00', category: 'transport', title: 'ホテルへ移動', location: '舞浜', cost: '0', memo: 'シャトルバス' },
+  { id: 501, tripId: 5, date: '2023-09-15', time: '12:00–15:00', category: 'transport', title: 'フライト 関空→仁川', location: '関西国際空港', cost: '20000', memo: 'ピーチ航空' },
+  { id: 502, tripId: 5, date: '2023-09-15', time: '17:00–18:30', category: 'meal', title: 'サムギョプサル', location: '明洞', cost: '2500', memo: '有名店' },
+  { id: 503, tripId: 5, date: '2023-09-15', time: '19:00–21:00', category: 'sightseeing', title: '明洞ショッピング', location: '明洞', cost: '10000', memo: 'コスメ購入' },
+  { id: 504, tripId: 5, date: '2023-09-16', time: '10:00–13:00', category: 'sightseeing', title: '景福宮', location: 'ソウル', cost: '300', memo: 'チマチョゴリ体験' },
+  { id: 505, tripId: 5, date: '2023-09-16', time: '13:30–14:30', category: 'meal', title: '参鶏湯', location: '土俗村', cost: '1800', memo: '並ぶ可能性あり' },
+  { id: 506, tripId: 5, date: '2023-09-16', time: '15:30–17:30', category: 'sightseeing', title: '北村韓屋村', location: '北村', cost: '0', memo: '写真スポット' }
+];
 
 // --- ヘルパー関数 ---
 const getDaysArray = (start, end) => {
@@ -84,6 +206,33 @@ const EmptyState = ({ icon: Icon, title, description, action }) => (
     {action && <div className="mt-2">{action}</div>}
   </div>
 );
+
+// 確認モーダルコンポーネント
+const ConfirmationModal = ({ isOpen, message, onConfirm, onCancel }) => {
+  if (!isOpen) return null;
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white rounded-2xl shadow-xl max-w-sm w-full p-6 animate-in zoom-in-95 duration-200">
+        <h3 className="text-lg font-bold text-gray-900 mb-2">確認</h3>
+        <p className="text-gray-600 mb-6 whitespace-pre-wrap">{message}</p>
+        <div className="flex gap-3">
+          <button 
+            onClick={onCancel}
+            className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+          >
+            キャンセル
+          </button>
+          <button 
+            onClick={onConfirm}
+            className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors shadow-sm"
+          >
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // フラッシュメッセージコンポーネント
 const FlashMessage = ({ message, type, onClose }) => {
@@ -217,7 +366,7 @@ const LandingPage = ({ onLogin, onSignup, onDemo, currentUser, onNavigateToTrips
             </button>
           ) : (
             <>
-              <button onClick={onLogin} className="px-8 py-4 bg-blue-500 text-white rounded-2xl hover:bg-blue-600 font-semibold text-lg transition-all shadow-lg hover:shadow-xl">プランを始める</button>
+              <button onClick={onSignup} className="px-8 py-4 bg-blue-500 text-white rounded-2xl hover:bg-blue-600 font-semibold text-lg transition-all shadow-lg hover:shadow-xl">プランを始める</button>
               <button onClick={onDemo} className="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-2xl hover:border-gray-400 font-semibold text-lg transition-all">デモを見る</button>
             </>
           )}
@@ -260,6 +409,7 @@ const LandingPage = ({ onLogin, onSignup, onDemo, currentUser, onNavigateToTrips
   </div>
 );
 
+// ... (LoginPage, SignupPage, ResetPasswordPage, TripsIndexPage, NewTripPage, NewActivityPage components remain the same) ...
 const LoginPage = ({ onLoginSuccess, onNavigateToSignup, onNavigateToReset, onBack }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -862,8 +1012,8 @@ const NewTripPage = ({ initialData, onSave, onCancel, onNavigateToTrips, onMenuO
                         type="button"
                         onClick={applyColor}
                         className={`w-full px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center justify-center gap-2 ${
-                          tempColor === formData.color
-                            ? 'bg-green-100 text-green-700 cursor-default'
+                          tempColor === formData.color 
+                            ? 'bg-green-100 text-green-700 cursor-default' 
                             : 'bg-gray-900 text-white hover:bg-gray-700 shadow-sm'
                         }`}
                         disabled={tempColor === formData.color}
@@ -1080,7 +1230,7 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNaviga
                     <span className="absolute left-4 top-3 text-gray-500">¥</span>
                     <input type="number" value={formData.cost} onChange={(e) => handleChange('cost', e.target.value)} placeholder="0" className={`w-full pl-8 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.cost ? 'border-red-500' : 'border-gray-300'}`} />
                   </div>
-                   {errors.cost && <p className="text-sm text-red-500 mt-1">{errors.cost}</p>}
+                    {errors.cost && <p className="text-sm text-red-500 mt-1">{errors.cost}</p>}
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 mb-2">メモ</label>
@@ -1126,7 +1276,7 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNaviga
   );
 };
 
-const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit, onDelete, activeTab, setActiveTab, onAddActivity, onEditActivity, onDeleteActivity, onUpdatePackingList, onMenuOpen }) => {
+const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit, onDelete, activeTab, setActiveTab, onAddActivity, onEditActivity, onDeleteActivity, onUpdatePackingList, onMenuOpen, onRequestConfirm }) => {
   // 追加: マウント時にトップへスクロール
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -1360,9 +1510,9 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
                               }} className="w-5 h-5 rounded border-gray-300 text-blue-500 focus:ring-2 cursor-pointer" />
                               <span className={`flex-1 ${item.checked ? 'line-through text-gray-400' : 'text-gray-900'}`}>{item.name}</span>
                               <button onClick={() => {
-                                if (window.confirm('削除しますか？')) {
+                                onRequestConfirm('削除しますか？', () => {
                                   onUpdatePackingList(currentPackingList.filter(i => i.id !== item.id));
-                                }
+                                });
                               }} className="text-red-500 p-2"><X size={18} /></button>
                             </div>
                           ))}
@@ -1557,7 +1707,7 @@ const ProfilePage = ({ currentUser, onUpdateProfile, onBack, onNavigateToTrips, 
         {/* タイトルサイズを調整し、アバターを追加してリッチにする */}
         <div className="mb-8 flex flex-col items-center">
            <div className="w-24 h-24 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold text-3xl mb-4 border-4 border-white shadow-sm">
-              {formData.name?.[0] || 'U'}
+             {formData.name?.[0] || 'U'}
            </div>
            <h1 className="text-2xl font-bold text-gray-900">プロフィール編集</h1>
            <p className="text-gray-500 text-sm mt-1">アカウント情報を更新します</p>
@@ -1603,99 +1753,24 @@ const ProfilePage = ({ currentUser, onUpdateProfile, onBack, onNavigateToTrips, 
 const TripPlanApp = () => {
   const [currentPage, setCurrentPage] = useState('landing');
   const [flash, setFlash] = useState(null); // { message: string, type: 'success' | 'error' }
+  const [confirmModal, setConfirmModal] = useState({ isOpen: false, message: '', onConfirm: null });
 
   const showFlash = (message, type = 'success') => {
     setFlash({ message, type });
   };
 
-  const [trips, setTrips] = useState([
-    {
-      id: 1,
-      title: '北海道 冬の旅',
-      destination: '札幌・小樽',
-      dateRange: '2026年2月10日〜14日',
-      startDate: '2026-02-10',
-      endDate: '2026-02-14',
-      color: '#4c6ef5', // Indigo
-      packingList: [
-        { id: 1, name: 'ダウンジャケット', category: '衣類', checked: true },
-        { id: 2, name: '手袋', category: '衣類', checked: true },
-        { id: 3, name: 'カイロ', category: 'その他', checked: true },
-        { id: 4, name: 'スノーブーツ', category: '衣類', checked: false },
-        { id: 5, name: 'カメラ', category: '電子機器', checked: false },
-        { id: 6, name: 'モバイルバッテリー', category: '電子機器', checked: false }
-      ]
-    },
-    // ... 他の旅データは省略せずに記述する必要がありますが、ここでは簡略化のため維持
-      {
-      id: 2,
-      title: '沖縄 ビーチリゾート',
-      destination: '那覇・石垣島',
-      dateRange: '2026年5月20日〜25日',
-      startDate: '2026-05-20',
-      endDate: '2026-05-25',
-      color: '#f06595', // Pink
-      packingList: [
-        { id: 1, name: '水着', category: '衣類', checked: true },
-        { id: 2, name: 'サングラス', category: '衣類', checked: true },
-        { id: 3, name: '日焼け止め', category: '洗面用具', checked: true },
-        { id: 4, name: 'ビーチサンダル', category: '衣類', checked: false },
-        { id: 5, name: '防水スマホケース', category: '電子機器', checked: false },
-        { id: 6, name: 'タオル', category: '洗面用具', checked: false }
-      ]
-    },
-    {
-      id: 3,
-      title: '京都 紅葉巡り',
-      destination: '京都・奈良',
-      dateRange: '2026年11月10日〜15日',
-      startDate: '2026-11-10',
-      endDate: '2026-11-15',
-      color: '#cc5de8', // Grape
-      packingList: [
-        { id: 1, name: '御朱印帳', category: 'その他', checked: true },
-        { id: 2, name: '歩きやすい靴', category: '衣類', checked: true },
-        { id: 3, name: 'ハンカチ', category: '衣類', checked: true },
-        { id: 4, name: 'ガイドブック', category: '書類', checked: false },
-        { id: 5, name: '折り畳み傘', category: 'その他', checked: false },
-        { id: 6, name: '自撮り棒', category: '電子機器', checked: false }
-      ]
-    },
-    {
-      id: 4,
-      title: '東京 週末旅行',
-      destination: '東京',
-      dateRange: '2024年12月10日〜12日',
-      startDate: '2024-12-10',
-      endDate: '2024-12-12',
-      color: '#ff922b', // Orange
-      packingList: [
-        { id: 1, name: 'Suica/ICカード', category: '書類', checked: true },
-        { id: 2, name: '常備薬', category: '医薬品', checked: true },
-        { id: 3, name: '化粧ポーチ', category: '洗面用具', checked: true },
-        { id: 4, name: 'モバイルバッテリー', category: '電子機器', checked: false },
-        { id: 5, name: 'エコバッグ', category: 'その他', checked: false },
-        { id: 6, name: '着替え', category: '衣類', checked: false }
-      ]
-    },
-    {
-      id: 5,
-      title: 'ソウル グルメツアー',
-      destination: 'ソウル',
-      dateRange: '2023年9月15日〜18日',
-      startDate: '2023-09-15',
-      endDate: '2023-09-18',
-      color: '#20c997', // Teal
-      packingList: [
-        { id: 1, name: 'パスポート', category: '書類', checked: true },
-        { id: 2, name: '変換プラグ', category: '電子機器', checked: true },
-        { id: 3, name: 'クレジットカード', category: '書類', checked: true },
-        { id: 4, name: '胃腸薬', category: '医薬品', checked: false },
-        { id: 5, name: '翻訳アプリ', category: '電子機器', checked: false },
-        { id: 6, name: 'ウェットティッシュ', category: '洗面用具', checked: false }
-      ]
-    }
-  ]);
+  const openConfirmModal = (message, action) => {
+    setConfirmModal({
+      isOpen: true,
+      message,
+      onConfirm: () => {
+        action();
+        setConfirmModal({ ...confirmModal, isOpen: false });
+      }
+    });
+  };
+
+  const [trips, setTrips] = useState(INITIAL_TRIPS);
   const [selectedTrip, setSelectedTrip] = useState(null);
   const [editingTrip, setEditingTrip] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -1706,39 +1781,7 @@ const TripPlanApp = () => {
   const [initialActivityData, setInitialActivityData] = useState(null);
   
   // Sample activities
-  const [sampleActivities, setSampleActivities] = useState([
-    // ... (activity data same as provided in previous code)
-    { id: 101, tripId: 1, date: '2026-02-10', time: '09:00–11:00', category: 'transport', title: 'フライト 羽田→新千歳', location: '羽田空港', cost: '15000', memo: 'ANA 55便' },
-    { id: 102, tripId: 1, date: '2026-02-10', time: '12:00–13:00', category: 'meal', title: '海鮮丼ランチ', location: '新千歳空港', cost: '2500', memo: '空港内の有名店で' },
-    { id: 103, tripId: 1, date: '2026-02-10', time: '15:00–17:00', category: 'sightseeing', title: '札幌時計台・大通公園', location: '札幌市中央区', cost: '200', memo: '雪まつり見学' },
-    { id: 104, tripId: 1, date: '2026-02-11', time: '10:00–12:00', category: 'sightseeing', title: '小樽運河クルーズ', location: '小樽市', cost: '1800', memo: '冬の景色を楽しむ' },
-    { id: 105, tripId: 1, date: '2026-02-11', time: '13:00–14:30', category: 'meal', title: '小樽寿司ランチ', location: '寿司屋通り', cost: '3500', memo: '予約済み' },
-    { id: 106, tripId: 1, date: '2026-02-11', time: '15:30–17:00', category: 'sightseeing', title: 'オルゴール堂', location: '小樽市', cost: '0', memo: 'お土産購入' },
-    { id: 201, tripId: 2, date: '2026-05-20', time: '11:00–14:00', category: 'transport', title: 'フライト 成田→那覇', location: '成田空港', cost: '12000', memo: 'LCC利用' },
-    { id: 202, tripId: 2, date: '2026-05-20', time: '15:00–16:00', category: 'meal', title: 'ソーキそば', location: '那覇市内', cost: '800', memo: '到着後の軽食' },
-    { id: 203, tripId: 2, date: '2026-05-20', time: '17:00–18:00', category: 'sightseeing', title: '国際通り散策', location: '那覇市', cost: '0', memo: 'お土産の下見' },
-    { id: 204, tripId: 2, date: '2026-05-21', time: '09:00–12:00', category: 'sightseeing', title: '美ら海水族館', location: '本部町', cost: '2180', memo: '朝一で行く' },
-    { id: 205, tripId: 2, date: '2026-05-21', time: '13:00–14:00', category: 'meal', title: 'カフェランチ', location: '本部町', cost: '1500', memo: '海の見えるカフェ' },
-    { id: 206, tripId: 2, date: '2026-05-21', time: '15:00–17:00', category: 'sightseeing', title: 'エメラルドビーチ', location: '本部町', cost: '0', memo: '海水浴' },
-    { id: 301, tripId: 3, date: '2026-11-10', time: '10:00–12:00', category: 'sightseeing', title: '清水寺', location: '京都市東山区', cost: '400', memo: '紅葉ライトアップ前' },
-    { id: 302, tripId: 3, date: '2026-11-10', time: '12:30–13:30', category: 'meal', title: '湯豆腐ランチ', location: '清水周辺', cost: '3000', memo: '混雑予想' },
-    { id: 303, tripId: 3, date: '2026-11-10', time: '14:00–16:00', category: 'sightseeing', title: '高台寺', location: '京都市東山区', cost: '600', memo: '庭園散策' },
-    { id: 304, tripId: 3, date: '2026-11-11', time: '09:00–11:00', category: 'sightseeing', title: '嵐山・渡月橋', location: '京都市右京区', cost: '0', memo: '早朝散歩' },
-    { id: 305, tripId: 3, date: '2026-11-11', time: '11:30–12:30', category: 'meal', title: '京料理ランチ', location: '嵐山', cost: '4000', memo: '予約必須' },
-    { id: 306, tripId: 3, date: '2026-11-11', time: '13:00–15:00', category: 'sightseeing', title: '天龍寺', location: '京都市右京区', cost: '500', memo: '世界遺産' },
-    { id: 401, tripId: 4, date: '2024-12-10', time: '10:00–12:00', category: 'sightseeing', title: '浅草寺', location: '台東区浅草', cost: '0', memo: '雷門で写真撮影' },
-    { id: 402, tripId: 4, date: '2024-12-10', time: '12:30–13:30', category: 'meal', title: 'もんじゃ焼き', location: '月島', cost: '2000', memo: '人気店へ' },
-    { id: 403, tripId: 4, date: '2024-12-10', time: '15:00–18:00', category: 'sightseeing', title: 'スカイツリー', location: '墨田区', cost: '3000', memo: '展望台予約済み' },
-    { id: 404, tripId: 4, date: '2024-12-11', time: '09:00–18:00', category: 'sightseeing', title: 'ディズニーランド', location: '千葉県浦安市', cost: '8400', memo: '一日中遊ぶ' },
-    { id: 405, tripId: 4, date: '2024-12-11', time: '19:00–20:30', category: 'meal', title: 'パーク内ディナー', location: 'TDL', cost: '4000', memo: 'ショーを見ながら' },
-    { id: 406, tripId: 4, date: '2024-12-11', time: '21:00–22:00', category: 'transport', title: 'ホテルへ移動', location: '舞浜', cost: '0', memo: 'シャトルバス' },
-    { id: 501, tripId: 5, date: '2023-09-15', time: '12:00–15:00', category: 'transport', title: 'フライト 関空→仁川', location: '関西国際空港', cost: '20000', memo: 'ピーチ航空' },
-    { id: 502, tripId: 5, date: '2023-09-15', time: '17:00–18:30', category: 'meal', title: 'サムギョプサル', location: '明洞', cost: '2500', memo: '有名店' },
-    { id: 503, tripId: 5, date: '2023-09-15', time: '19:00–21:00', category: 'sightseeing', title: '明洞ショッピング', location: '明洞', cost: '10000', memo: 'コスメ購入' },
-    { id: 504, tripId: 5, date: '2023-09-16', time: '10:00–13:00', category: 'sightseeing', title: '景福宮', location: 'ソウル', cost: '300', memo: 'チマチョゴリ体験' },
-    { id: 505, tripId: 5, date: '2023-09-16', time: '13:30–14:30', category: 'meal', title: '参鶏湯', location: '土俗村', cost: '1800', memo: '並ぶ可能性あり' },
-    { id: 506, tripId: 5, date: '2023-09-16', time: '15:30–17:30', category: 'sightseeing', title: '北村韓屋村', location: '北村', cost: '0', memo: '写真スポット' }
-  ]);
+  const [sampleActivities, setSampleActivities] = useState(INITIAL_ACTIVITIES);
 
   // --- ハンドラー ---
 
@@ -1788,11 +1831,11 @@ const TripPlanApp = () => {
   };
 
   const handleDeleteTrip = (tripId) => {
-    if (window.confirm('この旅を削除しますか？取り消すことはできません。')) {
+    openConfirmModal('この旅を削除しますか？取り消すことはできません。', () => {
       setTrips(trips.filter(t => t.id !== tripId));
       setCurrentPage('trips');
       showFlash('旅を削除しました', 'error');
-    }
+    });
   };
 
   const handleUpdatePackingList = (newPackingList) => {
@@ -1858,11 +1901,32 @@ const TripPlanApp = () => {
     }
   };
 
+  const handleEndDemo = () => {
+    openConfirmModal(
+      'デモを終了してデータをリセットしますか？\n（現在の変更内容は失われます）',
+      () => {
+        setTrips(INITIAL_TRIPS);
+        setSampleActivities(INITIAL_ACTIVITIES);
+        setCurrentPage('landing');
+        showFlash('デモを終了しました');
+      }
+    );
+  };
+
   // --- Render ---
 
   return (
     <div>
       {flash && <FlashMessage message={flash.message} type={flash.type} onClose={() => setFlash(null)} />}
+      
+      {/* 確認モーダル */}
+      <ConfirmationModal 
+        isOpen={confirmModal.isOpen} 
+        message={confirmModal.message} 
+        onConfirm={confirmModal.onConfirm} 
+        onCancel={() => setConfirmModal({ ...confirmModal, isOpen: false })} 
+      />
+
       {currentPage === 'landing' && (
         <LandingPage 
           onLogin={() => setCurrentPage('login')} 
@@ -1939,6 +2003,7 @@ const TripPlanApp = () => {
           }}
           onUpdatePackingList={handleUpdatePackingList}
           onMenuOpen={() => setIsMenuOpen(true)}
+          onRequestConfirm={openConfirmModal}
         />
       )}
       {(currentPage === 'new-activity' || currentPage === 'edit-activity') && (
@@ -1960,17 +2025,31 @@ const TripPlanApp = () => {
           onEdit={() => handleEditActivityStart(selectedActivity)}
           onNavigateToTrips={() => setCurrentPage('trips')}
           onDelete={() => {
-             if (window.confirm('この活動を削除しますか？')) {
+             openConfirmModal('この活動を削除しますか？', () => {
                 const newActivities = sampleActivities.filter(a => a.id !== selectedActivity.id);
                 setSampleActivities(newActivities);
                 setCurrentPage('trip-detail');
                 setActiveTab('itinerary');
                 showFlash('活動を削除しました', 'error');
-             }
+             });
           }}
           onMenuOpen={() => setIsMenuOpen(true)}
         />
       )}
+      
+      {/* デモモード用フローティングボタン */}
+      {!currentUser && currentPage !== 'landing' && currentPage !== 'login' && currentPage !== 'signup' && currentPage !== 'reset-password' && (
+        <div className="fixed bottom-6 left-6 z-50 animate-in slide-in-from-bottom-4 fade-in duration-300">
+          <button 
+            onClick={handleEndDemo}
+            className="px-6 py-3 bg-gray-900 text-white rounded-full shadow-lg hover:bg-gray-800 font-medium flex items-center gap-2 transition-all hover:scale-105"
+          >
+            <LogOut size={18} />
+            デモを終了 / リセット
+          </button>
+        </div>
+      )}
+
       <SideMenu 
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
@@ -1980,12 +2059,12 @@ const TripPlanApp = () => {
           setIsMenuOpen(false);
         }}
         onLogout={() => {
-           if(window.confirm('ログアウトしますか？')) { 
+           openConfirmModal('ログアウトしますか？', () => { 
              setCurrentUser(null);
              setCurrentPage('landing'); 
              setIsMenuOpen(false); 
              showFlash('ログアウトしました');
-           } 
+           });
         }}
       />
       {currentPage === 'profile' && (
