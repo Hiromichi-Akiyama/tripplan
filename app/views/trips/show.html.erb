@@ -15,25 +15,25 @@
       "未設定"
     end %>
 
-  <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 24px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06); margin-bottom: 18px;">
-    <div style="height: 8px; border-radius: 9999px; background: linear-gradient(135deg, <%= trip_color %> 0%, #f3f4f6 100%); margin-bottom: 18px;"></div>
+  <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 32px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-bottom: 24px;">
+    <div style="height: 8px; border-radius: 9999px; background: linear-gradient(135deg, <%= trip_color %> 0%, #f3f4f6 100%); margin-bottom: 24px;"></div>
     <div style="display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap;">
       <div>
         <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0 0 10px;"><%= @trip.title %></h1>
-        <p style="font-size: 16px; color: #6b7280; margin: 0 0 6px; display: flex; align-items: center; gap: 8px;">
+        <p style="font-size: 20px; color: #4b5563; margin: 0 0 6px; display: flex; align-items: center; gap: 8px;">
           <%= icon("map_pin", size: 18) %>
           <span style="color: #111827; font-weight: 600;"><%= @trip.destination.presence || "未設定" %></span>
         </p>
-        <p style="font-size: 15px; color: #6b7280; margin: 0; display: flex; align-items: center; gap: 8px;">
+        <p style="font-size: 14px; color: #6b7280; margin: 8px 0 0; display: flex; align-items: center; gap: 8px;">
           <%= icon("calendar", size: 18) %>
           <span style="color: #111827;"><%= date_text %></span>
         </p>
       </div>
       <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
         <%= link_to edit_trip_path(@trip), style: [
-          "padding: 8px 14px",
+          "padding: 8px 16px",
           "border-radius: 12px",
-          "border: 1px solid #e5e7eb",
+          "border: none",
           "background: #f3f4f6",
           "color: #374151",
           "font-size: 14px",
@@ -51,9 +51,9 @@
           data: { turbo_confirm: "この旅行を削除しますか？" },
           form: { style: "margin: 0;" },
           style: [
-            "padding: 8px 14px",
+            "padding: 8px 16px",
             "border-radius: 12px",
-            "border: 1px solid #fecaca",
+            "border: none",
             "background: #fef2f2",
             "color: #dc2626",
             "font-size: 14px",
@@ -72,31 +72,31 @@
 
   <% default_tab = @default_tab.presence || "itinerary" %>
   <% tab_active_style = [
-    "padding: 10px 16px",
-    "border-radius: 16px",
-    "font-size: 14px",
-    "font-weight: 700",
-    "border: 1px solid #e5e7eb",
-    "color: #111827",
-    "background: #ffffff",
-    "box-shadow: 0 2px 8px rgba(0,0,0,0.08)",
-    "cursor: pointer"
-  ].join('; ') %>
-  <% tab_inactive_style = [
-    "padding: 10px 16px",
+    "padding: 12px 24px",
     "border-radius: 16px",
     "font-size: 14px",
     "font-weight: 600",
-    "border: 1px solid transparent",
+    "border: none",
+    "color: #111827",
+    "background: #ffffff",
+    "box-shadow: 0 2px 6px rgba(0,0,0,0.08)",
+    "cursor: pointer"
+  ].join('; ') %>
+  <% tab_inactive_style = [
+    "padding: 12px 24px",
+    "border-radius: 16px",
+    "font-size: 14px",
+    "font-weight: 600",
+    "border: none",
     "color: #6b7280",
     "background: transparent",
     "cursor: pointer"
   ].join('; ') %>
 
-  <% panel_style = "background: #ffffff; border: 1px solid #e5e7eb; border-radius: 20px; padding: 18px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);" %>
+  <% panel_style = "background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 32px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);" %>
 
   <div data-controller="tabs" data-tabs-default="<%= default_tab %>" style="margin-top: 20px;">
-    <div role="tablist" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; padding: 6px; background: #f3f4f6; border-radius: 18px; border: 1px solid #e5e7eb; margin: 0 0 16px;">
+    <div role="tablist" style="display: flex; gap: 8px; margin: 0 0 24px; overflow-x: auto; padding-bottom: 8px; flex-wrap: nowrap;">
       <button type="button"
         id="tab-itinerary"
         role="tab"
@@ -138,7 +138,7 @@
         style="<%= tab_inactive_style %>">メモ</button>
     </div>
 
-    <div role="tabpanel" id="tab-panel-itinerary" aria-labelledby="tab-itinerary" data-tabs-target="panel" data-tab-id="itinerary" style="<%= panel_style %>">
+    <div role="tabpanel" id="tab-panel-itinerary" aria-labelledby="tab-itinerary" data-tabs-target="panel" data-tab-id="itinerary">
       <style>
         .itinerary-row:hover {
           box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
@@ -154,6 +154,7 @@
           .itinerary-row {
             flex-direction: column;
             align-items: stretch;
+            gap: 8px;
           }
 
           .itinerary-row-time {
@@ -176,8 +177,8 @@
           <% @trip_days.each_with_index do |day, index| %>
             <% day_activities = @activities_by_date[day] || [] %>
             <% date_label = day.respond_to?(:year) ? "#{day.year}年#{day.month}月#{day.day}日" : "日付未設定" %>
-            <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 24px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04); display: grid; gap: 16px;">
-              <div style="display: flex; align-items: baseline; gap: 12px;">
+            <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 24px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04); display: grid; gap: 16px;">
+              <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px;">
                 <h2 style="font-size: 24px; font-weight: 800; color: #111827; margin: 0;"><%= index + 1 %>日目</h2>
                 <span style="font-size: 14px; color: #6b7280;">(<%= date_label %>)</span>
               </div>
@@ -186,18 +187,18 @@
                   <%= render partial: "activities/timeline_row", collection: day_activities, as: :activity %>
                 <% else %>
                   <div style="padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #9ca3af;">
-                    <p style="margin: 0; font-size: 14px;">予定はまだありません。『＋この日の活動を追加』から登録しましょう。</p>
+                    <p style="margin: 0; font-size: 14px;">予定はまだありません。『+この日の活動を追加』から登録しましょう。</p>
                   </div>
                 <% end %>
               </div>
-              <%= link_to "＋ この日の活動を追加", new_trip_activity_path(@trip, date: day.to_s), class: "itinerary-add", style: [
+              <%= link_to "+この日の活動を追加", new_trip_activity_path(@trip, date: day.to_s), class: "itinerary-add", style: [
                 "margin-top: 4px",
                 "width: 100%",
                 "max-width: 100%",
                 "box-sizing: border-box",
                 "padding: 12px",
                 "border: 2px dashed #d1d5db",
-                "border-radius: 16px",
+                "border-radius: 12px",
                 "color: #6b7280",
                 "background: #ffffff",
                 "font-size: 16px",
@@ -218,7 +219,7 @@
           </div>
         <% end %>
 
-        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 24px; padding: 20px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 24px; padding: 24px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
           <div>
             <p style="margin: 0 0 6px; font-size: 14px; color: #6b7280; font-weight: 700;">合計活動数</p>
             <p style="margin: 0; font-size: 24px; font-weight: 800; color: #111827; line-height: 1.2; font-variant-numeric: tabular-nums;"><%= @total_activities %>件</p>
@@ -234,9 +235,9 @@
     <div role="tabpanel" id="tab-panel-packing" aria-labelledby="tab-packing" data-tabs-target="panel" data-tab-id="packing" style="<%= panel_style %>">
       <div style="display: grid; gap: 14px;">
         <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
-          <h2 style="font-size: 20px; font-weight: 800; color: #111827; margin: 0;">持ち物</h2>
+          <h2 style="font-size: 24px; font-weight: 800; color: #111827; margin: 0;">持ち物リスト</h2>
         </div>
-        <div style="border: 1px solid #e5e7eb; border-radius: 16px; padding: 12px; background: #f9fafb;">
+        <div style="border: none; border-radius: 16px; padding: 16px; background: #f9fafb;">
           <%= render "packing_items/inline_form", trip: @trip, packing_item: @packing_item || @trip.packing_items.build %>
         </div>
         <% if @packing_items.present? %>
@@ -256,7 +257,7 @@
             <% end %>
           </div>
         <% else %>
-          <div style="border: 1px dashed #d1d5db; border-radius: 18px; padding: 20px; background: #f9fafb; text-align: center;">
+          <div style="border: 1px dashed #d1d5db; border-radius: 24px; padding: 24px; background: #f9fafb; text-align: center;">
             <p style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: #111827;">まだ持ち物がありません</p>
             <p style="margin: 0; font-size: 13px; color: #6b7280;">追加するとここに表示されます。</p>
           </div>
@@ -267,7 +268,7 @@
     <div role="tabpanel" id="tab-panel-memo" aria-labelledby="tab-memo" data-tabs-target="panel" data-tab-id="memo" style="<%= panel_style %>">
       <div style="display: grid; gap: 14px;">
         <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
-          <h2 style="font-size: 20px; font-weight: 800; color: #111827; margin: 0;">メモ</h2>
+          <h2 style="font-size: 24px; font-weight: 800; color: #111827; margin: 0;">旅のメモ</h2>
         </div>
         <%= form_with model: @trip, url: trip_path(@trip), method: :patch, html: { style: "display: grid; gap: 12px;" } do |form| %>
           <%= hidden_field_tag :source, "memo" %>

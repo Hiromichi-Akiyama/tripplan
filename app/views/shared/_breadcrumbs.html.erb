@@ -1,5 +1,6 @@
 <% if items.present? %>
-  <nav class="tp-breadcrumbs" aria-label="パンくずリスト">
+  <% classes = ["tp-breadcrumbs", (local_assigns[:class_name] || nil)].compact.join(" ") %>
+  <nav class="<%= classes %>" aria-label="パンくずリスト">
     <% items.each_with_index do |item, index| %>
       <% if index.positive? %>
         <span class="tp-breadcrumbs__sep">&gt;</span>

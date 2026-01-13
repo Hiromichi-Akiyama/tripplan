@@ -34,7 +34,9 @@
 
 .tp-page {
   padding: var(--app-page-padding-y) 0 48px;
+  background: #f9fafb;
 }
+
 
 .tp-header-inner {
   padding: var(--app-header-padding-y) 0;
@@ -83,30 +85,42 @@
   margin: 0;
 }
 
-.tp-page-nav {
+.tp-page-nav,
+.tp-backbar {
   display: flex;
   align-items: center;
   gap: 16px;
   margin-bottom: 24px;
+  flex-wrap: wrap;
 }
 
 .tp-back-button {
-  border: none;
-  background: transparent;
-  padding: 8px;
-  margin-left: -8px;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  padding: 0;
   border-radius: 9999px;
   color: #6b7280;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease, color 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
 .tp-back-button:hover {
   background: #f3f4f6;
   color: #4b5563;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.tp-backbar__label {
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .tp-menu-button {
@@ -528,6 +542,11 @@
 .tp-auth-back {
   margin-top: 16px;
   text-align: center;
+}
+
+.tp-auth-back .tp-backbar {
+  justify-content: center;
+  margin-bottom: 0;
 }
 
 .tp-auth-back-link {

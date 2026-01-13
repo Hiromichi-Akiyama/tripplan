@@ -64,7 +64,9 @@
     </div>
 
     <div class="tp-auth-back">
-      <%= link_to "← トップページに戻る", root_path, class: "tp-auth-back-link" %>
+      <div class="tp-backbar">
+        <%= render "shared/back_button", path: root_path, label: "トップページに戻る", aria_label: "トップページに戻る" %>
+      </div>
     </div>
   </div>
 </div>
