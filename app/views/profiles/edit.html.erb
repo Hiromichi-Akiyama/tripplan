@@ -9,12 +9,9 @@
     end %>
   <% avatar_letter = user_name.strip[0]&.upcase || "G" %>
 
-  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px;">
-    <%= link_to trips_path, style: "width: 36px; height: 36px; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; color: #6b7280; background: #f3f4f6; text-decoration: none;" do %>
-      <%= icon("arrow_left", size: 20) %>
-    <% end %>
-    <%= render "shared/breadcrumbs", items: [{ label: "マイ旅一覧", path: trips_path }, { label: "プロフィール編集" }], class_name: "tp-breadcrumbs--inline" %>
-  </div>
+  <%= render "shared/page_nav",
+    back_path: trips_path,
+    items: [{ label: "マイ旅一覧", path: trips_path }, { label: "プロフィール編集" }] %>
 
   <div style="display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; margin-bottom: 24px;">
     <div style="width: 64px; height: 64px; border-radius: 9999px; background: #dbeafe; color: #2563eb; display: inline-flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 700;"><%= avatar_letter %></div>

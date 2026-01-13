@@ -1,0 +1,7 @@
+<% return if items.blank? %>
+<div class="tp-page-nav">
+  <%= link_to back_path, class: "tp-back-button", aria: { label: "戻る" } do %>
+    <%= icon("arrow_left", size: 24) %>
+  <% end %>
+  <%= render "shared/breadcrumbs", items: items, class_name: "tp-breadcrumbs--inline" %>
+</div>

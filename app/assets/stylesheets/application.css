@@ -54,9 +54,9 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
-  margin: 0 0 14px;
-  font-size: 13px;
+  gap: 4px;
+  margin: 0;
+  font-size: 14px;
   color: #6b7280;
 }
 
@@ -71,12 +71,42 @@
 }
 
 .tp-breadcrumbs__sep {
-  color: #d1d5db;
+  color: #6b7280;
 }
 
 .tp-breadcrumbs__current {
-  color: #6b7280;
+  color: #111827;
   font-weight: 600;
+}
+
+.tp-breadcrumbs--inline {
+  margin: 0;
+}
+
+.tp-page-nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.tp-back-button {
+  border: none;
+  background: transparent;
+  padding: 8px;
+  margin-left: -8px;
+  border-radius: 9999px;
+  color: #6b7280;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.tp-back-button:hover {
+  background: #f3f4f6;
+  color: #4b5563;
 }
 
 .tp-menu-button {

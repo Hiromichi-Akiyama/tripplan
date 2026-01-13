@@ -1,9 +1,11 @@
 <div class="activity-detail-page">
-  <%= render "shared/breadcrumbs", items: [
-    { label: "マイ旅一覧", path: trips_path },
-    { label: @trip.title, path: trip_path(@trip) },
-    { label: "活動詳細" }
-  ] %>
+  <%= render "shared/page_nav",
+    back_path: trip_path(@trip),
+    items: [
+      { label: "マイ旅一覧", path: trips_path },
+      { label: @trip.title, path: trip_path(@trip) },
+      { label: "活動詳細" }
+    ] %>
 
   <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 20px;">
     <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0;">活動詳細</h1>

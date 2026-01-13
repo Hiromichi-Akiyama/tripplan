@@ -1,5 +1,7 @@
 <div class="trip-form-page">
-  <%= render "shared/breadcrumbs", items: [{ label: "マイ旅一覧", path: trips_path }, { label: "新しい旅を作成" }] %>
+  <%= render "shared/page_nav",
+    back_path: trips_path,
+    items: [{ label: "マイ旅一覧", path: trips_path }, { label: "新しい旅を作成" }] %>
 
   <div style="margin-bottom: 24px;">
     <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0;">新しい旅を作成</h1>
