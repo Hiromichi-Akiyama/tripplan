@@ -40,7 +40,7 @@ class DemoSessionsController < ApplicationController
 
     sign_in(user)
     session[:demo_user_id] = user.id
-    redirect_to trips_path, notice: "デモでログインしました"
+    redirect_to trips_path, notice: "ログインしました"
   rescue StandardError => e
     Rails.logger.error(e.full_message)
     message = "デモの起動に失敗しました"

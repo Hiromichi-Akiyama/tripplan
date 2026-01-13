@@ -10,7 +10,7 @@ class PackingItemsController < ApplicationController
     @packing_item = @trip.packing_items.build(packing_item_create_params)
 
     if @packing_item.save
-      redirect_to trip_path(@trip), notice: "持ち物を作成しました"
+      redirect_to trip_path(@trip), notice: "持ち物を追加しました"
     else
       flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
       @activities = @trip.activities.ordered_for_timeline
@@ -31,7 +31,7 @@ class PackingItemsController < ApplicationController
 
   def destroy
     @packing_item.destroy
-    redirect_to trip_path(@trip), notice: "持ち物を削除しました"
+    redirect_to trip_path(@trip), alert: "持ち物を削除しました"
   end
 
   private

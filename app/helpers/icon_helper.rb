@@ -69,6 +69,16 @@ module IconHelper
                  tag.line(x1: 19, y1: 12, x2: 5, y2: 12),
                  tag.path(d: "M12 19l-7-7 7-7")
                ]
+             when "check"
+               [
+                 tag.path(d: "M20 6L9 17l-5-5")
+               ]
+             when "alert_circle"
+               [
+                 tag.circle(cx: 12, cy: 12, r: 9),
+                 tag.line(x1: 12, y1: 8, x2: 12, y2: 12),
+                 tag.line(x1: 12, y1: 16, x2: 12, y2: 16)
+               ]
              when "home"
                [
                  tag.path(d: "M3 11l9-7 9 7"),

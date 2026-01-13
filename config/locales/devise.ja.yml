@@ -1,0 +1,18 @@
+ja:
+  devise:
+    failure:
+      already_authenticated: "すでにログインしています。"
+      user:
+        already_authenticated: "すでにログインしています。"
+    sessions:
+      signed_in: "ログインしました"
+      signed_out: "ログアウトしました"
+      already_signed_out: "ログアウトしました"
+    registrations:
+      signed_up: "アカウントを作成しました"
+      signed_up_but_inactive: "アカウントを作成しました"
+      signed_up_but_locked: "アカウントを作成しました"
+      signed_up_but_unconfirmed: "アカウントを作成しました"
+      update_needs_confirmation: "アカウントを更新しました"
+      updated: "アカウントを更新しました"
+      updated_but_not_signed_in: "アカウントを更新しました"

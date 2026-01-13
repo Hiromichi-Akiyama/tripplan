@@ -568,6 +568,59 @@
   transform: translateY(-1px) scale(1.02);
 }
 
+.tp-flash {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  pointer-events: none;
+  padding: 0 16px;
+}
+
+.tp-flash__item {
+  pointer-events: auto;
+}
+
+.tp-flash__inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: 9999px;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 1.4;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  width: fit-content;
+  max-width: min(90vw, 480px);
+  text-align: center;
+  justify-content: center;
+}
+
+.tp-flash__inner--success {
+  background: #22c55e;
+}
+
+.tp-flash__inner--error {
+  background: #ef4444;
+}
+
+.tp-flash__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.tp-flash__text {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
 .tp-modal-overlay {
   position: fixed;
   inset: 0;
@@ -613,12 +666,20 @@
   gap: 12px;
 }
 
-.tp-modal__actions > * {
+.tp-modal__action {
   flex: 1;
+  display: flex;
+}
+
+.tp-modal__action > * {
+  width: 100%;
 }
 
 .tp-modal__button {
   width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px 16px;
   border-radius: 12px;
   font-weight: 600;
@@ -650,7 +711,8 @@
 
 .tp-modal__form {
   margin: 0;
-  flex: 1;
+  width: 100%;
+  display: flex;
 }
 
 @media (min-width: 768px) {

@@ -1,20 +1,14 @@
 <% if flash.present? %>
-  <style>
-    /* Default (PC): 1-line + ellipsis */
-    .flash-toast-text {
-      white-space: nowrap;
-    }
-  </style>
-
-  <div style="position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; flex-direction: column; gap: 8px; align-items: center; padding: 0 16px; pointer-events: none;">
+  <div class="tp-flash" role="status" aria-live="polite">
     <% flash.each do |type, message| %>
       <% next if message.blank? %>
-      <% is_notice = type.to_sym == :notice %>
-      <% bg_color = is_notice ? "#22c55e" : "#ef4444" %>
-
-      <div style="max-width: min(560px, calc(100vw - 32px)); width: fit-content; background: <%= bg_color %>; color: #ffffff; border-radius: 9999px; padding: 12px 14px; font-size: clamp(11px, 3.5vw, 14px); line-height: 1.4; font-weight: 600; box-shadow: 0 12px 30px rgba(0,0,0,0.15); display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-align: center; pointer-events: auto;">
-        <span style="font-weight: 700; white-space: nowrap; flex-shrink: 0;"><%= is_notice ? "成功" : "エラー" %></span>
-        <span class="flash-toast-text" style="min-width: 0;"><%= message %></span>
+      <% flash_type = type.to_sym == :notice ? "success" : "error" %>
+      <% icon_name = flash_type == "success" ? "check" : "alert_circle" %>
+      <div class="tp-flash__item" data-controller="flash" data-action="click->flash#dismiss">
+        <div class="tp-flash__inner tp-flash__inner--<%= flash_type %>">
+          <span class="tp-flash__icon"><%= icon(icon_name, size: 20) %></span>
+          <span class="tp-flash__text"><%= message %></span>
+        </div>
       </div>
     <% end %>
   </div>

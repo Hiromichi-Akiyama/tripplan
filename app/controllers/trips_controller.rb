@@ -26,7 +26,7 @@ class TripsController < ApplicationController
     @trip = current_user.trips.build(trip_params)
 
     if @trip.save
-      redirect_to trip_path(@trip), notice: "旅行を作成しました"
+      redirect_to trip_path(@trip), notice: "新しい旅を作成しました"
     else
       flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
       render :new, status: :unprocessable_entity
@@ -41,7 +41,7 @@ class TripsController < ApplicationController
       if params[:source] == "memo"
         redirect_to trip_path(@trip, tab: "memo"), notice: "メモを保存しました"
       else
-        redirect_to trip_path(@trip), notice: "旅行を更新しました"
+        redirect_to trip_path(@trip), notice: "旅の情報を更新しました"
       end
     else
       flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
@@ -61,7 +61,7 @@ class TripsController < ApplicationController
 
   def destroy
     @trip.destroy
-    redirect_to trips_path, notice: "旅行を削除しました"
+    redirect_to trips_path, alert: "旅を削除しました"
   end
 
   private
