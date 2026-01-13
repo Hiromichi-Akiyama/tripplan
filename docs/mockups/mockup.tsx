@@ -244,7 +244,7 @@ const FlashMessage = ({ message, type, onClose }) => {
   }, [onClose]);
 
   return (
-    <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-full shadow-lg flex items-center gap-2 animate-in slide-in-from-top-4 fade-in duration-300 w-11/12 max-w-md ${
+    <div className={`fixed top-4 left-1/2 transform -translate-x-1/2 z-50 px-6 py-3 rounded-full shadow-lg flex items-center gap-2 animate-in slide-in-from-top-4 fade-in duration-300 w-fit max-w-[90%] md:max-w-md ${
       type === 'error' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
     }`}>
       {type === 'error' ? <AlertCircle size={20} className="flex-shrink-0" /> : <Check size={20} className="flex-shrink-0" />}
@@ -1393,9 +1393,14 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
                         <div className="flex items-center gap-2 sm:w-32 sm:block sm:flex-shrink-0 text-gray-700 font-medium">
                           <Clock size={16} className="inline sm:mr-2" />{activity.time}
                         </div>
-                        <div className="hidden sm:block flex-shrink-0"><CategoryIcon category={activity.category} /></div>
+                        {/* アイコン表示部分を削除 */}
+                        {/* <div className="hidden sm:block flex-shrink-0"><CategoryIcon category={activity.category} /></div> */}
                         <div className="flex-1">
-                           <div className="flex items-center gap-2 sm:hidden mb-1"><CategoryIcon category={activity.category} /><span className="font-semibold">{activity.title}</span></div>
+                           <div className="flex items-center gap-2 sm:hidden mb-1">
+                               {/* アイコン表示部分を削除 */}
+                               {/* <CategoryIcon category={activity.category} /> */}
+                               <span className="font-semibold">{activity.title}</span>
+                           </div>
                            <h3 className="hidden sm:block font-semibold text-gray-900 mb-1">{activity.title}</h3>
                            <p className="text-sm text-gray-600 flex items-center gap-2"><MapPin size={14} />{activity.location}</p>
                         </div>
@@ -2021,7 +2026,7 @@ const TripPlanApp = () => {
         <ActivityDetailPage
           selectedActivity={selectedActivity}
           selectedTrip={selectedTrip}
-          onBack={() => setCurrentPage('trip-detail')}
+          onBack={() => setCurrentPage('activity-detail')}
           onEdit={() => handleEditActivityStart(selectedActivity)}
           onNavigateToTrips={() => setCurrentPage('trips')}
           onDelete={() => {
