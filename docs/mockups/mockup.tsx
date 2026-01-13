@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, MapPin, Package, Share2, Plus, Clock, DollarSign, ExternalLink, ChevronRight, Menu, X, Edit2, Trash2, User, Settings, Archive, HelpCircle, LogOut, ArrowLeft, ClipboardList, Plane, Check, AlertCircle, Info } from 'lucide-react';
+import { Calendar, MapPin, Package, Share2, Plus, Clock, DollarSign, ExternalLink, ChevronRight, Menu, X, Edit2, Trash2, User, Settings, Archive, HelpCircle, LogOut, ArrowLeft, ClipboardList, Plane, Check, AlertCircle, Info, Home } from 'lucide-react';
 
 // --- ヘルパー関数 ---
 const getDaysArray = (start, end) => {
@@ -143,6 +143,7 @@ const SideMenu = ({ isOpen, onClose, currentUser, onNavigate, onLogout }) => {
         <nav className="flex-1 overflow-y-auto py-4">
           <ul className="space-y-1 px-3">
             {[
+              { id: 'landing', label: 'トップページ', icon: Home },
               { id: 'trips', label: 'マイ旅一覧', icon: MapPin },
             ].map((item) => (
               <li key={item.id}>
@@ -174,7 +175,7 @@ const SideMenu = ({ isOpen, onClose, currentUser, onNavigate, onLogout }) => {
 
 // --- ページコンポーネント ---
 
-const LandingPage = ({ onLogin, onSignup, onDemo }) => (
+const LandingPage = ({ onLogin, onSignup, onDemo, currentUser, onNavigateToTrips, onMenuOpen }) => (
   <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
     <header className="bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
@@ -184,9 +185,21 @@ const LandingPage = ({ onLogin, onSignup, onDemo }) => (
           </div>
           <span className="text-2xl font-bold text-gray-900">TripPlan</span>
         </div>
-        <div className="flex gap-2 md:gap-4">
-          <button onClick={onLogin} className="px-3 md:px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors text-sm md:text-base">ログイン</button>
-          <button onClick={onSignup} className="px-4 md:px-6 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 font-medium transition-all text-sm md:text-base">新規登録</button>
+        
+        {/* ログイン状態に応じてヘッダーの表示を切り替え */}
+        <div className="flex items-center gap-4">
+          {currentUser ? (
+            <>
+              <button onClick={onMenuOpen} className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+                <Menu size={24} className="text-gray-700" />
+              </button>
+            </>
+          ) : (
+            <div className="flex gap-2 md:gap-4">
+              <button onClick={onLogin} className="px-3 md:px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors text-sm md:text-base">ログイン</button>
+              <button onClick={onSignup} className="px-4 md:px-6 py-2 bg-blue-500 text-white rounded-xl hover:bg-blue-600 font-medium transition-all text-sm md:text-base">新規登録</button>
+            </div>
+          )}
         </div>
       </div>
     </header>
@@ -194,9 +207,20 @@ const LandingPage = ({ onLogin, onSignup, onDemo }) => (
       <div className="text-center mb-12 md:mb-16">
         <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-4 md:mb-6">計画。準備。出発。</h1>
         <p className="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">旅程管理・宿泊・スポット・持ち物リストを1つのアプリで。</p>
+        
+        {/* ログイン状態に応じてアクションボタンを切り替え */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button onClick={onLogin} className="px-8 py-4 bg-blue-500 text-white rounded-2xl hover:bg-blue-600 font-semibold text-lg transition-all shadow-lg hover:shadow-xl">プランを始める</button>
-          <button onClick={onDemo} className="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-2xl hover:border-gray-400 font-semibold text-lg transition-all">デモを見る</button>
+          {currentUser ? (
+            <button onClick={onNavigateToTrips} className="px-8 py-4 bg-blue-500 text-white rounded-2xl hover:bg-blue-600 font-semibold text-lg transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+              <MapPin size={24} />
+              マイ旅一覧へ
+            </button>
+          ) : (
+            <>
+              <button onClick={onLogin} className="px-8 py-4 bg-blue-500 text-white rounded-2xl hover:bg-blue-600 font-semibold text-lg transition-all shadow-lg hover:shadow-xl">プランを始める</button>
+              <button onClick={onDemo} className="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-2xl hover:border-gray-400 font-semibold text-lg transition-all">デモを見る</button>
+            </>
+          )}
         </div>
       </div>
 
@@ -728,8 +752,8 @@ const NewTripPage = ({ initialData, onSave, onCancel, onNavigateToTrips, onMenuO
       </header>
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="flex items-center gap-4 mb-6">
-          <button onClick={onCancel} className="p-2 -ml-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">
-            <ArrowLeft size={24} />
+          <button onClick={onCancel} className="w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-sm hover:bg-gray-50 text-gray-600 transition-all">
+            <ArrowLeft size={20} />
           </button>
           <nav className="text-sm text-gray-500 flex items-center flex-wrap gap-1">
             {initialData ? (
@@ -958,8 +982,8 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNaviga
 
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="flex items-center gap-4 mb-6">
-          <button onClick={onCancel} className="p-2 -ml-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">
-            <ArrowLeft size={24} />
+          <button onClick={onCancel} className="w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-sm hover:bg-gray-50 text-gray-600 transition-all">
+            <ArrowLeft size={20} />
           </button>
           <nav className="text-sm text-gray-500 flex items-center flex-wrap gap-1">
             <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
@@ -1170,8 +1194,8 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
       </header>
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="flex items-center gap-4 mb-6">
-          <button onClick={onBack} className="p-2 -ml-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">
-            <ArrowLeft size={24} />
+          <button onClick={onBack} className="w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-sm hover:bg-gray-50 text-gray-600 transition-all">
+            <ArrowLeft size={20} />
           </button>
           <nav className="text-sm text-gray-500 flex items-center flex-wrap gap-1">
             <span onClick={onBack} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
@@ -1392,8 +1416,8 @@ const ActivityDetailPage = ({ selectedActivity, selectedTrip, onBack, onEdit, on
 
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="flex items-center gap-4 mb-6">
-          <button onClick={onBack} className="p-2 -ml-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">
-            <ArrowLeft size={24} />
+          <button onClick={onBack} className="w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-sm hover:bg-gray-50 text-gray-600 transition-all">
+            <ArrowLeft size={20} />
           </button>
           <nav className="text-sm text-gray-500 flex items-center flex-wrap gap-1">
             <span onClick={onNavigateToTrips} className="hover:text-gray-700 cursor-pointer hover:underline">マイ旅一覧</span>
@@ -1519,8 +1543,8 @@ const ProfilePage = ({ currentUser, onUpdateProfile, onBack, onNavigateToTrips, 
 
       <div className="max-w-4xl mx-auto px-4 md:px-8 py-8 md:py-12">
         <div className="flex items-center gap-4 mb-6">
-          <button onClick={onBack} className="p-2 -ml-2 hover:bg-gray-100 rounded-full text-gray-600 transition-colors">
-            <ArrowLeft size={24} />
+          <button onClick={onBack} className="w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-sm hover:bg-gray-50 text-gray-600 transition-all">
+            <ArrowLeft size={20} />
           </button>
           {/* パンくずリストを復活 */}
           <nav className="text-sm text-gray-500 flex items-center flex-wrap gap-1">
@@ -1844,6 +1868,9 @@ const TripPlanApp = () => {
           onLogin={() => setCurrentPage('login')} 
           onSignup={() => setCurrentPage('signup')} 
           onDemo={() => setCurrentPage('trips')} 
+          currentUser={currentUser}
+          onNavigateToTrips={() => setCurrentPage('trips')}
+          onMenuOpen={() => setIsMenuOpen(true)}
         />
       )}
       {currentPage === 'login' && (
