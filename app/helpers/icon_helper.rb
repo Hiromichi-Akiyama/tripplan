@@ -69,6 +69,11 @@ module IconHelper
                  tag.line(x1: 19, y1: 12, x2: 5, y2: 12),
                  tag.path(d: "M12 19l-7-7 7-7")
                ]
+             when "home"
+               [
+                 tag.path(d: "M3 11l9-7 9 7"),
+                 tag.path(d: "M5 10v10a1 1 0 0 0 1 1h5v-6h2v6h5a1 1 0 0 0 1-1V10")
+               ]
              else
                []
              end

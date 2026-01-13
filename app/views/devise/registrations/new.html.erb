@@ -1,0 +1,78 @@
+<div class="tp-auth-page tp-auth-page--signup">
+  <div class="tp-auth-wrap">
+    <%= link_to root_path, class: "tp-auth-logo" do %>
+      <span class="tp-auth-logo-icon"><%= icon("map_pin", size: 24) %></span>
+      <span class="tp-auth-logo-text">TripPlan</span>
+    <% end %>
+
+    <div class="tp-auth-card">
+      <h1 class="tp-auth-title">新規登録</h1>
+      <p class="tp-auth-subtitle">アカウントを作成して旅行の計画を始めましょう</p>
+
+      <%= form_with model: resource, as: resource_name, url: registration_path(resource_name) do |form| %>
+        <% email_error = resource.errors[:email].present? %>
+        <% password_error = resource.errors[:password].present? %>
+        <% confirmation_error = resource.errors[:password_confirmation].present? %>
+        <div class="tp-auth-form">
+          <div class="tp-auth-field">
+            <label class="tp-auth-label" for="user_email">メールアドレス <span class="tp-auth-required">*</span></label>
+            <%= form.email_field :email,
+              autocomplete: "email",
+              placeholder: "example@email.com",
+              class: ["tp-auth-input", ("tp-auth-input-error" if email_error)].compact.join(" ") %>
+            <% if email_error %>
+              <p class="tp-auth-error"><%= resource.errors.full_messages_for(:email).first %></p>
+            <% end %>
+          </div>
+
+          <div class="tp-auth-field">
+            <label class="tp-auth-label" for="user_password">パスワード <span class="tp-auth-required">*</span></label>
+            <%= form.password_field :password,
+              autocomplete: "new-password",
+              placeholder: "8文字以上、英数字を含む",
+              class: ["tp-auth-input", ("tp-auth-input-error" if password_error)].compact.join(" ") %>
+            <% if password_error %>
+              <p class="tp-auth-error"><%= resource.errors.full_messages_for(:password).first %></p>
+            <% end %>
+            <p class="tp-auth-help">8文字以上、英字と数字を含めてください</p>
+          </div>
+
+          <div class="tp-auth-field">
+            <label class="tp-auth-label" for="user_password_confirmation">パスワード（確認） <span class="tp-auth-required">*</span></label>
+            <%= form.password_field :password_confirmation,
+              autocomplete: "new-password",
+              placeholder: "もう一度入力してください",
+              class: ["tp-auth-input", ("tp-auth-input-error" if confirmation_error)].compact.join(" ") %>
+            <% if confirmation_error %>
+              <p class="tp-auth-error"><%= resource.errors.full_messages_for(:password_confirmation).first %></p>
+            <% end %>
+          </div>
+
+          <div class="tp-auth-field">
+            <label class="tp-auth-label" for="user_name">名前 <span class="tp-auth-label-hint">（任意）</span></label>
+            <%= form.text_field :name,
+              placeholder: "山田太郎",
+              class: "tp-auth-input" %>
+            <p class="tp-auth-help">後から設定することもできます</p>
+          </div>
+
+          <%= form.submit "新規登録", class: "tp-auth-button" %>
+        </div>
+      <% end %>
+
+      <p class="tp-auth-help" style="text-align: center; margin-top: 16px;">
+        登録することで、<%= link_to "利用規約", "#", class: "tp-auth-link" %>と
+        <%= link_to "プライバシーポリシー", "#", class: "tp-auth-link" %>に同意したものとみなされます
+      </p>
+
+      <div class="tp-auth-footer">
+        すでにアカウントをお持ちの方は
+        <%= link_to "ログイン", new_session_path(resource_name), class: "tp-auth-footer-link" %>
+      </div>
+    </div>
+
+    <div class="tp-auth-back">
+      <%= link_to "← トップページに戻る", root_path, class: "tp-auth-back-link" %>
+    </div>
+  </div>
+</div>

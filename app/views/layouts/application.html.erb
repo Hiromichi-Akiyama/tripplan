@@ -11,7 +11,7 @@
   </head>
 
   <body data-controller="menu">
-    <%= render "shared/flash" %>
+    <%= render "shared/flash" unless devise_controller? %>
     <% show_app_shell = !((controller_name == "pages" && action_name == "home") || devise_controller?) %>
     <% if show_app_shell %>
       <%= render "shared/app_header" %>
@@ -20,9 +20,12 @@
           <%= yield %>
         <% end %>
       </main>
+      <%= render "shared/hamburger_menu" %>
     <% else %>
       <%= yield %>
+      <% if controller_name == "pages" && action_name == "home" && user_signed_in? %>
+        <%= render "shared/hamburger_menu" %>
+      <% end %>
     <% end %>
-    <%= render "shared/hamburger_menu" %>
   </body>
 </html>

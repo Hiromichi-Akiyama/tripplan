@@ -33,6 +33,10 @@
     </div>
 
     <nav class="tp-drawer__nav">
+      <%= link_to root_path, class: "tp-drawer__nav-link" do %>
+        <%= icon("home", size: 20) %>
+        トップページ
+      <% end %>
       <%= link_to trips_path, class: "tp-drawer__nav-link" do %>
         <%= icon("map_pin", size: 20) %>
         マイ旅一覧

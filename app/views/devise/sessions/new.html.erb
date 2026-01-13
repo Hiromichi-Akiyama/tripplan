@@ -1,0 +1,70 @@
+<div class="tp-auth-page">
+  <div class="tp-auth-wrap">
+    <%= link_to root_path, class: "tp-auth-logo" do %>
+      <span class="tp-auth-logo-icon"><%= icon("map_pin", size: 24) %></span>
+      <span class="tp-auth-logo-text">TripPlan</span>
+    <% end %>
+
+    <div class="tp-auth-card">
+      <h1 class="tp-auth-title">ログイン</h1>
+      <p class="tp-auth-subtitle">アカウントにログインして旅行を管理しましょう</p>
+
+      <%= form_with model: resource, as: resource_name, url: session_path(resource_name) do |form| %>
+        <% submitted = params[:user].present? %>
+        <% email_blank = submitted && params.dig(:user, :email).blank? %>
+        <% password_blank = submitted && params.dig(:user, :password).blank? %>
+        <% auth_failed = flash[:alert].present? %>
+        <% invalid_credentials = auth_failed && !email_blank && !password_blank %>
+        <% email_error = email_blank || invalid_credentials %>
+        <% password_error = password_blank || invalid_credentials %>
+        <div class="tp-auth-form">
+          <div class="tp-auth-field">
+            <label class="tp-auth-label" for="user_email">メールアドレス</label>
+            <%= form.email_field :email,
+              autofocus: true,
+              autocomplete: "email",
+              placeholder: "example@email.com",
+              class: ["tp-auth-input", ("tp-auth-input-error" if email_error)].compact.join(" ") %>
+            <% if email_blank %>
+              <p class="tp-auth-error">メールアドレスを入力してください</p>
+            <% end %>
+          </div>
+
+          <div class="tp-auth-field">
+            <label class="tp-auth-label" for="user_password">パスワード</label>
+            <%= form.password_field :password,
+              autocomplete: "current-password",
+              placeholder: "••••••••",
+              class: ["tp-auth-input", ("tp-auth-input-error" if password_error)].compact.join(" ") %>
+            <% if password_blank %>
+              <p class="tp-auth-error">パスワードを入力してください</p>
+            <% elsif invalid_credentials %>
+              <p class="tp-auth-error">メールアドレスまたはパスワードが正しくありません</p>
+            <% end %>
+          </div>
+
+          <div class="tp-auth-row">
+            <% if devise_mapping.rememberable? %>
+              <label class="tp-auth-row" style="justify-content: flex-start;">
+                <%= form.check_box :remember_me, class: "tp-auth-check" %>
+                <span style="font-size: 13px; color: #374151;">ログイン状態を保持</span>
+              </label>
+            <% end %>
+            <%= link_to "パスワードを忘れた場合", new_password_path(resource_name), class: "tp-auth-link" %>
+          </div>
+
+          <%= form.submit "ログイン", class: "tp-auth-button" %>
+        </div>
+      <% end %>
+
+      <div class="tp-auth-footer">
+        アカウントをお持ちでない方は
+        <%= link_to "新規登録", new_registration_path(resource_name), class: "tp-auth-footer-link" %>
+      </div>
+    </div>
+
+    <div class="tp-auth-back">
+      <%= link_to "← トップページに戻る", root_path, class: "tp-auth-back-link" %>
+    </div>
+  </div>
+</div>
