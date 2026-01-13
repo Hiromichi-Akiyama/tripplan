@@ -6,8 +6,18 @@
   elsif activity.end_time.present?
     "〜#{activity.end_time.strftime('%H:%M')}"
   else
-    "時刻未設定"
+    "−"
   end %>
+<% cost_value = activity.cost.presence || 0 %>
+<% location_text = activity.location.presence %>
+<% location_style = [
+  "margin: 0",
+  "font-size: 14px",
+  "color: #6b7280",
+  "display: inline-flex",
+  "align-items: center",
+  ("gap: 6px" if location_text)
+].compact.join('; ') %>
 
 <%= link_to trip_activity_path(activity.trip, activity), class: "itinerary-row", style: [
   "display: flex",
@@ -28,21 +38,19 @@
   </div>
   <div class="itinerary-row-content" style="flex: 1; min-width: 160px;">
     <p style="margin: 0 0 4px; font-size: 16px; font-weight: 700; color: #111827; line-height: 1.4;"><%= activity.title %></p>
-    <% if activity.location.present? %>
-      <p style="margin: 0; font-size: 14px; color: #6b7280; display: inline-flex; align-items: center; gap: 6px;">
-        <%= icon("map_pin", size: 14) %>
-        <span><%= activity.location %></span>
-      </p>
-    <% end %>
+    <p style="<%= location_style %>">
+      <%= icon("map_pin", size: 14) %>
+      <% if location_text %>
+        <span><%= location_text %></span>
+      <% end %>
+    </p>
   </div>
   <div class="itinerary-row-meta" style="display: flex; align-items: flex-start; gap: 12px; margin-left: auto; align-self: stretch; position: relative; padding-right: 40px;">
-    <% if activity.cost.present? %>
-      <div class="itinerary-row-cost" style="flex-shrink: 0; text-align: right;">
-        <p style="margin: 0; font-size: 16px; font-weight: 700; color: #111827;">
-          <%= number_to_currency(activity.cost, unit: "¥", precision: 0) %>
-        </p>
-      </div>
-    <% end %>
+    <div class="itinerary-row-cost" style="flex-shrink: 0; text-align: right;">
+      <p style="margin: 0; font-size: 16px; font-weight: 700; color: #111827;">
+        <%= number_to_currency(cost_value, unit: "¥", precision: 0) %>
+      </p>
+    </div>
     <span class="itinerary-row-chevron" style="color: #9ca3af; font-size: 20px; line-height: 1; position: absolute; right: 6px; top: 50%; transform: translateY(-50%);">&gt;</span>
   </div>
 <% end %>
