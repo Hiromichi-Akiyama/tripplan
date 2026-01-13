@@ -191,25 +191,7 @@
                   </div>
                 <% end %>
               </div>
-              <%= link_to "+この日の活動を追加", new_trip_activity_path(@trip, date: day.to_s), class: "itinerary-add", style: [
-                "margin-top: 4px",
-                "width: 100%",
-                "max-width: 100%",
-                "box-sizing: border-box",
-                "padding: 12px",
-                "border: 2px dashed #d1d5db",
-                "border-radius: 12px",
-                "color: #6b7280",
-                "background: #ffffff",
-                "font-size: 16px",
-                "font-weight: 600",
-                "text-decoration: none",
-                "display: inline-flex",
-                "align-items: center",
-                "justify-content: center",
-                "gap: 8px",
-                "transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease"
-              ].join('; ') %>
+              <%= link_to "+この日の活動を追加", new_trip_activity_path(@trip, date: day.to_s), class: "itinerary-add" %>
             </div>
           <% end %>
         <% else %>

@@ -734,6 +734,40 @@
   display: flex;
 }
 
+.itinerary-add {
+  margin-top: 4px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  border: 2px dashed #d1d5db;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #6b7280;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.itinerary-add:hover {
+  border-color: #60a5fa;
+  color: #3b82f6;
+  background: #eff6ff;
+  box-shadow: 0 6px 16px rgba(59, 130, 246, 0.15);
+  transform: translateY(-1px);
+}
+
+.itinerary-add:focus-visible {
+  outline: 2px solid #93c5fd;
+  outline-offset: 2px;
+}
+
 @media (min-width: 768px) {
   .tp-container {
     padding: 0 var(--app-container-padding-x-md);
