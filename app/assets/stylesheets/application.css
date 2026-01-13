@@ -540,6 +540,119 @@
   color: #111827;
 }
 
+.tp-demo-reset {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  z-index: 50;
+}
+
+.tp-demo-reset__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: #111827;
+  color: #ffffff;
+  border: none;
+  border-radius: 9999px;
+  font-weight: 600;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.tp-demo-reset__button:hover {
+  background: #1f2937;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+  transform: translateY(-1px) scale(1.02);
+}
+
+.tp-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+.tp-modal-overlay[hidden] {
+  display: none;
+}
+
+.tp-modal {
+  width: 100%;
+  max-width: 360px;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.tp-modal__title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.tp-modal__message {
+  margin: 0 0 24px;
+  font-size: 14px;
+  color: #6b7280;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}
+
+.tp-modal__actions {
+  display: flex;
+  gap: 12px;
+}
+
+.tp-modal__actions > * {
+  flex: 1;
+}
+
+.tp-modal__button {
+  width: 100%;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tp-modal__button--cancel {
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  color: #374151;
+}
+
+.tp-modal__button--cancel:hover {
+  background: #f9fafb;
+}
+
+.tp-modal__button--ok {
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+}
+
+.tp-modal__button--ok:hover {
+  background: #1d4ed8;
+}
+
+.tp-modal__form {
+  margin: 0;
+  flex: 1;
+}
+
 @media (min-width: 768px) {
   .tp-container {
     padding: 0 var(--app-container-padding-x-md);
