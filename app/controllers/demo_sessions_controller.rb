@@ -10,7 +10,6 @@ class DemoSessionsController < ApplicationController
 
     sign_out(:user)
     demo_user.destroy!
-    session.delete(:demo_user_id)
     redirect_to root_path, notice: "デモを終了しました"
   rescue StandardError => e
     Rails.logger.error(e.full_message)
@@ -19,6 +18,8 @@ class DemoSessionsController < ApplicationController
       message = "デモ終了失敗: #{e.class} #{e.message}"
     end
     redirect_to root_path, alert: message
+  ensure
+    session.delete(:demo_user_id)
   end
 
   def create
@@ -33,7 +34,9 @@ class DemoSessionsController < ApplicationController
       user = User.create!(
         name: "デモユーザー",
         email: "demo+#{SecureRandom.hex(8)}@example.com",
-        password: SecureRandom.base58(16)
+        password: SecureRandom.base58(16),
+        demo: true,
+        demo_expires_at: User::DEMO_TTL.from_now
       )
       Demo::Provisioner.call!(user)
     end

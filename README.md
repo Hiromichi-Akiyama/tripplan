@@ -95,6 +95,25 @@ TripPlan は、旅行計画に必要な **旅程・持ち物・メモ** を一�
 
 ---
 
+## デモクリーンアップ（Render運用）
+
+期限切れデモユーザーを削除するため、Render の Cron Job で `bin/rails demo:cleanup` を定期実行してください。  
+目安は 1時間に1回（`0 * * * *`）または 30分ごと（`*/30 * * * *`）です。
+
+### Render Cron Job 設定例
+
+1. Render Dashboard → Cron Jobs → New Cron Job  
+2. Command: `bin/rails demo:cleanup`  
+3. Schedule: `0 * * * *`（毎時）  
+4. Environment: `production`  
+5. DATABASE_URL / RAILS_MASTER_KEY など本番と同じ環境変数をCronにも渡す
+
+### 手動実行（保険）
+
+Render Shell / One-off job から `bin/rails demo:cleanup` を実行して手動クリーンアップできます。
+
+---
+
 ## 今後の予定
 
 - 公開リンク（閲覧専用）
