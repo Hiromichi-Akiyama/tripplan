@@ -1389,7 +1389,7 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
                   </div>
                   <div className="space-y-4">
                     {dayActivities.length > 0 ? dayActivities.map((activity, idx) => (
-                      <div key={idx} onClick={() => onEditActivity(activity)} className="flex flex-col sm:flex-row gap-2 sm:gap-4 p-4 border border-gray-200 rounded-2xl hover:shadow-md cursor-pointer transition-all">
+                      <div key={idx} onClick={() => onEditActivity(activity)} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-4 border border-gray-200 rounded-2xl hover:shadow-md cursor-pointer transition-all">
                         <div className="flex items-center gap-2 sm:w-32 sm:block sm:flex-shrink-0 text-gray-700 font-medium">
                           <Clock size={16} className="inline sm:mr-2" />{activity.time}
                         </div>
