@@ -40,7 +40,7 @@
         "text-decoration: none"
       ].join('; ') %>
       <%= button_to "削除", trip_activity_path(activity.trip, activity), method: :delete,
-        data: { turbo_confirm: "このアクティビティを削除しますか？" },
+        data: { turbo_confirm: "この活動を削除しますか？" },
         form: { style: "margin: 0;" },
         style: [
           "padding: 6px 10px",
