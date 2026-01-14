@@ -13,16 +13,14 @@
 <% location_style = [
   "margin: 0",
   "font-size: 14px",
-  "color: #6b7280",
+  "color: #4b5563",
   "display: inline-flex",
   "align-items: center",
-  ("gap: 6px" if location_text)
+  ("gap: 8px" if location_text)
 ].compact.join('; ') %>
 
 <%= link_to trip_activity_path(activity.trip, activity), class: "itinerary-row", style: [
   "display: flex",
-  "gap: 16px",
-  "align-items: flex-start",
   "padding: 16px",
   "border: 1px solid #e5e7eb",
   "border-radius: 16px",
@@ -32,12 +30,12 @@
   "color: inherit",
   "transition: box-shadow 0.2s ease"
 ].join('; ') do %>
-  <div class="itinerary-row-time" style="flex: 0 0 auto; width: 128px; color: #374151; font-weight: 600; font-size: 15px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums;">
+  <div class="itinerary-row-time" style="flex: 0 0 auto; width: 128px; color: #374151; font-size: 16px; line-height: 1.4; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; font-variant-numeric: tabular-nums;">
     <%= icon("clock", size: 16) %>
     <%= time_label %>
   </div>
-  <div class="itinerary-row-content" style="flex: 1; min-width: 160px;">
-    <p style="margin: 0 0 4px; font-size: 16px; font-weight: 700; color: #111827; line-height: 1.4;"><%= activity.title %></p>
+  <div class="itinerary-row-content" style="flex: 1; min-width: 160px; display: flex; flex-direction: column; justify-content: center;">
+    <p style="margin: 0 0 4px; font-size: 16px; font-weight: 600; color: #111827; line-height: 1.4;"><%= activity.title %></p>
     <p style="<%= location_style %>">
       <%= icon("map_pin", size: 14) %>
       <% if location_text %>
@@ -45,9 +43,9 @@
       <% end %>
     </p>
   </div>
-  <div class="itinerary-row-meta" style="display: flex; align-items: flex-start; gap: 12px; margin-left: auto; align-self: stretch; position: relative; padding-right: 40px;">
+  <div class="itinerary-row-meta" style="display: flex; align-items: center; gap: 12px; margin-left: auto; align-self: stretch; position: relative; padding-right: 40px;">
     <div class="itinerary-row-cost" style="flex-shrink: 0; text-align: right;">
-      <p style="margin: 0; font-size: 16px; font-weight: 700; color: #111827;">
+      <p style="margin: 0; font-size: 16px; font-weight: 600; color: #111827; font-variant-numeric: tabular-nums;">
         <%= number_to_currency(cost_value, unit: "¥", precision: 0) %>
       </p>
     </div>

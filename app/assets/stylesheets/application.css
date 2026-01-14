@@ -24,6 +24,10 @@
   --app-header-padding-y: 16px;
 }
 
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
 .tp-container {
   max-width: var(--app-container-width);
   margin: 0 auto;
@@ -766,6 +770,22 @@
 .itinerary-add:focus-visible {
   outline: 2px solid #93c5fd;
   outline-offset: 2px;
+}
+
+.itinerary-row {
+  align-items: center;
+  gap: 20px;
+}
+
+.itinerary-row-time {
+  font-weight: 500;
+}
+
+@media (max-width: 640px) {
+  .itinerary-row {
+    align-items: stretch;
+    gap: 8px;
+  }
 }
 
 @media (min-width: 768px) {
