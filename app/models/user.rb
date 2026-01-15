@@ -8,19 +8,18 @@ class User < ApplicationRecord
   has_many :trips, dependent: :destroy
 
   # Password policy
-  # - required
-  # - 8+ characters
-  # - includes at least 1 letter and 1 digit
-  PASSWORD_POLICY_REGEX = /\A(?=.*[A-Za-z])(?=.*\d).{8,}\z/
+  # - Devise handles: required + length (config.password_length)
+  # - Here we enforce: includes at least 1 letter and 1 digit
+  PASSWORD_COMPLEXITY_REGEX = /\A(?=.*[A-Za-z])(?=.*\d).+\z/
 
   validates :password,
-            presence: true,
-            length: { minimum: 8 },
             format: {
-              with: PASSWORD_POLICY_REGEX,
-              message: "は8文字以上で、英字を1文字以上、数字を1文字以上含めてください"
+              with: PASSWORD_COMPLEXITY_REGEX,
+              message: "は英字を1文字以上、数字を1文字以上含めてください"
             },
-            if: :password_required?
+            if: -> {
+              password_required? && password.present? && password.length >= Devise.password_length.min
+            }
 
   def demo?
     demo
