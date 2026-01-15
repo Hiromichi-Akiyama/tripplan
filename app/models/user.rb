@@ -7,6 +7,21 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :trips, dependent: :destroy
 
+  # Password policy
+  # - required
+  # - 8+ characters
+  # - includes at least 1 letter and 1 digit
+  PASSWORD_POLICY_REGEX = /\A(?=.*[A-Za-z])(?=.*\d).{8,}\z/
+
+  validates :password,
+            presence: true,
+            length: { minimum: 8 },
+            format: {
+              with: PASSWORD_POLICY_REGEX,
+              message: "は8文字以上で、英字を1文字以上、数字を1文字以上含めてください"
+            },
+            if: :password_required?
+
   def demo?
     demo
   end
