@@ -17,28 +17,28 @@ RSpec.describe Trip, type: :model do
       end
 
       it 'destination,color,notesが空でも登録できる' do
-        @trip.destination = ''
-        @trip.color = ''
-        @trip.notes = ''
+        @trip.destination = nil
+        @trip.color = nil
+        @trip.notes = nil
         expect(@trip).to be_valid
       end
     end
 
     context '登録できないとき' do
       it 'titleが空では登録できない' do
-        @trip.title = ''
+        @trip.title = nil
         @trip.valid?
         expect(@trip.errors.full_messages).to include("タイトルを入力してください")
       end
 
       it 'start_dateが空では登録できない' do
-        @trip.start_date = ''
+        @trip.start_date = nil
         @trip.valid?
         expect(@trip.errors.full_messages).to include("開始日を入力してください")
       end
 
       it 'end_dateが空では登録できない' do
-        @trip.end_date = ''
+        @trip.end_date = nil
         @trip.valid?
         expect(@trip.errors.full_messages).to include("終了日を入力してください")
       end

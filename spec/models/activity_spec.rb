@@ -41,13 +41,13 @@ RSpec.describe Activity, type: :model do
 
     context '登録できないとき' do
       it 'titleが空では登録できない' do
-        @activity.title = ''
+        @activity.title = nil
         @activity.valid?
         expect(@activity.errors.full_messages).to include("タイトルを入力してください")
       end
 
       it 'dateが空では登録できない' do
-        @activity.date = ''
+        @activity.date = nil
         @activity.valid?
         expect(@activity.errors.full_messages).to include("日付を入力してください")
       end
