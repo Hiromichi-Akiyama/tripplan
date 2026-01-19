@@ -64,6 +64,24 @@ RSpec.describe Activity, type: :model do
         expect(@activity.errors.full_messages).to include("日付は旅行期間内の日付を選択してください")
       end
 
+      it 'costがマイナスだと登録できない' do
+        @activity.cost = -1
+        @activity.valid?
+        expect(@activity.errors.full_messages).to include("費用は0以上の整数を入力してください")
+      end
+
+      it 'costが小数だと登録できない' do
+        @activity.cost = 1.5
+        @activity.valid?
+        expect(@activity.errors.full_messages).to include("費用は0以上の整数を入力してください")
+      end
+
+      it 'costが文字列だと登録できない' do
+        @activity.cost = "abc"
+        @activity.valid?
+        expect(@activity.errors.full_messages).to include("費用は0以上の整数を入力してください")
+      end
+
     end
 
   end
