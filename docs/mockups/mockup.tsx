@@ -123,6 +123,7 @@ const INITIAL_ACTIVITIES = [
   { id: 506, tripId: 5, date: '2023-09-16', time: '15:30–17:30', category: 'sightseeing', title: '北村韓屋村', location: '北村', cost: '0', memo: '写真スポット' }
 ];
 
+// ... (Helper functions and components remain the same) ...
 // --- ヘルパー関数 ---
 const getDaysArray = (start, end) => {
   const arr = [];
@@ -322,6 +323,7 @@ const SideMenu = ({ isOpen, onClose, currentUser, onNavigate, onLogout }) => {
   );
 };
 
+// ... (LandingPage, LoginPage, SignupPage, ResetPasswordPage, TripsIndexPage, NewTripPage components remain the same) ...
 // --- ページコンポーネント ---
 
 const LandingPage = ({ onLogin, onSignup, onDemo, currentUser, onNavigateToTrips, onMenuOpen }) => (
@@ -409,7 +411,6 @@ const LandingPage = ({ onLogin, onSignup, onDemo, currentUser, onNavigateToTrips
   </div>
 );
 
-// ... (LoginPage, SignupPage, ResetPasswordPage, TripsIndexPage, NewTripPage, NewActivityPage components remain the same) ...
 const LoginPage = ({ onLoginSuccess, onNavigateToSignup, onNavigateToReset, onBack }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -1071,6 +1072,10 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNaviga
     const newErrors = {};
     if (!formData.title) newErrors.title = 'タイトルは必須です';
     if (!formData.date) newErrors.date = '日付は必須です';
+    // Validate date is within trip range
+    else if (selectedTrip && (formData.date < selectedTrip.startDate || formData.date > selectedTrip.endDate)) {
+       newErrors.date = `旅行期間中（${selectedTrip.startDate} 〜 ${selectedTrip.endDate}）の日付を指定してください`;
+    }
     if (formData.cost && parseInt(formData.cost) < 0) newErrors.cost = '費用には0以上の整数を入力してください';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -1171,7 +1176,14 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNaviga
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 mb-2">日付 <span className="text-red-500">*</span></label>
-                  <input type="date" value={formData.date} onChange={(e) => handleChange('date', e.target.value)} className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.date ? 'border-red-500' : 'border-gray-300'}`} />
+                  <input 
+                    type="date" 
+                    value={formData.date} 
+                    onChange={(e) => handleChange('date', e.target.value)} 
+                    min={selectedTrip?.startDate}
+                    max={selectedTrip?.endDate}
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.date ? 'border-red-500' : 'border-gray-300'}`} 
+                  />
                   {errors.date && <p className="text-sm text-red-500 mt-1">{errors.date}</p>}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1836,7 +1848,7 @@ const TripPlanApp = () => {
   };
 
   const handleDeleteTrip = (tripId) => {
-    openConfirmModal('この旅を削除しますか？取り消すことはできません。', () => {
+    openConfirmModal('この旅を削除しますか？', () => { // Updated confirmation message
       setTrips(trips.filter(t => t.id !== tripId));
       setCurrentPage('trips');
       showFlash('旅を削除しました', 'error');
@@ -2026,7 +2038,7 @@ const TripPlanApp = () => {
         <ActivityDetailPage
           selectedActivity={selectedActivity}
           selectedTrip={selectedTrip}
-          onBack={() => setCurrentPage('activity-detail')}
+          onBack={() => setCurrentPage('trip-detail')} // Fixed navigation logic
           onEdit={() => handleEditActivityStart(selectedActivity)}
           onNavigateToTrips={() => setCurrentPage('trips')}
           onDelete={() => {
