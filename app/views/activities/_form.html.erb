@@ -7,6 +7,9 @@
   <% title_error_message = activity.errors.full_messages_for(:title).first %>
   <% date_error_message = activity.errors.full_messages_for(:date).first %>
   <% cost_error_message = activity.errors.full_messages_for(:cost).first %>
+  <% date_input_options = { required: true } %>
+  <% date_input_options[:min] = trip.start_date if trip&.start_date.present? %>
+  <% date_input_options[:max] = trip.end_date if trip&.end_date.present? %>
   <% base_input_style = [
     "width: 100%",
     "padding: 12px 16px",
@@ -40,7 +43,7 @@
           <label for="<%= form.field_id(:date) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">
             日付 <span style="color: #ef4444;">*</span>
           </label>
-          <%= form.date_field :date, required: true, style: (base_input_style + ["border: 1px solid #{date_error ? '#fca5a5' : '#d1d5db'}"]).join('; ') %>
+          <%= form.date_field :date, **date_input_options, style: (base_input_style + ["border: 1px solid #{date_error ? '#fca5a5' : '#d1d5db'}"]).join('; ') %>
           <% if date_error %>
             <p style="color: #ef4444; font-size: 12px; margin: 6px 0 0;"><%= date_error_message %></p>
           <% end %>
