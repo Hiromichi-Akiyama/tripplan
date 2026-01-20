@@ -14,8 +14,8 @@ RSpec.describe "Trips auth", type: :request do
 
     it "GET /trips/:id はログイン画面へリダイレクトされる" do
       # 注意: 未ログインでもURL生成は必要なので、id用にTripを作る
-      user = FactoryBot.create(:user)
-      trip = FactoryBot.create(:trip, user: user)
+      owner = FactoryBot.create(:user)
+      trip = FactoryBot.create(:trip, user: owner)
 
       get trip_path(trip)
 
