@@ -1,0 +1,26 @@
+require "rails_helper"
+
+RSpec.describe "Trips auth", type: :request do
+  describe "未ログイン時のアクセス制御" do
+    it "GET /trips はログイン画面へリダイレクトされる" do
+      get trips_path
+
+      # 302 リダイレクトになること
+      expect(response).to have_http_status(:found)
+
+      # Deviseのログイン画面へ飛ばされること
+      expect(response).to redirect_to(new_user_session_path)
+    end
+
+    it "GET /trips/:id はログイン画面へリダイレクトされる" do
+      # 注意: 未ログインでもURL生成は必要なので、id用にTripを作る
+      user = FactoryBot.create(:user)
+      trip = FactoryBot.create(:trip, user: user)
+
+      get trip_path(trip)
+
+      expect(response).to have_http_status(:found)
+      expect(response).to redirect_to(new_user_session_path)
+    end
+  end
+end
