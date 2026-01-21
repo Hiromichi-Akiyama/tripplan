@@ -14,7 +14,7 @@ class TripsController < ApplicationController
     @packing_items = @trip.packing_items.ordered_for_list
     @packing_item = @trip.packing_items.build
     @default_tab = params[:tab]
-    prepare_itinerary_data
+    prepare_itinerary
     prepare_packing_items_by_category
   end
 
@@ -50,7 +50,7 @@ class TripsController < ApplicationController
         @packing_items = @trip.packing_items.ordered_for_list
         @packing_item = @trip.packing_items.build
         @default_tab = "memo"
-        prepare_itinerary_data
+        prepare_itinerary
         prepare_packing_items_by_category
         render :show, status: :unprocessable_entity
       else

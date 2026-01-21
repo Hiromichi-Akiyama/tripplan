@@ -16,7 +16,7 @@ class PackingItemsController < ApplicationController
       @activities = @trip.activities.ordered_for_timeline
       @packing_items = @trip.packing_items.ordered_for_list
       @default_tab = "packing"
-      prepare_itinerary_data
+      prepare_itinerary
       prepare_packing_items_by_category
       render "trips/show", status: :unprocessable_entity
     end
