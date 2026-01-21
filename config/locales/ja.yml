@@ -23,3 +23,6 @@ ja:
         memo: "メモ"
       packing_item:
         name: "アイテム名"
+
+  packing_items:
+    uncategorized: "未分類"
