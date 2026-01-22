@@ -15,9 +15,9 @@ class ActivitiesController < ApplicationController
     @activity = @trip.activities.build(activity_params)
 
     if @activity.save
-      redirect_to trip_path(@trip), notice: "新しい活動を追加しました"
+      redirect_to trip_path(@trip), notice: I18n.t("flash.activities.created")
     else
-      flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
+      flash.now[:alert] = I18n.t("flash.activities.invalid")
       render :new, status: :unprocessable_entity
     end
   end
@@ -27,16 +27,16 @@ class ActivitiesController < ApplicationController
 
   def update
     if @activity.update(activity_params)
-      redirect_to trip_path(@trip), notice: "活動を更新しました"
+      redirect_to trip_path(@trip), notice: I18n.t("flash.activities.updated")
     else
-      flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
+      flash.now[:alert] = I18n.t("flash.activities.invalid")
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @activity.destroy
-    redirect_to trip_path(@trip), alert: "活動を削除しました"
+    redirect_to trip_path(@trip), alert: I18n.t("flash.activities.deleted")
   end
 
   private

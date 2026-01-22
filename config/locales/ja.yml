@@ -26,3 +26,15 @@ ja:
 
   packing_items:
     uncategorized: "未分類"
+
+  flash:
+    activities:
+      created: "活動を追加しました"
+      updated: "活動を更新しました"
+      deleted: "活動を削除しました"
+      invalid: "入力内容にエラーがあります。確認してください。"
+    packing_items:
+      created: "持ち物を追加しました"
+      update_failed: "更新に失敗しました"
+      deleted: "持ち物を削除しました"
+      invalid: "入力内容にエラーがあります。確認してください。"
