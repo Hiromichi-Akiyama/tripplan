@@ -70,7 +70,7 @@
     </div>
   </div>
 
-  <% default_tab = @default_tab.presence || "itinerary" %>
+  <% default_tab = @default_tab.presence || Trip::TAB_ITINERARY %>
   <% tab_active_style = [
     "padding: 12px 24px",
     "border-radius: 16px",

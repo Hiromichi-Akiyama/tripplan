@@ -10,12 +10,12 @@ class PackingItemsController < ApplicationController
     @packing_item = @trip.packing_items.build(packing_item_create_params)
 
     if @packing_item.save
-      redirect_to trip_path(@trip, tab: "packing"), notice: I18n.t("flash.packing_items.created")
+      redirect_to trip_path(@trip, tab: Trip::TAB_PACKING), notice: I18n.t("flash.packing_items.created")
     else
       flash.now[:alert] = I18n.t("flash.packing_items.invalid")
       @activities = @trip.activities.ordered_for_timeline
       @packing_items = @trip.packing_items.ordered_for_list
-      @default_tab = "packing"
+      @default_tab = Trip::TAB_PACKING
       prepare_itinerary
       prepare_packing_items_by_category
       render "trips/show", status: :unprocessable_entity
@@ -24,15 +24,15 @@ class PackingItemsController < ApplicationController
 
   def update
     if @packing_item.update(packing_item_checked_params)
-      redirect_to trip_path(@trip, tab: "packing")
+      redirect_to trip_path(@trip, tab: Trip::TAB_PACKING)
     else
-      redirect_to trip_path(@trip, tab: "packing"), alert: I18n.t("flash.packing_items.update_failed")
+      redirect_to trip_path(@trip, tab: Trip::TAB_PACKING), alert: I18n.t("flash.packing_items.update_failed")
     end
   end
 
   def destroy
     @packing_item.destroy
-    redirect_to trip_path(@trip, tab: "packing"), alert: I18n.t("flash.packing_items.deleted")
+    redirect_to trip_path(@trip, tab: Trip::TAB_PACKING), alert: I18n.t("flash.packing_items.deleted")
   end
 
   private

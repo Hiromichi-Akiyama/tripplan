@@ -5,7 +5,7 @@ class TripsController < ApplicationController
   before_action :set_trip, only: %i[show edit update destroy]
 
   def index
-    @active_tab = Trip::TABS.include?(params[:tab]) ? params[:tab] : "all"
+    @active_tab = Trip::INDEX_TABS.include?(params[:tab]) ? params[:tab] : Trip::TAB_ALL
     @trips = current_user.trips.for_tab(@active_tab)
   end
 
@@ -39,7 +39,7 @@ class TripsController < ApplicationController
   def update
     if @trip.update(trip_params)
       if params[:source] == "memo"
-        redirect_to trip_path(@trip, tab: "memo"), notice: I18n.t("flash.trips.memo_saved")
+        redirect_to trip_path(@trip, tab: Trip::TAB_MEMO), notice: I18n.t("flash.trips.memo_saved")
       else
         redirect_to trip_path(@trip), notice: I18n.t("flash.trips.updated")
       end
@@ -49,7 +49,7 @@ class TripsController < ApplicationController
         @activities = @trip.activities.ordered_for_timeline
         @packing_items = @trip.packing_items.ordered_for_list
         @packing_item = @trip.packing_items.build
-        @default_tab = "memo"
+        @default_tab = Trip::TAB_MEMO
         prepare_itinerary
         prepare_packing_items_by_category
         render :show, status: :unprocessable_entity
