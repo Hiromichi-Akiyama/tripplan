@@ -38,3 +38,12 @@ ja:
       update_failed: "更新に失敗しました"
       deleted: "持ち物を削除しました"
       invalid: "入力内容にエラーがあります。確認してください。"
+    trips:
+      created: "新しい旅を作成しました"
+      updated: "旅の情報を更新しました"
+      deleted: "旅を削除しました"
+      invalid: "入力内容にエラーがあります。確認してください。"
+      memo_saved: "メモを保存しました"
+    profiles:
+      updated: "プロフィールを更新しました"
+      invalid: "入力内容にエラーがあります。確認してください。"

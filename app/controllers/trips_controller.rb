@@ -26,9 +26,9 @@ class TripsController < ApplicationController
     @trip = current_user.trips.build(trip_params)
 
     if @trip.save
-      redirect_to trip_path(@trip), notice: "新しい旅を作成しました"
+      redirect_to trip_path(@trip), notice: I18n.t("flash.trips.created")
     else
-      flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
+      flash.now[:alert] = I18n.t("flash.trips.invalid")
       render :new, status: :unprocessable_entity
     end
   end
@@ -39,12 +39,12 @@ class TripsController < ApplicationController
   def update
     if @trip.update(trip_params)
       if params[:source] == "memo"
-        redirect_to trip_path(@trip, tab: "memo"), notice: "メモを保存しました"
+        redirect_to trip_path(@trip, tab: "memo"), notice: I18n.t("flash.trips.memo_saved")
       else
-        redirect_to trip_path(@trip), notice: "旅の情報を更新しました"
+        redirect_to trip_path(@trip), notice: I18n.t("flash.trips.updated")
       end
     else
-      flash.now[:alert] = "入力内容にエラーがあります。確認してください。"
+      flash.now[:alert] = I18n.t("flash.trips.invalid")
       if params[:source] == "memo"
         @activities = @trip.activities.ordered_for_timeline
         @packing_items = @trip.packing_items.ordered_for_list
@@ -61,7 +61,7 @@ class TripsController < ApplicationController
 
   def destroy
     @trip.destroy
-    redirect_to trips_path, alert: "旅を削除しました"
+    redirect_to trips_path, alert: I18n.t("flash.trips.deleted")
   end
 
   private
