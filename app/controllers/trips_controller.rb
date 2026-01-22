@@ -10,8 +10,8 @@ class TripsController < ApplicationController
   end
 
   def show
-    @activities = @trip.activities.ordered_for_timeline
-    @packing_items = @trip.packing_items.ordered_for_list
+    @activities = @trip.activities_for_timeline
+    @packing_items = @trip.packing_items_for_list
     @packing_item = @trip.packing_items.build
     @default_tab = params[:tab]
     prepare_itinerary
@@ -46,8 +46,8 @@ class TripsController < ApplicationController
     else
       flash.now[:alert] = I18n.t("flash.trips.invalid")
       if params[:source] == "memo"
-        @activities = @trip.activities.ordered_for_timeline
-        @packing_items = @trip.packing_items.ordered_for_list
+        @activities = @trip.activities_for_timeline
+        @packing_items = @trip.packing_items_for_list
         @packing_item = @trip.packing_items.build
         @default_tab = Trip::TAB_MEMO
         prepare_itinerary

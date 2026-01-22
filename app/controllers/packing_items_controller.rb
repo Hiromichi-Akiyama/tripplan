@@ -13,8 +13,8 @@ class PackingItemsController < ApplicationController
       redirect_to trip_path(@trip, tab: Trip::TAB_PACKING), notice: I18n.t("flash.packing_items.created")
     else
       flash.now[:alert] = I18n.t("flash.packing_items.invalid")
-      @activities = @trip.activities.ordered_for_timeline
-      @packing_items = @trip.packing_items.ordered_for_list
+      @activities = @trip.activities_for_timeline
+      @packing_items = @trip.packing_items_for_list
       @default_tab = Trip::TAB_PACKING
       prepare_itinerary
       prepare_packing_items_by_category

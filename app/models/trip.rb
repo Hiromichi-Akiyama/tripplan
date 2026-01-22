@@ -43,6 +43,14 @@ class Trip < ApplicationRecord
     user.trips.find(id)
   end
 
+  def activities_for_timeline
+    activities.ordered_for_timeline
+  end
+
+  def packing_items_for_list
+    packing_items.ordered_for_list
+  end
+
   private
 
   def end_date_after_or_equal_start_date
