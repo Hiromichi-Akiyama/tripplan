@@ -1,32 +1,38 @@
 class PackingItemsController < ApplicationController
+  include ItineraryDataPreparable
+  include PackingItemsGroupable
 
   before_action :authenticate_user!
   before_action :set_trip
   before_action :set_packing_item, only: %i[update destroy]
 
   def create
-    @packing_item = @trip.packing_items.build(packing_item_create_params)
+    @packing_item = @trip.build_packing_item(packing_item_create_params)
 
     if @packing_item.save
-      redirect_to trip_path(@trip), notice: "持ち物を作成しました"
+      redirect_to trip_path(@trip, tab: Trip::TAB_PACKING), notice: I18n.t("flash.packing_items.created")
     else
-      @activities = @trip.activities.ordered_for_timeline
-      @packing_items = @trip.packing_items.ordered_for_list
+      flash.now[:alert] = I18n.t("flash.packing_items.invalid")
+      @activities = @trip.activities_for_timeline
+      @packing_items = @trip.packing_items_for_list
+      @default_tab = Trip::TAB_PACKING
+      prepare_itinerary
+      prepare_packing_items_by_category
       render "trips/show", status: :unprocessable_entity
     end
   end
 
   def update
     if @packing_item.update(packing_item_checked_params)
-      redirect_to trip_path(@trip)
+      redirect_to trip_path(@trip, tab: Trip::TAB_PACKING)
     else
-      redirect_to trip_path(@trip), alert: "更新に失敗しました" 
+      redirect_to trip_path(@trip, tab: Trip::TAB_PACKING), alert: I18n.t("flash.packing_items.update_failed")
     end
   end
 
   def destroy
     @packing_item.destroy
-    redirect_to trip_path(@trip)
+    redirect_to trip_path(@trip, tab: Trip::TAB_PACKING), alert: I18n.t("flash.packing_items.deleted")
   end
 
   private
@@ -46,5 +52,4 @@ class PackingItemsController < ApplicationController
   def packing_item_checked_params
     params.require(:packing_item).permit(:checked)
   end
-
 end

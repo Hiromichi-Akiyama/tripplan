@@ -7,15 +7,28 @@
   "text-decoration: #{packing_item.checked ? 'line-through' : 'none'}",
   "line-height: 1.4"
 ].join('; ') %>
+<% container_style = [
+  "border: 1px solid #e5e7eb",
+  "border-radius: 16px",
+  "padding: 14px 16px",
+  "background: #{packing_item.checked ? '#f9fafb' : '#ffffff'}",
+  "box-shadow: 0 2px 8px rgba(0,0,0,0.04)",
+  "display: flex",
+  "align-items: center",
+  "gap: 12px",
+  "justify-content: space-between",
+  "flex-wrap: wrap",
+  "opacity: #{packing_item.checked ? '0.78' : '1'}"
+].join('; ') %>
 
-<div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 14px; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.03); display: flex; align-items: center; gap: 12px; justify-content: space-between; flex-wrap: wrap;">
+<div style="<%= container_style %>">
   <div style="display: flex; align-items: center; gap: 12px; flex: 1; min-width: 220px;">
     <%= form_with model: [packing_item.trip, packing_item], url: trip_packing_item_path(packing_item.trip, packing_item), method: :patch, style: "margin: 0;" do |f| %>
       <label style="display: inline-flex; align-items: center; gap: 10px; cursor: pointer;">
         <%= f.check_box :checked, {
           onchange: "this.form.requestSubmit()",
           aria: { label: checkbox_label },
-          style: "width: 18px; height: 18px; margin: 0;",
+          style: "width: 20px; height: 20px; margin: 0; accent-color: #3b82f6;",
           include_hidden: true
         }, "1", "0" %>
         <p style="<%= name_style %>"><%= packing_item.name %></p>
@@ -25,7 +38,7 @@
 
   <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
     <% if packing_item.category.present? %>
-      <span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; background: #f3f4f6; color: #374151; border-radius: 9999px; font-size: 13px; font-weight: 600;">🏷 <%= packing_item.category %></span>
+      <span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #f3f4f6; color: #374151; border-radius: 9999px; font-size: 12px; font-weight: 600;">🏷 <%= packing_item.category %></span>
     <% end %>
 
     <%= button_to "削除", trip_packing_item_path(packing_item.trip, packing_item), method: :delete,
@@ -34,9 +47,9 @@
       style: [
         "padding: 8px 10px",
         "border-radius: 10px",
-        "border: 1px solid #fca5a5",
+        "border: 1px solid #fecaca",
         "background: #fef2f2",
-        "color: #b91c1c",
+        "color: #dc2626",
         "font-size: 13px",
         "font-weight: 700",
         "cursor: pointer",

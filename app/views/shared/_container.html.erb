@@ -1,0 +1,4 @@
+<% extra_class = local_assigns[:class_name].to_s %>
+<div class="tp-container<%= extra_class.present? ? " #{extra_class}" : "" %>">
+  <%= yield %>
+</div>

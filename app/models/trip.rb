@@ -8,8 +8,16 @@ class Trip < ApplicationRecord
   validate :end_date_after_or_equal_start_date
 
 
+  TAB_ALL = "all"
+  TAB_ITINERARY = "itinerary"
+  TAB_PACKING = "packing"
+  TAB_MEMO = "memo"
+  TABS = [TAB_ALL, TAB_ITINERARY, TAB_PACKING, TAB_MEMO].freeze
+
   # Tabs for Trips index
-  TABS = %w[all upcoming past].freeze
+  INDEX_TAB_UPCOMING = "upcoming"
+  INDEX_TAB_PAST = "past"
+  INDEX_TABS = [TAB_ALL, INDEX_TAB_UPCOMING, INDEX_TAB_PAST].freeze
 
   # end_date >= today (includes trips currently in-progress)
   scope :upcoming, ->(today = Date.current) { where("end_date >= ?", today) }
@@ -22,9 +30,9 @@ class Trip < ApplicationRecord
   scope :for_tab, ->(tab, today = Date.current) {
     tab = tab.to_s
     case tab
-    when "upcoming"
+    when INDEX_TAB_UPCOMING
       upcoming(today).order(start_date: :asc)
-    when "past"
+    when INDEX_TAB_PAST
       past(today).order(end_date: :desc)
     else
       order(start_date: :desc)
@@ -33,6 +41,18 @@ class Trip < ApplicationRecord
 
   def self.find_by_user_and_id(user, id)
     user.trips.find(id)
+  end
+
+  def activities_for_timeline
+    activities.ordered_for_timeline
+  end
+
+  def packing_items_for_list
+    packing_items.ordered_for_list
+  end
+
+  def build_packing_item(attrs = {})
+    packing_items.build(attrs)
   end
 
   private

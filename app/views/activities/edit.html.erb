@@ -1,12 +1,19 @@
-<div style="max-width: 840px; margin: 0 auto; padding: 24px 16px 32px;">
-  <div style="margin-bottom: 12px;">
-    <%= link_to "← Trip詳細に戻る", trip_path(@trip), style: "color: #2563eb; text-decoration: none; font-size: 14px; font-weight: 600;" %>
+<div class="activity-form-page">
+  <%= render "shared/page_nav",
+    back_path: trip_activity_path(@trip, @activity),
+    items: [
+      { label: "マイ旅一覧", path: trips_path },
+      { label: @trip.title, path: trip_path(@trip) },
+      { label: "活動詳細", path: trip_activity_path(@trip, @activity) },
+      { label: "活動を編集" }
+    ] %>
+
+  <div style="margin-bottom: 24px;">
+    <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0 0 8px;">活動を編集</h1>
+    <p style="font-size: 14px; color: #6b7280; margin: 0;">内容を修正して保存してください。</p>
   </div>
 
-  <h1 style="font-size: 24px; font-weight: 800; color: #111827; margin: 0 0 12px;">旅程を編集</h1>
-  <p style="font-size: 14px; color: #6b7280; margin: 0 0 16px;">内容を修正して「更新する」を押してください。</p>
-
-  <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 18px 16px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);">
+  <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 32px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);">
     <%= render "form", trip: @trip, activity: @activity %>
   </div>
 </div>

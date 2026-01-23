@@ -1,105 +1,265 @@
-<div class="trip-detail-page" style="max-width: 840px; margin: 0 auto; padding: 24px 16px 32px;">
-  <div style="margin-bottom: 12px;">
-    <%= link_to "← 一覧に戻る", trips_path, style: "color: #2563eb; text-decoration: none; font-size: 14px;" %>
+<% trip_color = @trip.color.presence || "#e5e7eb" %>
+<div class="trip-detail-page">
+  <%= render "shared/page_nav",
+    back_path: trips_path,
+    items: [{ label: "マイ旅一覧", path: trips_path }, { label: @trip.title }] %>
+
+  <% date_text =
+    if @trip.start_date.present? && @trip.end_date.present?
+      "#{@trip.start_date.strftime('%Y年%m月%d日')}〜#{@trip.end_date.strftime('%Y年%m月%d日')}"
+    elsif @trip.start_date.present?
+      @trip.start_date.strftime('%Y年%m月%d日')
+    elsif @trip.end_date.present?
+      @trip.end_date.strftime('%Y年%m月%d日')
+    else
+      "未設定"
+    end %>
+
+  <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 32px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-bottom: 24px;">
+    <div style="height: 8px; border-radius: 9999px; background: linear-gradient(135deg, <%= trip_color %> 0%, #f3f4f6 100%); margin-bottom: 24px;"></div>
+    <div style="display: flex; gap: 16px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap;">
+      <div>
+        <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0 0 10px;"><%= @trip.title %></h1>
+        <p style="font-size: 20px; color: #4b5563; margin: 0 0 6px; display: flex; align-items: center; gap: 8px; font-weight: 500;">
+          <%= icon("map_pin", size: 20) %>
+          <%= @trip.destination.presence || "未設定" %>
+        </p>
+        <p style="font-size: 14px; color: #6b7280; margin: 8px 0 0; display: flex; align-items: center; gap: 8px;">
+          <%= icon("calendar", size: 18) %>
+          <span style="color: #111827;"><%= date_text %></span>
+        </p>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+        <%= link_to edit_trip_path(@trip), style: [
+          "padding: 8px 16px",
+          "border-radius: 12px",
+          "border: none",
+          "background: #f3f4f6",
+          "color: #374151",
+          "font-size: 14px",
+          "font-weight: 600",
+          "text-decoration: none",
+          "display: inline-flex",
+          "align-items: center",
+          "gap: 6px"
+        ].join('; ') do %>
+          <%= icon("pencil", size: 16) %>
+          編集
+        <% end %>
+
+        <%= button_to trip_path(@trip), method: :delete,
+          data: { turbo_confirm: "この旅を削除しますか？" },
+          form: { style: "margin: 0;" },
+          style: [
+            "padding: 8px 16px",
+            "border-radius: 12px",
+            "border: none",
+            "background: #fef2f2",
+            "color: #dc2626",
+            "font-size: 14px",
+            "font-weight: 600",
+            "cursor: pointer",
+            "display: inline-flex",
+            "align-items: center",
+            "gap: 6px"
+        ].join('; ') do %>
+          <%= icon("trash", size: 16) %>
+          削除
+        <% end %>
+      </div>
+    </div>
   </div>
 
-  <h1 style="font-size: 26px; font-weight: 800; color: #111827; margin: 0 0 12px;"><%= @trip.title %></h1>
+  <% default_tab = @default_tab.presence || Trip::TAB_ITINERARY %>
+  <% tab_active_style = [
+    "padding: 12px 24px",
+    "border-radius: 16px",
+    "font-size: 14px",
+    "font-weight: 600",
+    "border: none",
+    "color: #111827",
+    "background: #ffffff",
+    "box-shadow: 0 2px 6px rgba(0,0,0,0.08)",
+    "cursor: pointer"
+  ].join('; ') %>
+  <% tab_inactive_style = [
+    "padding: 12px 24px",
+    "border-radius: 16px",
+    "font-size: 14px",
+    "font-weight: 600",
+    "border: none",
+    "color: #6b7280",
+    "background: transparent",
+    "cursor: pointer"
+  ].join('; ') %>
 
-  <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 0 0 16px;">
-    <%= link_to "編集", edit_trip_path(@trip), style: [
-      "padding: 10px 14px",
-      "border-radius: 10px",
-      "border: 1px solid #d1d5db",
-      "background: #fff",
-      "color: #111827",
-      "font-size: 14px",
-      "font-weight: 600",
-      "text-decoration: none",
-      "box-shadow: 0 2px 6px rgba(0,0,0,0.04)"
-    ].join('; ') %>
+  <% panel_style = "background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 32px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);" %>
 
-    <%= button_to "削除", trip_path(@trip), method: :delete,
-      data: { turbo_confirm: "この旅行を削除しますか？" },
-      form: { style: "margin: 0;" },
-      style: [
-        "padding: 10px 14px",
-        "border-radius: 10px",
-        "border: 1px solid #fca5a5",
-        "background: #fef2f2",
-        "color: #b91c1c",
-        "font-size: 14px",
-        "font-weight: 700",
-        "cursor: pointer",
-        "box-shadow: 0 2px 6px rgba(0,0,0,0.04)"
-      ].join('; ') %>
-  </div>
-
-  <div style="display: grid; gap: 16px; background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);">
-    <div>
-      <p style="font-size: 13px; color: #6b7280; margin: 0 0 4px;">目的地</p>
-      <p style="font-size: 16px; font-weight: 600; color: #111827; margin: 0;"><%= @trip.destination.presence || "未設定" %></p>
+  <div data-controller="tabs" data-tabs-default="<%= default_tab %>" style="margin-top: 20px;">
+    <div role="tablist" style="display: flex; gap: 8px; margin: 0 0 24px; overflow-x: auto; padding-bottom: 8px; flex-wrap: nowrap;">
+      <button type="button"
+        id="tab-itinerary"
+        role="tab"
+        aria-selected="true"
+        aria-controls="tab-panel-itinerary"
+        tabindex="0"
+        data-action="tabs#switch"
+        data-tabs-target="tab"
+        data-tab-id="itinerary"
+        data-tabs-id-param="itinerary"
+        data-tabs-active-style="<%= tab_active_style %>"
+        data-tabs-inactive-style="<%= tab_inactive_style %>"
+        style="<%= tab_active_style %>">旅程</button>
+      <button type="button"
+        id="tab-packing"
+        role="tab"
+        aria-selected="false"
+        aria-controls="tab-panel-packing"
+        tabindex="-1"
+        data-action="tabs#switch"
+        data-tabs-target="tab"
+        data-tab-id="packing"
+        data-tabs-id-param="packing"
+        data-tabs-active-style="<%= tab_active_style %>"
+        data-tabs-inactive-style="<%= tab_inactive_style %>"
+        style="<%= tab_inactive_style %>">持ち物</button>
+      <button type="button"
+        id="tab-memo"
+        role="tab"
+        aria-selected="false"
+        aria-controls="tab-panel-memo"
+        tabindex="-1"
+        data-action="tabs#switch"
+        data-tabs-target="tab"
+        data-tab-id="memo"
+        data-tabs-id-param="memo"
+        data-tabs-active-style="<%= tab_active_style %>"
+        data-tabs-inactive-style="<%= tab_inactive_style %>"
+        style="<%= tab_inactive_style %>">メモ</button>
     </div>
 
-    <div>
-      <p style="font-size: 13px; color: #6b7280; margin: 0 0 4px;">期間</p>
-      <p style="font-size: 16px; color: #111827; margin: 0;"><%= [@trip.start_date&.strftime("%Y/%m/%d"), @trip.end_date&.strftime("%Y/%m/%d")].compact.join(" 〜 ") %></p>
-    </div>
+    <div role="tabpanel" id="tab-panel-itinerary" aria-labelledby="tab-itinerary" data-tabs-target="panel" data-tab-id="itinerary">
+      <style>
+        .itinerary-row:hover {
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        }
 
-    <div>
-      <p style="font-size: 13px; color: #6b7280; margin: 0 0 4px;">メモ</p>
-      <% if @trip.notes.present? %>
-        <div style="font-size: 15px; color: #111827; line-height: 1.6;">
-          <%= simple_format(@trip.notes) %>
+        .itinerary-add:hover {
+          border-color: #60a5fa;
+          color: #3b82f6;
+          background: #eff6ff;
+        }
+
+        @media (max-width: 640px) {
+          .itinerary-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 8px;
+          }
+
+          .itinerary-row-time {
+            width: auto !important;
+          }
+
+          .itinerary-row-content {
+            min-width: 0 !important;
+          }
+
+          .itinerary-row-meta {
+            width: 100%;
+            justify-content: flex-end;
+            margin-left: 0 !important;
+          }
+        }
+      </style>
+      <div style="display: grid; gap: 24px;">
+        <% if @trip_days.present? %>
+          <% @trip_days.each_with_index do |day, index| %>
+            <% day_activities = @activities_by_date[day] || [] %>
+            <% date_label = day.respond_to?(:year) ? "#{day.year}年#{day.month}月#{day.day}日" : "日付未設定" %>
+            <div style="background: #ffffff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 24px; box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04); display: grid; gap: 16px;">
+              <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px;">
+                <h2 style="font-size: 24px; font-weight: 800; color: #111827; margin: 0;"><%= index + 1 %>日目</h2>
+                <span style="font-size: 14px; color: #6b7280;">(<%= date_label %>)</span>
+              </div>
+              <div style="display: grid; gap: 16px;">
+                <% if day_activities.present? %>
+                  <%= render partial: "activities/timeline_row", collection: day_activities, as: :activity %>
+                <% else %>
+                  <div style="padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #9ca3af;">
+                    <p style="margin: 0; font-size: 14px;">予定はまだありません。『+この日の活動を追加』から登録しましょう。</p>
+                  </div>
+                <% end %>
+              </div>
+              <%= link_to "+この日の活動を追加", new_trip_activity_path(@trip, date: day.to_s), class: "itinerary-add" %>
+            </div>
+          <% end %>
+        <% else %>
+          <div style="border: 1px dashed #d1d5db; border-radius: 24px; padding: 24px; background: #f9fafb; text-align: center;">
+            <p style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: #111827;">まだ旅程がありません</p>
+            <p style="margin: 0; font-size: 13px; color: #6b7280;">日付が設定されると旅程が表示されます。</p>
+          </div>
+        <% end %>
+
+        <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 24px; padding: 24px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;">
+          <div>
+            <p style="margin: 0 0 6px; font-size: 14px; color: #6b7280; font-weight: 700;">合計活動数</p>
+            <p style="margin: 0; font-size: 24px; font-weight: 800; color: #111827; line-height: 1.2; font-variant-numeric: tabular-nums;"><%= @total_activities %>件</p>
+          </div>
+          <div style="text-align: right;">
+            <p style="margin: 0 0 6px; font-size: 14px; color: #6b7280; font-weight: 700;">合計費用</p>
+            <p style="margin: 0; font-size: 24px; font-weight: 800; color: #111827; line-height: 1.2; font-variant-numeric: tabular-nums;"><%= number_to_currency(@total_cost, unit: "¥", precision: 0) %></p>
+          </div>
         </div>
-      <% else %>
-        <p style="font-size: 14px; color: #9ca3af; margin: 0;">メモはまだありません。</p>
-      <% end %>
+      </div>
     </div>
-  </div>
 
-  <div style="margin-top: 20px;">
-    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 12px;">
-      <h2 style="font-size: 20px; font-weight: 800; color: #111827; margin: 0;">旅程</h2>
-      <%= link_to "＋ 活動を追加", new_trip_activity_path(@trip), style: [
-        "padding: 10px 14px",
-        "border-radius: 10px",
-        "border: 1px solid #2563eb",
-        "background: #eff6ff",
-        "color: #1d4ed8",
-        "font-size: 14px",
-        "font-weight: 700",
-        "text-decoration: none",
-        "box-shadow: 0 2px 6px rgba(37,99,235,0.12)"
-      ].join('; ') %>
+    <div role="tabpanel" id="tab-panel-packing" aria-labelledby="tab-packing" data-tabs-target="panel" data-tab-id="packing" style="<%= panel_style %>">
+      <div style="display: grid; gap: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+          <h2 style="font-size: 24px; font-weight: 800; color: #111827; margin: 0;">持ち物リスト</h2>
+        </div>
+        <div style="border: none; border-radius: 16px; padding: 16px; background: #f9fafb;">
+          <%= render "packing_items/inline_form", trip: @trip, packing_item: @packing_item || @trip.build_packing_item %>
+        </div>
+        <% if @packing_items.present? %>
+          <div style="display: grid; gap: 16px;">
+            <% @packing_category_order.each do |category| %>
+              <% items = @packing_items_by_category[category] %>
+              <% next if items.blank? %>
+              <div style="display: grid; gap: 10px;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                  <h3 style="margin: 0; font-size: 16px; font-weight: 700; color: #374151;"><%= category %></h3>
+                  <div style="flex: 1; height: 1px; background: #e5e7eb;"></div>
+                </div>
+                <div style="display: grid; gap: 10px;">
+                  <%= render partial: "packing_items/row", collection: items, as: :packing_item %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <div style="border: 1px dashed #d1d5db; border-radius: 24px; padding: 24px; background: #f9fafb; text-align: center;">
+            <p style="margin: 0 0 6px; font-size: 16px; font-weight: 700; color: #111827;">まだ持ち物がありません</p>
+            <p style="margin: 0; font-size: 13px; color: #6b7280;">追加するとここに表示されます。</p>
+          </div>
+        <% end %>
+      </div>
     </div>
-    <% if @activities.present? %>
-      <div style="display: grid; gap: 12px;">
-        <%= render @activities %>
-      </div>
-    <% else %>
-      <div style="border: 1px dashed #d1d5db; border-radius: 12px; padding: 16px; background: #f9fafb; text-align: center;">
-        <p style="margin: 0 0 6px; font-size: 15px; font-weight: 700; color: #111827;">まだ旅程がありません</p>
-        <p style="margin: 0; font-size: 13px; color: #6b7280;">予定を追加するとここに表示されます。</p>
-      </div>
-    <% end %>
-  </div>
 
-  <div style="margin-top: 24px;">
-    <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 12px;">
-      <h2 style="font-size: 20px; font-weight: 800; color: #111827; margin: 0;">持ち物</h2>
-    </div>
-    <div style="border: 1px solid #e5e7eb; border-radius: 12px; padding: 12px 14px; background: #fff; box-shadow: 0 2px 6px rgba(0,0,0,0.03); margin-bottom: 12px;">
-      <%= render "packing_items/inline_form", trip: @trip, packing_item: @packing_item || @trip.packing_items.build %>
-    </div>
-    <% if @packing_items.present? %>
-      <div style="display: grid; gap: 10px;">
-        <%= render @packing_items %>
+    <div role="tabpanel" id="tab-panel-memo" aria-labelledby="tab-memo" data-tabs-target="panel" data-tab-id="memo" style="<%= panel_style %>">
+      <div style="display: grid; gap: 14px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
+          <h2 style="font-size: 24px; font-weight: 800; color: #111827; margin: 0;">旅のメモ</h2>
+        </div>
+        <%= form_with model: @trip, url: trip_path(@trip), method: :patch, html: { style: "display: grid; gap: 12px;" } do |form| %>
+          <%= hidden_field_tag :source, "memo" %>
+          <%= form.text_area :notes, rows: 6, placeholder: "フライト番号や予約メモなどを入力できます", style: "width: 100%; max-width: 100%; box-sizing: border-box; padding: 14px; border: 1px solid #d1d5db; border-radius: 16px; font-size: 15px; color: #111827; background: #fff; line-height: 1.6; resize: vertical; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);" %>
+          <div style="display: flex; justify-content: flex-end;">
+            <%= form.submit "保存する", style: "display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 18px; background: #3b82f6; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 25px rgba(59,130,246,0.2); width: 100%; max-width: 240px; transition: transform 0.08s ease, box-shadow 0.08s ease;", data: { turbo_submits_with: "保存中..." } %>
+          </div>
+        <% end %>
       </div>
-    <% else %>
-      <div style="border: 1px dashed #d1d5db; border-radius: 12px; padding: 16px; background: #f9fafb; text-align: center;">
-        <p style="margin: 0 0 6px; font-size: 15px; font-weight: 700; color: #111827;">まだ持ち物がありません</p>
-        <p style="margin: 0; font-size: 13px; color: #6b7280;">追加するとここに表示されます。</p>
-      </div>
-    <% end %>
+    </div>
   </div>
 </div>

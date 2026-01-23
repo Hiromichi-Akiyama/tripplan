@@ -1,7 +1,17 @@
 class PackingItem < ApplicationRecord
   belongs_to :trip
 
-  CATEGORIES = ["衣類", "洗面・バス用品", "電子機器", "貴重品・書類", "薬・ヘルスケア", "その他"].freeze
+  CATEGORIES = [
+    "衣類",
+    "洗面用具",
+    "洗面・バス用品",
+    "電子機器",
+    "書類",
+    "貴重品・書類",
+    "医薬品",
+    "薬・ヘルスケア",
+    "その他"
+  ].freeze
 
   validates :name, presence: true
   validates :display_order, numericality: { only_integer: true, greater_than_or_equal_to: 1}

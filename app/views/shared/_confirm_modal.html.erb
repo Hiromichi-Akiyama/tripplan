@@ -1,0 +1,20 @@
+<div data-controller="confirm-modal">
+  <div class="tp-modal-overlay" data-confirm-modal-target="overlay" data-action="click->confirm-modal#closeOnOverlay" hidden>
+    <div class="tp-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-modal-title">
+      <h3 class="tp-modal__title" id="confirm-modal-title">確認</h3>
+      <p class="tp-modal__message" data-confirm-modal-target="message"></p>
+      <div class="tp-modal__actions">
+        <div class="tp-modal__action">
+          <button type="button" class="tp-modal__button tp-modal__button--cancel" data-action="confirm-modal#cancel">
+            キャンセル
+          </button>
+        </div>
+        <div class="tp-modal__action">
+          <button type="button" class="tp-modal__button tp-modal__button--ok" data-action="confirm-modal#confirm">
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

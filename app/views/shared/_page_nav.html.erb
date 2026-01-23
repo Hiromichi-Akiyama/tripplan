@@ -1,0 +1,5 @@
+<% return if items.blank? %>
+<div class="tp-backbar">
+  <%= render "shared/back_button", path: back_path, aria_label: "戻る" %>
+  <%= render "shared/breadcrumbs", items: items, class_name: "tp-breadcrumbs--inline" %>
+</div>

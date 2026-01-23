@@ -1,0 +1,25 @@
+<div class="tp-demo-reset" data-controller="demo-reset">
+  <button type="button" class="tp-demo-reset__button" data-action="demo-reset#open">
+    <%= icon("log_out", size: 18) %>
+    デモを終了 / リセット
+  </button>
+
+  <div class="tp-modal-overlay" data-demo-reset-target="modal" hidden>
+    <div class="tp-modal">
+      <h3 class="tp-modal__title">確認</h3>
+      <p class="tp-modal__message">デモを終了してデータをリセットしますか？&#10;（現在の変更内容は失われます）</p>
+      <div class="tp-modal__actions">
+        <div class="tp-modal__action">
+          <button type="button" class="tp-modal__button tp-modal__button--cancel" data-action="demo-reset#close">
+            キャンセル
+          </button>
+        </div>
+        <div class="tp-modal__action">
+          <%= form_with url: demo_logout_path, method: :delete, class: "tp-modal__form" do %>
+            <%= button_tag "OK", type: "submit", class: "tp-modal__button tp-modal__button--ok" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
