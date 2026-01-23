@@ -7,7 +7,7 @@ class PackingItemsController < ApplicationController
   before_action :set_packing_item, only: %i[update destroy]
 
   def create
-    @packing_item = @trip.packing_items.build(packing_item_create_params)
+    @packing_item = @trip.build_packing_item(packing_item_create_params)
 
     if @packing_item.save
       redirect_to trip_path(@trip, tab: Trip::TAB_PACKING), notice: I18n.t("flash.packing_items.created")

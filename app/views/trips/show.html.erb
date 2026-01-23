@@ -220,7 +220,7 @@
           <h2 style="font-size: 24px; font-weight: 800; color: #111827; margin: 0;">持ち物リスト</h2>
         </div>
         <div style="border: none; border-radius: 16px; padding: 16px; background: #f9fafb;">
-          <%= render "packing_items/inline_form", trip: @trip, packing_item: @packing_item || @trip.packing_items.build %>
+          <%= render "packing_items/inline_form", trip: @trip, packing_item: @packing_item || @trip.build_packing_item %>
         </div>
         <% if @packing_items.present? %>
           <div style="display: grid; gap: 16px;">

@@ -51,6 +51,10 @@ class Trip < ApplicationRecord
     packing_items.ordered_for_list
   end
 
+  def build_packing_item(attrs = {})
+    packing_items.build(attrs)
+  end
+
   private
 
   def end_date_after_or_equal_start_date

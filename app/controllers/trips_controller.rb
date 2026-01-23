@@ -12,7 +12,7 @@ class TripsController < ApplicationController
   def show
     @activities = @trip.activities_for_timeline
     @packing_items = @trip.packing_items_for_list
-    @packing_item = @trip.packing_items.build
+    @packing_item = @trip.build_packing_item
     @default_tab = params[:tab]
     prepare_itinerary
     prepare_packing_items_by_category
@@ -48,7 +48,7 @@ class TripsController < ApplicationController
       if params[:source] == "memo"
         @activities = @trip.activities_for_timeline
         @packing_items = @trip.packing_items_for_list
-        @packing_item = @trip.packing_items.build
+        @packing_item = @trip.build_packing_item
         @default_tab = Trip::TAB_MEMO
         prepare_itinerary
         prepare_packing_items_by_category
