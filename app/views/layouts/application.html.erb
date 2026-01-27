@@ -27,9 +27,6 @@
         <%= render "shared/hamburger_menu" %>
       <% end %>
     <% end %>
-    <% if demo_user? && !devise_controller? %>
-      <%= render "shared/demo_reset" %>
-    <% end %>
     <%= render "shared/confirm_modal" %>
   </body>
 </html>
