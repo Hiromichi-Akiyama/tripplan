@@ -2,13 +2,13 @@
   <%= render "shared/page_nav",
     back_path: trip_path(@trip),
     items: [
-      { label: "マイ旅一覧", path: trips_path },
+      { label: t("views.common.my_trips"), path: trips_path },
       { label: @trip.title, path: trip_path(@trip) },
-      { label: "活動詳細" }
+      { label: t("views.activities.show.title") }
     ] %>
 
   <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 20px;">
-    <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0;">活動詳細</h1>
+    <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0;"><%= t("views.activities.show.title") %></h1>
     <div style="display: flex; gap: 10px; flex-wrap: wrap;">
       <%= link_to edit_trip_activity_path(@trip, @activity), style: [
         "padding: 8px 14px",
@@ -24,10 +24,10 @@
         "gap: 6px"
       ].join('; ') do %>
         <%= icon("pencil", size: 16) %>
-        編集
+        <%= t("views.buttons.edit") %>
       <% end %>
       <%= button_to trip_activity_path(@trip, @activity), method: :delete,
-        data: { turbo_confirm: "この活動を削除しますか？" },
+        data: { turbo_confirm: t("views.confirmations.activity_delete") },
         form: { style: "margin: 0;" },
         style: [
           "padding: 8px 14px",
@@ -43,7 +43,7 @@
           "gap: 6px"
         ].join('; ') do %>
         <%= icon("trash", size: 16) %>
-        削除
+        <%= t("views.buttons.delete") %>
       <% end %>
     </div>
   </div>

@@ -41,8 +41,8 @@
       <span style="display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; background: #f3f4f6; color: #374151; border-radius: 9999px; font-size: 12px; font-weight: 600;">🏷 <%= packing_item.category %></span>
     <% end %>
 
-    <%= button_to "削除", trip_packing_item_path(packing_item.trip, packing_item), method: :delete,
-      data: { turbo_confirm: "この持ち物を削除しますか？" },
+    <%= button_to t("views.buttons.delete"), trip_packing_item_path(packing_item.trip, packing_item), method: :delete,
+      data: { turbo_confirm: t("views.confirmations.packing_item_delete") },
       form: { style: "margin: 0;" },
       style: [
         "padding: 8px 10px",

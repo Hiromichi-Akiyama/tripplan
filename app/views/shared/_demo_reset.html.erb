@@ -11,12 +11,12 @@
       <div class="tp-modal__actions">
         <div class="tp-modal__action">
           <button type="button" class="tp-modal__button tp-modal__button--cancel" data-action="demo-reset#close">
-            キャンセル
+            <%= t("views.buttons.cancel") %>
           </button>
         </div>
         <div class="tp-modal__action">
           <%= form_with url: demo_logout_path, method: :delete, class: "tp-modal__form" do %>
-            <%= button_tag "OK", type: "submit", class: "tp-modal__button tp-modal__button--ok" %>
+          <%= button_tag t("views.buttons.ok"), type: "submit", class: "tp-modal__button tp-modal__button--ok" %>
           <% end %>
         </div>
       </div>

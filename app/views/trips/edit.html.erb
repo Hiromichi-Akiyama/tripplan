@@ -2,13 +2,13 @@
   <%= render "shared/page_nav",
     back_path: trip_path(@trip),
     items: [
-      { label: "マイ旅一覧", path: trips_path },
+      { label: t("views.common.my_trips"), path: trips_path },
       { label: @trip.title, path: trip_path(@trip) },
-      { label: "旅を編集" }
+      { label: t("views.trips.edit.title") }
     ] %>
 
   <div style="margin-bottom: 24px;">
-    <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0;">旅を編集</h1>
+    <h1 style="font-size: 32px; font-weight: 800; color: #111827; margin: 0;"><%= t("views.trips.edit.title") %></h1>
   </div>
 
   <div style="background: #fff; border: 1px solid #e5e7eb; border-radius: 24px; padding: 32px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);">

@@ -44,11 +44,11 @@
           "gap: 6px"
         ].join('; ') do %>
           <%= icon("pencil", size: 16) %>
-          編集
+          <%= t("views.buttons.edit") %>
         <% end %>
 
         <%= button_to trip_path(@trip), method: :delete,
-          data: { turbo_confirm: "この旅を削除しますか？" },
+          data: { turbo_confirm: t("views.confirmations.trip_delete") },
           form: { style: "margin: 0;" },
           style: [
             "padding: 8px 16px",
@@ -64,7 +64,7 @@
             "gap: 6px"
         ].join('; ') do %>
           <%= icon("trash", size: 16) %>
-          削除
+          <%= t("views.buttons.delete") %>
         <% end %>
       </div>
     </div>
@@ -256,7 +256,7 @@
           <%= hidden_field_tag :source, "memo" %>
           <%= form.text_area :notes, rows: 6, placeholder: "フライト番号や予約メモなどを入力できます", style: "width: 100%; max-width: 100%; box-sizing: border-box; padding: 14px; border: 1px solid #d1d5db; border-radius: 16px; font-size: 15px; color: #111827; background: #fff; line-height: 1.6; resize: vertical; box-shadow: inset 0 1px 2px rgba(0,0,0,0.02);" %>
           <div style="display: flex; justify-content: flex-end;">
-            <%= form.submit "保存する", style: "display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 18px; background: #3b82f6; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 25px rgba(59,130,246,0.2); width: 100%; max-width: 240px; transition: transform 0.08s ease, box-shadow 0.08s ease;", data: { turbo_submits_with: "保存中..." } %>
+          <%= form.submit t("views.buttons.save_action"), style: "display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 18px; background: #3b82f6; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 10px 25px rgba(59,130,246,0.2); width: 100%; max-width: 240px; transition: transform 0.08s ease, box-shadow 0.08s ease;", data: { turbo_submits_with: t("views.buttons.saving") } %>
           </div>
         <% end %>
       </div>
