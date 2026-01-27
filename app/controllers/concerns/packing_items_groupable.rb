@@ -4,18 +4,19 @@ module PackingItemsGroupable
   private
 
   def prepare_packing_items_by_category
+    uncategorized = I18n.t("packing_items.uncategorized")
     grouped = {}
     @packing_items.each do |item|
-      key = item.category.presence || "未分類"
+      key = item.category.presence || uncategorized
       (grouped[key] ||= []) << item
     end
 
     @packing_items_by_category = grouped
 
     ordered = PackingItem::CATEGORIES.select { |category| grouped.key?(category) }
-    extras = grouped.keys - PackingItem::CATEGORIES - ["未分類"]
+    extras = grouped.keys - PackingItem::CATEGORIES - [uncategorized]
     ordered += extras.sort
-    ordered << "未分類" if grouped.key?("未分類")
+    ordered << uncategorized if grouped.key?(uncategorized)
     @packing_category_order = ordered
   end
 end

@@ -3,7 +3,7 @@ module ItineraryDataPreparable
 
   private
 
-  def prepare_itinerary_data
+  def prepare_itinerary
     @activities_by_date = @activities.group_by(&:date)
     @total_activities = @activities.size
     @total_cost = @activities.sum(:cost)
