@@ -93,6 +93,27 @@ TripPlan は、旅行計画に必要な **旅程・持ち物・メモ** を一�
 - HTTPS 強制
 - Rails 標準の CSRF / XSS 対策
 
+## ポートフォリオ用データ
+
+固定のテストユーザー（`portfolio@example.com` / `Portfolio1234`）に、
+mockup.tsx の初期データを投入します。
+
+```
+bin/rails db:seed
+```
+
+データを初期状態に戻したい場合は以下を実行してください（対象は固定テストユーザーのみ）。
+
+```
+bin/rails portfolio:reset
+```
+
+本番環境で実行する場合は安全のため `ALLOW_PORTFOLIO_RESET=1` を付けてください。
+
+```
+ALLOW_PORTFOLIO_RESET=1 bin/rails portfolio:reset
+```
+
 ## 今後の予定
 
 - 公開リンク（閲覧専用）
