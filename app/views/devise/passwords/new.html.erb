@@ -1,0 +1,39 @@
+<div class="tp-auth-page tp-auth-page--centered">
+  <div class="tp-auth-wrap">
+    <%= link_to root_path, class: "tp-auth-logo" do %>
+      <span class="tp-auth-logo-icon"><%= icon("map_pin", size: 24) %></span>
+      <span class="tp-auth-logo-text">TripPlan</span>
+    <% end %>
+
+    <div class="tp-auth-card">
+      <h1 class="tp-auth-title">パスワードリセット</h1>
+      <div class="tp-auth-description">
+        <p class="tp-auth-subtitle">登録したメールアドレスを入力してください。</p>
+        <p class="tp-auth-subtitle">パスワードリセット用のリンクをお送りします。</p>
+      </div>
+
+      <%= form_with model: resource, as: resource_name, url: password_path(resource_name), html: { method: :post } do |form| %>
+        <% email_error = resource.errors[:email].present? %>
+        <div class="tp-auth-form">
+          <div class="tp-auth-field">
+            <label class="tp-auth-label" for="user_email">メールアドレス</label>
+            <%= form.email_field :email,
+              autofocus: true,
+              autocomplete: "email",
+              placeholder: "example@email.com",
+              class: ["tp-auth-input", ("tp-auth-input-error" if email_error)].compact.join(" ") %>
+            <% if email_error %>
+              <p class="tp-auth-error"><%= resource.errors.full_messages_for(:email).first %></p>
+            <% end %>
+          </div>
+
+          <%= form.submit "リセットリンクを送信", class: "tp-auth-button" %>
+        </div>
+      <% end %>
+
+      <div class="tp-auth-footer">
+        <%= link_to "← ログイン画面に戻る", new_user_session_path, class: "tp-auth-link" %>
+      </div>
+    </div>
+  </div>
+</div>

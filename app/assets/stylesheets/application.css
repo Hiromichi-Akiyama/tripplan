@@ -24,7 +24,12 @@
   --app-header-padding-y: 16px;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
+  margin: 0;
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
@@ -351,16 +356,22 @@ body {
 }
 
 .tp-auth-page {
-  min-height: 100vh;
+  min-height: calc(100svh - 48px);
   background: linear-gradient(180deg, #f9fafb 0%, #ffffff 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 32px 16px;
+  padding: 24px 16px;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 
 .tp-auth-page--signup {
-  padding: 48px 16px;
+  padding: 24px 16px;
+}
+
+.tp-auth-page--centered {
+  min-height: calc(100svh - 48px);
 }
 
 .tp-auth-wrap {
@@ -417,6 +428,21 @@ body {
 .tp-auth-subtitle {
   margin: 0 0 24px;
   color: #6b7280;
+}
+
+.tp-auth-description {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0 0 24px;
+}
+
+.tp-auth-description .tp-auth-subtitle {
+  margin: 0;
+}
+
+.tp-auth-subtitle--tight {
+  margin: -12px 0 24px;
 }
 
 .tp-auth-form {
