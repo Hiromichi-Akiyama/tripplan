@@ -867,15 +867,21 @@ body {
 
   .trip-date-fields {
     grid-template-columns: 1fr !important;
+    width: 100%;
+    max-width: 100%;
   }
 
   .trip-date-fields > div {
     min-width: 0;
+    max-width: 100%;
   }
 
+  .trip-date-input,
   .trip-date-fields input[type="date"] {
     width: 100%;
     min-width: 0;
+    max-width: 100%;
+    display: block;
   }
 }
 
