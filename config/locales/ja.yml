@@ -8,6 +8,7 @@ ja:
       too_long: "は%{count}文字以内で入力してください"
       confirmation: "と%{attribute}の入力が一致しません"
       invalid: "は不正な値です"
+      not_found: "が見つかりません"
 
   activerecord:
     attributes:
@@ -16,6 +17,12 @@ ja:
         password: "パスワード"
         password_confirmation: "パスワード（確認）"
         name: "名前"
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              not_found: "が見つかりません"
       trip:
         title: "タイトル"
         start_date: "開始日"

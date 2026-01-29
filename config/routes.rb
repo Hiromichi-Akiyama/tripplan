@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { passwords: "users/passwords" }
   root "pages#home"
   resource :profile, only: %i[edit update]
 

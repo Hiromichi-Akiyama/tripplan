@@ -11,7 +11,8 @@
   </head>
 
   <body data-controller="menu">
-    <%= render "shared/flash" %>
+    <% show_flash = !(devise_controller? && controller_name == "sessions" && action_name == "new") %>
+    <%= render "shared/flash" if show_flash %>
     <% show_app_shell = !((controller_name == "pages" && action_name == "home") || devise_controller?) %>
     <% if show_app_shell %>
       <%= render "shared/app_header" %>
