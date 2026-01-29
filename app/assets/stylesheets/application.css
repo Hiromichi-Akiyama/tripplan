@@ -126,6 +126,32 @@ body {
   transform: translateY(-1px);
 }
 
+.tp-backbar__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  color: #6b7280;
+  text-decoration: none;
+  border-radius: 9999px;
+  cursor: pointer;
+}
+
+.tp-backbar__link:hover {
+  color: #111827;
+}
+
+.tp-backbar__link:hover .tp-backbar__label {
+  color: #111827;
+}
+
+.tp-backbar__link:hover .tp-back-button {
+  background: #f3f4f6;
+  color: #4b5563;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
 .tp-backbar__label {
   color: #6b7280;
   font-size: 14px;
@@ -577,6 +603,29 @@ body {
 .tp-auth-back .tp-backbar {
   justify-content: center;
   margin-bottom: 0;
+}
+
+.tp-auth-back .tp-backbar__link {
+  padding: 0;
+  gap: 8px;
+}
+
+.tp-auth-back .tp-back-button {
+  width: auto;
+  height: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  transform: none;
+}
+
+.tp-auth-back .tp-backbar__link:hover .tp-back-button {
+  background: none;
+  color: inherit;
+  box-shadow: none;
+  transform: none;
 }
 
 .tp-auth-back-link {
