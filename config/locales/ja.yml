@@ -17,12 +17,6 @@ ja:
         password: "パスワード"
         password_confirmation: "パスワード（確認）"
         name: "名前"
-    errors:
-      models:
-        user:
-          attributes:
-            email:
-              not_found: "が見つかりません"
       trip:
         title: "タイトル"
         start_date: "開始日"
@@ -43,6 +37,12 @@ ja:
         booking_code: "予約番号"
       packing_item:
         name: "アイテム名"
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              not_found: "が見つかりません"
 
   packing_items:
     uncategorized: "未分類"
