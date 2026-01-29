@@ -864,6 +864,19 @@ body {
     align-items: stretch;
     gap: 8px;
   }
+
+  .trip-date-fields {
+    grid-template-columns: 1fr !important;
+  }
+
+  .trip-date-fields > div {
+    min-width: 0;
+  }
+
+  .trip-date-fields input[type="date"] {
+    width: 100%;
+    min-width: 0;
+  }
 }
 
 @media (min-width: 768px) {

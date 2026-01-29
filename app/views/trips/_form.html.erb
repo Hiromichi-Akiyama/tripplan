@@ -41,7 +41,7 @@
         <%= form.text_field :destination, placeholder: "例：札幌・小樽", style: (base_input_style + ["border: 1px solid #d1d5db"]).join('; ') %>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+      <div class="trip-date-fields" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
         <div>
           <label for="<%= form.field_id(:start_date) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">
             <%= t("activerecord.attributes.trip.start_date") %> <span style="color: #ef4444;">*</span>
