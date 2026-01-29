@@ -1401,25 +1401,25 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
                   </div>
                   <div className="space-y-4">
                     {dayActivities.length > 0 ? dayActivities.map((activity, idx) => (
-                      <div key={idx} onClick={() => onEditActivity(activity)} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-4 border border-gray-200 rounded-2xl hover:shadow-md cursor-pointer transition-all">
-                        <div className="flex items-center gap-2 sm:w-32 sm:block sm:flex-shrink-0 text-gray-700 font-medium">
-                          <Clock size={16} className="inline sm:mr-2" />{activity.time}
+                      <div key={idx} onClick={() => onEditActivity(activity)} className="flex items-center justify-between gap-3 p-4 border border-gray-200 rounded-2xl hover:shadow-md cursor-pointer transition-all">
+                        {/* コンテンツ部分（レスポンシブで縦・横切り替え） */}
+                        <div className="flex-1 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                          <div className="flex items-center gap-2 sm:w-32 sm:block sm:flex-shrink-0 text-gray-700 font-medium">
+                            <Clock size={16} className="inline sm:mr-2" />{activity.time}
+                          </div>
+                          <div className="flex-1">
+                             <div className="flex items-center gap-2 sm:hidden mb-1">
+                                 <span className="font-semibold">{activity.title}</span>
+                             </div>
+                             <h3 className="hidden sm:block font-semibold text-gray-900 mb-1">{activity.title}</h3>
+                             <p className="text-sm text-gray-600 flex items-center gap-2"><MapPin size={14} />{activity.location}</p>
+                          </div>
+                          <div className="flex-shrink-0 text-left sm:text-right mt-1 sm:mt-0">
+                            <p className="font-semibold text-gray-900 flex items-center gap-1"><DollarSign size={16} className="hidden" />{activity.cost ? `¥${Number(activity.cost).toLocaleString()}` : '¥0'}</p>
+                          </div>
                         </div>
-                        {/* アイコン表示部分を削除 */}
-                        {/* <div className="hidden sm:block flex-shrink-0"><CategoryIcon category={activity.category} /></div> */}
-                        <div className="flex-1">
-                           <div className="flex items-center gap-2 sm:hidden mb-1">
-                               {/* アイコン表示部分を削除 */}
-                               {/* <CategoryIcon category={activity.category} /> */}
-                               <span className="font-semibold">{activity.title}</span>
-                           </div>
-                           <h3 className="hidden sm:block font-semibold text-gray-900 mb-1">{activity.title}</h3>
-                           <p className="text-sm text-gray-600 flex items-center gap-2"><MapPin size={14} />{activity.location}</p>
-                        </div>
-                        <div className="flex-shrink-0 text-left sm:text-right mt-2 sm:mt-0">
-                          <p className="font-semibold text-gray-900 flex items-center gap-1"><DollarSign size={16} className="hidden" />{activity.cost ? `¥${Number(activity.cost).toLocaleString()}` : '¥0'}</p>
-                        </div>
-                        <ChevronRight size={20} className="text-gray-400 self-center hidden sm:block" />
+                        {/* 矢印アイコン（常に表示） */}
+                        <ChevronRight size={20} className="text-gray-400 flex-shrink-0" />
                       </div>
                     )) : <div className="py-6 flex flex-col items-center justify-center text-gray-400"><p className="text-sm">予定はまだありません。『+この日の活動を追加』から登録しましょう。</p></div>}
                   </div>
