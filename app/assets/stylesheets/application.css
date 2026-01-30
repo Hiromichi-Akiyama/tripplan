@@ -878,12 +878,24 @@ body {
     min-width: 0;
     display: block;
     box-sizing: border-box;
+    min-height: 48px;
   }
 
   @supports (-webkit-touch-callout: none) {
     .trip-date-input {
       -webkit-appearance: none;
       appearance: none;
+      height: 48px !important;
+      min-height: 48px !important;
+      font-size: 16px !important;
+    }
+
+    .trip-date-input::-webkit-datetime-edit {
+      padding: 0;
+    }
+
+    .trip-date-input::-webkit-date-and-time-value {
+      line-height: 1.2;
     }
   }
 
