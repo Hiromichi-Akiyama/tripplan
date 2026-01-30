@@ -860,6 +860,51 @@ body {
 }
 
 @media (max-width: 640px) {
+  .activity-time-fields {
+    grid-template-columns: 1fr !important;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .activity-time-fields > div {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .activity-date-input,
+  .activity-time-input,
+  .activity-number-input {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    display: block;
+    box-sizing: border-box;
+    min-height: 48px;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    .activity-date-input,
+    .activity-time-input,
+    .activity-number-input {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 48px !important;
+      min-height: 48px !important;
+      font-size: 16px !important;
+    }
+
+    .activity-date-input::-webkit-datetime-edit,
+    .activity-time-input::-webkit-datetime-edit {
+      padding: 0;
+    }
+
+    .activity-date-input::-webkit-date-and-time-value,
+    .activity-time-input::-webkit-date-and-time-value {
+      line-height: 1.2;
+    }
+  }
+
   .trip-date-fields {
     grid-template-columns: 1fr !important;
     width: 100%;
