@@ -860,6 +860,33 @@ body {
 }
 
 @media (max-width: 640px) {
+  .trip-date-fields {
+    grid-template-columns: 1fr !important;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .trip-date-fields > div {
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .trip-date-input {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    display: block;
+    box-sizing: border-box;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    .trip-date-input {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+  }
+
   .itinerary-row {
     align-items: stretch;
     gap: 8px;
