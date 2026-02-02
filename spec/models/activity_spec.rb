@@ -29,19 +29,19 @@ RSpec.describe Activity, type: :model do
       it 'start_time,end_time,location,cost,memo,address,url,booking_codeが空でも登録できる' do
         @activity.start_time = nil
         @activity.end_time = nil
-        @activity.location = nil
+        @activity.location = ''
         @activity.cost = nil
-        @activity.memo = nil
-        @activity.address = nil
-        @activity.url = nil
-        @activity.booking_code = nil
+        @activity.memo = ''
+        @activity.address = ''
+        @activity.url = ''
+        @activity.booking_code = ''
         expect(@activity).to be_valid
       end
     end
 
     context '登録できないとき' do
       it 'titleが空では登録できない' do
-        @activity.title = nil
+        @activity.title = ''
         @activity.valid?
         expect(@activity.errors.full_messages).to include("タイトルを入力してください")
       end

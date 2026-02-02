@@ -15,13 +15,13 @@ RSpec.describe User, type: :model do
 
     context '新規登録できないとき' do
       it 'emailが空では登録できない' do
-        @user.email = nil
+        @user.email = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("メールアドレスを入力してください")
       end
 
       it 'passwordが空では登録できない' do
-        @user.password = nil
+        @user.password = ''
         @user.valid?
         expect(@user.errors.full_messages).to include("パスワードを入力してください")
       end
