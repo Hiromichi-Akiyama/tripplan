@@ -61,11 +61,11 @@ RSpec.describe User, type: :model do
         expect(@user.errors.full_messages).to include("パスワードは英字を1文字以上、数字を1文字以上含めてください")
       end
 
-      it 'passwordが7文字以下では登録できない' do
-        @user.password = 'abc1234'
-        @user.password_confirmation = 'abc1234'
+      it 'passwordが11文字以下では登録できない' do
+        @user.password = 'abc12345678'
+        @user.password_confirmation = 'abc12345678'
         @user.valid?
-        expect(@user.errors.full_messages).to include("パスワードは8文字以上で入力してください")
+        expect(@user.errors.full_messages).to include("パスワードは12文字以上で入力してください")
       end
 
       it 'passwordが129文字以上では登録できない' do
