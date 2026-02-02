@@ -11,7 +11,7 @@ class ProfilesController < ApplicationController
       redirect_to edit_profile_path, notice: I18n.t("flash.profiles.updated")
     else
       flash.now[:alert] = I18n.t("flash.profiles.invalid")
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
