@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "Trips auth", type: :request do
+  fixtures :users, :trips
+
   describe "未ログイン時のアクセス制御" do
     it "GET /trips はログイン画面へリダイレクトされる" do
       get trips_path
@@ -13,9 +15,7 @@ RSpec.describe "Trips auth", type: :request do
     end
 
     it "GET /trips/:id はログイン画面へリダイレクトされる" do
-      # 注意: 未ログインでもURL生成は必要なので、id用にTripを作る
-      owner = FactoryBot.create(:user)
-      trip = FactoryBot.create(:trip, user: owner)
+      trip = trips(:owner_trip)
 
       get trip_path(trip)
 

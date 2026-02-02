@@ -2,7 +2,9 @@
 require "rails_helper"
 
 RSpec.describe "Trips", type: :request do
-  let(:user) { FactoryBot.create(:user) }
+  fixtures :users, :trips
+
+  let(:user) { users(:owner) }
 
   before do
     sign_in user
@@ -10,8 +12,6 @@ RSpec.describe "Trips", type: :request do
 
   describe "GET /trips" do
     it "一覧が表示できる" do
-      FactoryBot.create(:trip, user: user)
-
       get trips_path
 
       expect(response).to have_http_status(:ok)
@@ -20,7 +20,7 @@ RSpec.describe "Trips", type: :request do
 
   describe "GET /trips/:id" do
     it "詳細が表示できる" do
-      trip = FactoryBot.create(:trip, user: user)
+      trip = trips(:owner_trip)
 
       get trip_path(trip)
 
@@ -76,14 +76,14 @@ RSpec.describe "Trips", type: :request do
         }.not_to change(Trip, :count)
 
         # render :new の場合は 200、Rails7+Turbo だと 422 のことがある
-        expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_content)
       end
     end
   end
 
   describe "GET /trips/:id/edit" do
     it "編集フォームが表示できる" do
-      trip = FactoryBot.create(:trip, user: user)
+      trip = trips(:owner_trip)
 
       get edit_trip_path(trip)
 
@@ -94,7 +94,7 @@ RSpec.describe "Trips", type: :request do
   describe "PATCH /trips/:id" do
     context "パラメータが正しい場合" do
       it "Tripを更新でき、詳細へリダイレクトされる" do
-        trip = FactoryBot.create(:trip, user: user, title: "before")
+        trip = trips(:owner_trip)
 
         patch trip_path(trip), params: { trip: { title: "after" } }
 
@@ -106,19 +106,20 @@ RSpec.describe "Trips", type: :request do
 
     context "パラメータが不正な場合" do
       it "Tripを更新できず、編集フォームが再表示される" do
-        trip = FactoryBot.create(:trip, user: user, title: "before")
+        trip = trips(:owner_trip)
+        original_title = trip.title
 
         patch trip_path(trip), params: { trip: { title: "" } }
 
-        expect(trip.reload.title).to eq("before")
-        expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_entity)
+        expect(trip.reload.title).to eq(original_title)
+        expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_content)
       end
     end
   end
 
   describe "DELETE /trips/:id" do
     it "Tripを削除でき、一覧へリダイレクトされる" do
-      trip = FactoryBot.create(:trip, user: user)
+      trip = trips(:owner_trip)
 
       expect {
         delete trip_path(trip)
