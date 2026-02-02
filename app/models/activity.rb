@@ -2,7 +2,7 @@ class Activity < ApplicationRecord
   belongs_to :trip
 
   validates :title, :date, presence: true
-  validate :cost_is_non_negative_integer
+  validates :cost, numericality: { only_integer: true, greater_than_or_equal_to: 0 }, allow_blank: true
   validate :date_within_trip_period
 
   scope :ordered_for_timeline, -> {
@@ -17,23 +17,6 @@ class Activity < ApplicationRecord
   end
 
   private
-
-  def cost_is_non_negative_integer
-    raw_cost = cost_before_type_cast
-    return if raw_cost.blank?
-
-    valid =
-      case raw_cost
-      when Integer
-        raw_cost >= 0
-      when String
-        raw_cost.match?(/\A\d+\z/)
-      else
-        false
-      end
-
-    errors.add(:cost, "は0以上の整数を入力してください") unless valid
-  end
 
   def date_within_trip_period
     return if date.blank? || trip.blank? || trip.start_date.blank? || trip.end_date.blank?
