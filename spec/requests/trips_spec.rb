@@ -37,14 +37,17 @@ RSpec.describe "Trips", type: :request do
   end
 
   describe "POST /trips" do
+    let(:fixed_start_date) { Date.new(2026, 1, 10) }
+    let(:fixed_end_date)   { Date.new(2026, 1, 12) }
+
     context "パラメータが正しい場合" do
       it "Tripを作成でき、詳細へリダイレクトされる" do
         params = {
           trip: {
             title: "My Trip",
             destination: "Tokyo",
-            start_date: Date.current,
-            end_date: Date.current + 2,
+            start_date: fixed_start_date,
+            end_date: fixed_end_date,
             color: "#1e90ff",
             notes: "memo"
           }
@@ -66,8 +69,8 @@ RSpec.describe "Trips", type: :request do
         params = {
           trip: {
             title: "", # 不正（必須想定）
-            start_date: Date.current,
-            end_date: Date.current
+            start_date: fixed_start_date,
+            end_date: fixed_end_date
           }
         }
 
