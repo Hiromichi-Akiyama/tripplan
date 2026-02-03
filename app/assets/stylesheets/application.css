@@ -700,6 +700,7 @@ body {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
   width: fit-content;
   max-width: min(90vw, 480px);
+  min-width: 0;
   text-align: center;
   justify-content: center;
 }
@@ -718,8 +719,13 @@ body {
 }
 
 .tp-flash__text {
-  white-space: normal;
-  overflow-wrap: anywhere;
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tp-modal-overlay {
