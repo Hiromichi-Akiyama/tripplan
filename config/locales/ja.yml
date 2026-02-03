@@ -11,14 +11,9 @@ ja:
       not_a_number: "は数値で入力してください"
       not_an_integer: "は整数で入力してください"
       greater_than_or_equal_to: "は%{count}以上の値にしてください"
+      before_start_date: "は開始日以降の日付を選択してください"
 
   activerecord:
-    errors:
-      models:
-        trip:
-          attributes:
-            end_date:
-              before_start_date: "は開始日以降の日付を選択してください"
     attributes:
       user:
         email: "メールアドレス"
