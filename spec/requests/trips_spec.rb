@@ -166,7 +166,7 @@ RSpec.describe "Trips", type: :request do
         expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_content)
         expect(response.body).to include(I18n.t("errors.format",
           attribute: I18n.t("activerecord.attributes.trip.end_date"),
-          message: I18n.t("activerecord.errors.models.trip.attributes.end_date.before_start_date")
+          message: I18n.t("errors.messages.before_start_date")
         ))
       end
     end
