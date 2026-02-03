@@ -104,7 +104,7 @@ RSpec.describe "Trips", type: :request do
       end
     end
 
-    context "パラメータが不正な場合" do
+    context "titleが空の場合" do
       it "Tripを更新できず、編集フォームが再表示される" do
         trip = trips(:owner_trip)
         original_title = trip.title
@@ -113,10 +113,62 @@ RSpec.describe "Trips", type: :request do
 
         expect(trip.reload.title).to eq(original_title)
         expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_content)
+        expect(response.body).to include(I18n.t("errors.format",
+          attribute: I18n.t("activerecord.attributes.trip.title"),
+          message: I18n.t("errors.messages.blank")
+        ))
       end
     end
-  end
 
+    context "start_dateが空の場合" do
+      it "Tripを更新できず、編集フォームが再表示される" do
+        trip = trips(:owner_trip)
+        original_start_date = trip.start_date
+
+        patch trip_path(trip), params: { trip: { start_date: "" } }
+
+        expect(trip.reload.start_date).to eq(original_start_date)
+        expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_content)
+        expect(response.body).to include(I18n.t("errors.format",
+          attribute: I18n.t("activerecord.attributes.trip.start_date"),
+          message: I18n.t("errors.messages.blank")
+        ))
+      end
+    end
+
+    context "end_dateが空の場合" do
+      it "Tripを更新できず、編集フォームが再表示される" do
+        trip = trips(:owner_trip)
+        original_end_date = trip.end_date
+
+        patch trip_path(trip), params: { trip: { end_date: "" } }
+        
+        expect(trip.reload.end_date).to eq(original_end_date)
+        expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_content)
+        expect(response.body).to include(I18n.t("errors.format",
+          attribute: I18n.t("activerecord.attributes.trip.end_date"),
+          message: I18n.t("errors.messages.blank")
+        ))
+      end
+    end
+
+    context "end_dateがstart_dateより前の場合" do
+      it "Tripを更新できず、編集フォームが再表示される" do
+        trip = trips(:owner_trip)
+        original_end_date = trip.end_date
+
+        patch trip_path(trip), params: { trip: { end_date: trip.start_date - 1 } }
+
+        expect(trip.reload.end_date).to eq(original_end_date)
+        expect(response).to have_http_status(:ok).or have_http_status(:unprocessable_content)
+        expect(response.body).to include(I18n.t("errors.format",
+          attribute: I18n.t("activerecord.attributes.trip.end_date"),
+          message: I18n.t("activerecord.errors.models.trip.attributes.end_date.before_start_date")
+        ))
+      end
+    end
+
+  end
   describe "DELETE /trips/:id" do
     it "Tripを削除でき、一覧へリダイレクトされる" do
       trip = trips(:owner_trip)
