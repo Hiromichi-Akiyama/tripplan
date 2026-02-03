@@ -26,7 +26,7 @@ RSpec.describe Trip, type: :model do
 
     context '登録できないとき' do
       it 'titleが空では登録できない' do
-        @trip.title = nil
+        @trip.title = ''
         @trip.valid?
         expect(@trip.errors.full_messages).to include("タイトルを入力してください")
       end

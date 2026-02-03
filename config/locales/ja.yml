@@ -8,9 +8,17 @@ ja:
       too_long: "は%{count}文字以内で入力してください"
       confirmation: "と%{attribute}の入力が一致しません"
       invalid: "は不正な値です"
-      not_found: "が見つかりません"
+      not_a_number: "は数値で入力してください"
+      not_an_integer: "は整数で入力してください"
+      greater_than_or_equal_to: "は%{count}以上の値にしてください"
 
   activerecord:
+    errors:
+      models:
+        trip:
+          attributes:
+            end_date:
+              before_start_date: "は開始日以降の日付を選択してください"
     attributes:
       user:
         email: "メールアドレス"

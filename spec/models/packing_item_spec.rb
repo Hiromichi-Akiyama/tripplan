@@ -14,7 +14,7 @@ RSpec.describe PackingItem, type: :model do
 
     context '登録できないとき' do
       it 'nameが空では登録できない' do
-        @packing_item.name = nil
+        @packing_item.name = ''
         @packing_item.valid?
         expect(@packing_item.errors.full_messages).to include("アイテム名を入力してください")
       end

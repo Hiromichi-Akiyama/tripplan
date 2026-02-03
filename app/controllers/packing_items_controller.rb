@@ -18,7 +18,7 @@ class PackingItemsController < ApplicationController
       @default_tab = Trip::TAB_PACKING
       prepare_itinerary
       prepare_packing_items_by_category
-      render "trips/show", status: :unprocessable_entity
+      render "trips/show", status: :unprocessable_content
     end
   end
 

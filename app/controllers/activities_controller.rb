@@ -18,7 +18,7 @@ class ActivitiesController < ApplicationController
       redirect_to trip_path(@trip), notice: I18n.t("flash.activities.created")
     else
       flash.now[:alert] = I18n.t("flash.activities.invalid")
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -30,7 +30,7 @@ class ActivitiesController < ApplicationController
       redirect_to trip_path(@trip), notice: I18n.t("flash.activities.updated")
     else
       flash.now[:alert] = I18n.t("flash.activities.invalid")
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

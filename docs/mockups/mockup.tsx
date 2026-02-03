@@ -488,7 +488,7 @@ const SignupPage = ({ onSignupSuccess, onNavigateToLogin, onBack }) => {
     else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = '有効なメールアドレスを入力してください';
     
     if (!form.password) newErrors.password = 'パスワードを入力してください';
-    else if (form.password.length < 8) newErrors.password = '8文字以上で入力してください';
+    else if (form.password.length < 12) newErrors.password = '12文字以上で入力してください';
     
     if (form.password !== form.passwordConfirm) newErrors.passwordConfirm = 'パスワードが一致しません';
 
@@ -541,7 +541,7 @@ const SignupPage = ({ onSignupSuccess, onNavigateToLogin, onBack }) => {
                   type="password"
                   value={form.password}
                   onChange={(e) => setForm({...form, password: e.target.value})}
-                  placeholder="8文字以上、英数字を含む"
+                  placeholder="12文字以上、英数字を含む"
                   className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.password ? 'border-red-500' : 'border-gray-300'
                   }`}
@@ -549,7 +549,7 @@ const SignupPage = ({ onSignupSuccess, onNavigateToLogin, onBack }) => {
                 {errors.password && (
                   <p className="text-sm text-red-500 mt-1">{errors.password}</p>
                 )}
-                <p className="text-xs text-gray-500 mt-1">8文字以上、英字と数字を含めてください</p>
+                <p className="text-xs text-gray-500 mt-1">12文字以上、英字と数字を含めてください</p>
               </div>
 
               {/* パスワード（確認） */}

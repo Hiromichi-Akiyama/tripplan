@@ -29,19 +29,19 @@ RSpec.describe Activity, type: :model do
       it 'start_time,end_time,location,cost,memo,address,url,booking_codeが空でも登録できる' do
         @activity.start_time = nil
         @activity.end_time = nil
-        @activity.location = nil
+        @activity.location = ''
         @activity.cost = nil
-        @activity.memo = nil
-        @activity.address = nil
-        @activity.url = nil
-        @activity.booking_code = nil
+        @activity.memo = ''
+        @activity.address = ''
+        @activity.url = ''
+        @activity.booking_code = ''
         expect(@activity).to be_valid
       end
     end
 
     context '登録できないとき' do
       it 'titleが空では登録できない' do
-        @activity.title = nil
+        @activity.title = ''
         @activity.valid?
         expect(@activity.errors.full_messages).to include("タイトルを入力してください")
       end
@@ -67,19 +67,19 @@ RSpec.describe Activity, type: :model do
       it 'costがマイナスだと登録できない' do
         @activity.cost = -1
         @activity.valid?
-        expect(@activity.errors.full_messages).to include("費用は0以上の整数を入力してください")
+        expect(@activity.errors.full_messages).to include("費用は0以上の値にしてください")
       end
 
       it 'costが小数だと登録できない' do
         @activity.cost = 1.5
         @activity.valid?
-        expect(@activity.errors.full_messages).to include("費用は0以上の整数を入力してください")
+        expect(@activity.errors.full_messages).to include("費用は整数で入力してください")
       end
 
       it 'costが文字列だと登録できない' do
         @activity.cost = "abc"
         @activity.valid?
-        expect(@activity.errors.full_messages).to include("費用は0以上の整数を入力してください")
+        expect(@activity.errors.full_messages).to include("費用は数値で入力してください")
       end
 
     end

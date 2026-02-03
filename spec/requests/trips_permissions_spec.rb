@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe "TripsPermissions", type: :request do
+  fixtures :users, :trips
+
   describe "他人のTripsにアクセスできない" do
     it "GET /trips/:id は他人のTripだとアクセスできない（404/403など）" do
-      owner = FactoryBot.create(:user)
-      other = FactoryBot.create(:user)
-      trip = FactoryBot.create(:trip, user: owner)
+      other = users(:other)
+      trip = trips(:owner_trip)
 
       sign_in other
       get trip_path(trip)
@@ -15,9 +16,9 @@ RSpec.describe "TripsPermissions", type: :request do
     end
 
     it "PATCH /trips/:id は他人のTripを更新できない（DBが変わらない）" do
-      owner = FactoryBot.create(:user)
-      other = FactoryBot.create(:user)
-      trip = FactoryBot.create(:trip, user: owner, title: "before")
+      other = users(:other)
+      trip = trips(:owner_trip)
+      original_title = trip.title
 
       sign_in other
       patch trip_path(trip), params: { trip: { title: "after" } }
@@ -26,13 +27,12 @@ RSpec.describe "TripsPermissions", type: :request do
       expect(response).to have_http_status(:not_found).or have_http_status(:forbidden)
 
       #DBが更新されていないこと（重要）
-      expect(trip.reload.title).to eq("before")
+      expect(trip.reload.title).to eq(original_title)
     end
 
     it "DELETE /trips/:id は他人のTripを削除できない（レコードが残る）" do
-      owner = FactoryBot.create(:user)
-      other = FactoryBot.create(:user)
-      trip = FactoryBot.create(:trip, user: owner)
+      other = users(:other)
+      trip = trips(:owner_trip)
 
       sign_in other
 
