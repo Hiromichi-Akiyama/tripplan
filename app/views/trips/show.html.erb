@@ -202,7 +202,11 @@
                   <%= render partial: "activities/timeline_row", collection: day_activities, as: :activity %>
                 <% else %>
                   <div style="padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #9ca3af;">
-                    <p style="margin: 0; font-size: 14px;">予定はまだありません。『+この日の活動を追加』から登録しましょう。</p>
+                    <p class="itinerary-empty-text itinerary-empty-text--responsive" style="margin: 0; font-size: 14px;">
+                      <span class="itinerary-empty-text__line">予定はまだありません。</span>
+                      <span class="itinerary-empty-text__line">『+この日の活動を追加』</span>
+                      <span class="itinerary-empty-text__line">から登録しましょう。</span>
+                    </p>
                   </div>
                 <% end %>
               </div>

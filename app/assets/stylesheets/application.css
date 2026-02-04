@@ -732,6 +732,10 @@ body {
   text-overflow: ellipsis;
 }
 
+.itinerary-empty-text--responsive .itinerary-empty-text__line {
+  display: inline;
+}
+
 .tp-modal-overlay {
   position: fixed;
   inset: 0;
@@ -988,5 +992,15 @@ body {
   .tp-auth-page select,
   .tp-auth-page textarea {
     font-size: 16px;
+  }
+}
+
+@media (max-width: 640px) {
+  .itinerary-empty-text--responsive .itinerary-empty-text__line {
+    display: block;
+  }
+
+  .itinerary-empty-text--responsive .itinerary-empty-text__line + .itinerary-empty-text__line {
+    margin-top: 4px;
   }
 }
