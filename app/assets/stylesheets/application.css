@@ -870,6 +870,12 @@ body {
 }
 
 @media (max-width: 640px) {
+  .tp-mobile-nozoom input,
+  .tp-mobile-nozoom select,
+  .tp-mobile-nozoom textarea {
+    font-size: 16px !important;
+  }
+
   .activity-time-fields {
     grid-template-columns: 1fr !important;
     width: 100%;
