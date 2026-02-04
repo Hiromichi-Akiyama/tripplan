@@ -10,6 +10,7 @@
   <% colors = ["#f06595", "#cc5de8", "#ff922b", "#20c997", "#10b981", "#6366f1", "#4c6ef5"] %>
   <% selected_color = trip.color.presence || colors.first %>
   <% custom_selected = !colors.include?(selected_color) %>
+  <% custom_picker_id = "#{form.field_id(:color)}_custom_picker" %>
   <% base_input_style = [
     "width: 100%",
     "padding: 12px 16px",
@@ -99,12 +100,12 @@
               </label>
             <% end %>
             <%= form.radio_button :color, selected_color, checked: custom_selected, id: "color_custom", data: { theme_color_target: "radio customRadio", action: "theme-color#select" }, style: "position: absolute; opacity: 0; pointer-events: none;" %>
-            <button type="button" class="theme-color-button <%= 'is-selected' if custom_selected %>" data-theme-color-target="customButton" data-action="theme-color#openPicker" style="padding: 10px 12px; border-radius: 10px; border: 1px solid #e5e7eb; background: #ffffff; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer;"><%= t("views.buttons.custom") %></button>
+            <label for="<%= custom_picker_id %>" class="theme-color-button <%= 'is-selected' if custom_selected %>" data-theme-color-target="customButton" style="padding: 10px 12px; border-radius: 10px; border: 1px solid #e5e7eb; background: #ffffff; font-size: 13px; font-weight: 600; color: #374151; cursor: pointer; display: inline-flex; align-items: center;"><%= t("views.buttons.custom") %></label>
           </div>
 
           <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 16px; flex-wrap: wrap;">
             <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
-              <%= tag.input type: "color", value: selected_color, name: "", data: { theme_color_target: "picker", action: "input->theme-color#customChange" }, style: "width: 56px; height: 56px; padding: 4px; border-radius: 12px; cursor: pointer; background: #ffffff; border: 1px solid #e5e7eb;" %>
+              <%= tag.input type: "color", id: custom_picker_id, value: selected_color, name: "", data: { theme_color_target: "picker", action: "input->theme-color#customChange" }, style: "width: 56px; height: 56px; padding: 4px; border-radius: 12px; cursor: pointer; background: #ffffff; border: 1px solid #e5e7eb;" %>
               <span style="font-size: 12px; color: #6b7280;"><%= t("views.common.selected") %></span>
             </div>
             <div style="flex: 1; min-width: 200px;">
