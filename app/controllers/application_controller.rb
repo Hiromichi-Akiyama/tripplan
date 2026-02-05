@@ -1,7 +1,14 @@
 class ApplicationController < ActionController::Base
-  helper_method :demo_user?
+  before_action :basic_auth
 
-  def demo_user?
-    session[:demo_user_id].present? && current_user&.id == session[:demo_user_id].to_i
+
+  private
+
+  def basic_auth
+    return if Rails.env.test?
+
+    authenticate_or_request_with_http_basic do |username, password|
+      username == ENV["TRIPPLAN_AUTH_USER"] && password == ENV["TRIPPLAN_AUTH_PASSWORD"]  # 環境変数を読み込む記述に変更
+    end
   end
 end

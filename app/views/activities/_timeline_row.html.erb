@@ -43,12 +43,12 @@
       <% end %>
     </p>
   </div>
-  <div class="itinerary-row-meta" style="display: flex; align-items: center; gap: 12px; margin-left: auto; align-self: stretch; position: relative; padding-right: 40px;">
+  <div class="itinerary-row-meta" style="display: flex; align-items: center; gap: 12px; margin-left: auto; align-self: stretch;">
     <div class="itinerary-row-cost" style="flex-shrink: 0; text-align: right;">
       <p style="margin: 0; font-size: 16px; font-weight: 600; color: #111827; font-variant-numeric: tabular-nums;">
         <%= number_to_currency(cost_value, unit: "¥", precision: 0) %>
       </p>
     </div>
-    <span class="itinerary-row-chevron" style="color: #9ca3af; font-size: 20px; line-height: 1; position: absolute; right: 6px; top: 50%; transform: translateY(-50%);">&gt;</span>
+    <span class="itinerary-row-chevron" style="color: #9ca3af; font-size: 20px; line-height: 1;">&gt;</span>
   </div>
 <% end %>

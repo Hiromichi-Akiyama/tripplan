@@ -42,7 +42,7 @@
     </div>
 
     <div style="display: flex; justify-content: flex-end;">
-      <%= form.submit "追加する", style: "display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 16px; background: #3b82f6; color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 16px rgba(59,130,246,0.2); min-width: 120px; transition: transform 0.08s ease, box-shadow 0.08s ease;", data: { turbo_submits_with: "追加中..." } %>
+      <%= form.submit t("views.buttons.add"), style: "display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 12px 16px; background: #3b82f6; color: #fff; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 16px rgba(59,130,246,0.2); min-width: 120px; transition: transform 0.08s ease, box-shadow 0.08s ease;", data: { turbo_submits_with: t("views.buttons.adding") } %>
     </div>
   </div>
 <% end %>

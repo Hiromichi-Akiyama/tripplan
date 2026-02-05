@@ -1,6 +1,6 @@
 <%= form_with model: [trip, activity], html: { novalidate: true } do |form| %>
-  <% submit_label = activity.persisted? ? "変更を保存" : "保存する" %>
-  <% submit_loading = activity.persisted? ? "保存中..." : "保存中..." %>
+  <% submit_label = activity.persisted? ? t("views.buttons.save_changes") : t("views.buttons.save_action") %>
+  <% submit_loading = t("views.buttons.saving") %>
   <% title_error = activity.errors[:title].present? %>
   <% date_error  = activity.errors[:date].present? %>
   <% cost_error  = activity.errors[:cost].present? %>
@@ -24,14 +24,14 @@
   <div style="display: grid; gap: 24px;">
     <div>
       <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
-        <h2 style="margin: 0; font-size: 20px; font-weight: 800; color: #111827;">基本情報</h2>
+        <h2 style="margin: 0; font-size: 20px; font-weight: 800; color: #111827;"><%= t("views.sections.basic_info") %></h2>
         <span style="font-size: 12px; color: #2563eb; background: #eff6ff; padding: 4px 10px; border-radius: 9999px; font-weight: 600;">旅程に表示されます</span>
       </div>
 
       <div style="display: grid; gap: 20px;">
         <div>
           <label for="<%= form.field_id(:title) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">
-            タイトル <span style="color: #ef4444;">*</span>
+            <%= t("activerecord.attributes.activity.title") %> <span style="color: #ef4444;">*</span>
           </label>
           <%= form.text_field :title, required: true, placeholder: "例：札幌時計台", style: (base_input_style + ["border: 1px solid #{title_error ? '#fca5a5' : '#d1d5db'}"]).join('; ') %>
           <% if title_error %>
@@ -41,35 +41,35 @@
 
         <div>
           <label for="<%= form.field_id(:date) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">
-            日付 <span style="color: #ef4444;">*</span>
+            <%= t("activerecord.attributes.activity.date") %> <span style="color: #ef4444;">*</span>
           </label>
-          <%= form.date_field :date, **date_input_options, style: (base_input_style + ["border: 1px solid #{date_error ? '#fca5a5' : '#d1d5db'}"]).join('; ') %>
+          <%= form.date_field :date, **date_input_options, class: "activity-date-input", style: (base_input_style + ["border: 1px solid #{date_error ? '#fca5a5' : '#d1d5db'}"]).join('; ') %>
           <% if date_error %>
             <p style="color: #ef4444; font-size: 12px; margin: 6px 0 0;"><%= date_error_message %></p>
           <% end %>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+        <div class="activity-time-fields" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
           <div>
-            <label for="<%= form.field_id(:start_time) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">開始時刻</label>
-            <%= form.time_field :start_time, style: (base_input_style + ["border: 1px solid #d1d5db"]).join('; ') %>
+            <label for="<%= form.field_id(:start_time) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;"><%= t("activerecord.attributes.activity.start_time") %></label>
+            <%= form.time_field :start_time, class: "activity-time-input", style: (base_input_style + ["border: 1px solid #d1d5db"]).join('; ') %>
           </div>
           <div>
-            <label for="<%= form.field_id(:end_time) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">終了時刻</label>
-            <%= form.time_field :end_time, style: (base_input_style + ["border: 1px solid #d1d5db"]).join('; ') %>
+            <label for="<%= form.field_id(:end_time) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;"><%= t("activerecord.attributes.activity.end_time") %></label>
+            <%= form.time_field :end_time, class: "activity-time-input", style: (base_input_style + ["border: 1px solid #d1d5db"]).join('; ') %>
           </div>
         </div>
 
         <div>
-          <label for="<%= form.field_id(:location) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">場所</label>
+          <label for="<%= form.field_id(:location) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;"><%= t("activerecord.attributes.activity.location") %></label>
           <%= form.text_field :location, placeholder: "例：札幌市中央区", style: (base_input_style + ["border: 1px solid #d1d5db"]).join('; ') %>
         </div>
 
         <div>
-          <label for="<%= form.field_id(:cost) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">費用</label>
+          <label for="<%= form.field_id(:cost) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;"><%= t("activerecord.attributes.activity.cost") %></label>
           <div style="position: relative;">
             <span style="position: absolute; left: 12px; top: 12px; font-size: 15px; color: #6b7280;">¥</span>
-            <%= form.number_field :cost, min: 0, step: 1, inputmode: "numeric", placeholder: "0", style: (base_input_style + ["padding-left: 32px", "border: 1px solid #{cost_error ? '#fca5a5' : '#d1d5db'}"]).join('; ') %>
+            <%= form.number_field :cost, min: 0, step: 1, inputmode: "numeric", placeholder: "0", class: "activity-number-input", style: (base_input_style + ["padding-left: 32px", "border: 1px solid #{cost_error ? '#fca5a5' : '#d1d5db'}"]).join('; ') %>
           </div>
           <% if cost_error %>
             <p style="color: #ef4444; font-size: 12px; margin: 6px 0 0;"><%= cost_error_message %></p>
@@ -77,7 +77,7 @@
         </div>
 
         <div>
-          <label for="<%= form.field_id(:memo) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;">メモ</label>
+          <label for="<%= form.field_id(:memo) %>" style="display: block; font-size: 14px; font-weight: 700; color: #111827; margin-bottom: 8px;"><%= t("activerecord.attributes.activity.memo") %></label>
           <%= form.text_area :memo, rows: 4, placeholder: "活動についてのメモや注意事項", style: (base_input_style + ["border: 1px solid #d1d5db", "line-height: 1.6", "resize: none"]).join('; ') %>
         </div>
       </div>
@@ -85,21 +85,21 @@
 
     <div style="padding-top: 24px; border-top: 1px solid #e5e7eb;">
       <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
-        <h2 style="margin: 0; font-size: 20px; font-weight: 800; color: #111827;">詳細情報</h2>
+        <h2 style="margin: 0; font-size: 20px; font-weight: 800; color: #111827;"><%= t("views.sections.detail_info") %></h2>
         <span style="font-size: 12px; color: #6b7280; background: #f3f4f6; padding: 4px 10px; border-radius: 9999px; font-weight: 600;">任意・詳細ページのみ表示</span>
       </div>
 
       <div style="display: grid; gap: 20px;">
         <div>
-          <label for="<%= form.field_id(:address) %>" style="display: block; font-size: 14px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">住所</label>
+          <label for="<%= form.field_id(:address) %>" style="display: block; font-size: 14px; font-weight: 600; color: #6b7280; margin-bottom: 8px;"><%= t("activerecord.attributes.activity.address") %></label>
           <%= form.text_field :address, placeholder: "例：北海道札幌市中央区北1条西2丁目", style: (base_input_style + ["border: 1px solid #d1d5db"]).join('; ') %>
         </div>
         <div>
-          <label for="<%= form.field_id(:url) %>" style="display: block; font-size: 14px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">URL</label>
+          <label for="<%= form.field_id(:url) %>" style="display: block; font-size: 14px; font-weight: 600; color: #6b7280; margin-bottom: 8px;"><%= t("activerecord.attributes.activity.url") %></label>
           <%= form.url_field :url, placeholder: "https://example.com", style: (base_input_style + ["border: 1px solid #d1d5db"]).join('; ') %>
         </div>
         <div>
-          <label for="<%= form.field_id(:booking_code) %>" style="display: block; font-size: 14px; font-weight: 600; color: #6b7280; margin-bottom: 8px;">予約番号</label>
+          <label for="<%= form.field_id(:booking_code) %>" style="display: block; font-size: 14px; font-weight: 600; color: #6b7280; margin-bottom: 8px;"><%= t("activerecord.attributes.activity.booking_code") %></label>
           <%= form.text_field :booking_code, placeholder: "例：CH-2026021001", style: (base_input_style + ["border: 1px solid #d1d5db"]).join('; ') %>
         </div>
       </div>
@@ -107,7 +107,7 @@
 
     <div style="display: flex; gap: 12px; flex-wrap: wrap; padding-top: 8px;">
       <%= form.submit submit_label, style: "flex: 1 1 220px; padding: 12px 18px; background: #3b82f6; color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; box-shadow: 0 6px 14px rgba(59,130,246,0.2);", data: { turbo_submits_with: submit_loading } %>
-      <%= link_to "キャンセル", trip_path(trip), style: "flex: 0 0 auto; padding: 12px 18px; border: 2px solid #d1d5db; color: #374151; border-radius: 12px; text-decoration: none; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center;" %>
+      <%= link_to t("views.buttons.cancel"), trip_path(trip), style: "flex: 0 0 auto; padding: 12px 18px; border: 2px solid #d1d5db; color: #374151; border-radius: 12px; text-decoration: none; font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center;" %>
     </div>
   </div>
 <% end %>

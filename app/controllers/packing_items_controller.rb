@@ -24,9 +24,27 @@ class PackingItemsController < ApplicationController
 
   def update
     if @packing_item.update(packing_item_checked_params)
-      redirect_to trip_path(@trip, tab: Trip::TAB_PACKING)
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            helpers.dom_id(@packing_item),
+            partial: "packing_items/row",
+            locals: { packing_item: @packing_item }
+          )
+        end
+        format.html { redirect_to trip_path(@trip, tab: Trip::TAB_PACKING) }
+      end
     else
-      redirect_to trip_path(@trip, tab: Trip::TAB_PACKING), alert: I18n.t("flash.packing_items.update_failed")
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(
+            helpers.dom_id(@packing_item),
+            partial: "packing_items/row",
+            locals: { packing_item: @packing_item }
+          ), status: :unprocessable_content
+        end
+        format.html { redirect_to trip_path(@trip, tab: Trip::TAB_PACKING), alert: I18n.t("flash.packing_items.update_failed") }
+      end
     end
   end
 

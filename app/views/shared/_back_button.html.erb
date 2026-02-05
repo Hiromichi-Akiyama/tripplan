@@ -1,6 +1,12 @@
-<%= link_to path, class: "tp-back-button", aria: { label: (aria_label || "戻る") } do %>
-  <%= icon("arrow_left", size: 20) %>
-<% end %>
 <% if local_assigns[:label].present? %>
-  <span class="tp-backbar__label"><%= label %></span>
+  <%= link_to path, class: "tp-backbar__link", aria: { label: (aria_label || "戻る") } do %>
+    <span class="tp-back-button">
+      <%= icon("arrow_left", size: 20) %>
+    </span>
+    <span class="tp-backbar__label"><%= label %></span>
+  <% end %>
+<% else %>
+  <%= link_to path, class: "tp-back-button", aria: { label: (aria_label || "戻る") } do %>
+    <%= icon("arrow_left", size: 20) %>
+  <% end %>
 <% end %>

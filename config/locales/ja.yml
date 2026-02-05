@@ -35,8 +35,17 @@ ja:
         location: "場所"
         cost: "費用"
         memo: "メモ"
+        address: "住所"
+        url: "URL"
+        booking_code: "予約番号"
       packing_item:
         name: "アイテム名"
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              not_found: "が見つかりません"
 
   packing_items:
     uncategorized: "未分類"
@@ -61,3 +70,52 @@ ja:
     profiles:
       updated: "プロフィールを更新しました"
       invalid: "入力内容にエラーがあります。確認してください。"
+
+  views:
+    common:
+      my_trips: "マイ旅一覧"
+      selected: "選択中"
+      preview: "プレビュー"
+      applied: "適用済み"
+    buttons:
+      edit: "編集"
+      delete: "削除"
+      save: "保存"
+      save_action: "保存する"
+      save_changes: "変更を保存"
+      saving: "保存中..."
+      create: "作成する"
+      creating: "作成中..."
+      add: "追加する"
+      adding: "追加中..."
+      cancel: "キャンセル"
+      ok: "OK"
+      custom: "カスタム"
+    sections:
+      basic_info: "基本情報"
+      detail_info: "詳細情報"
+    confirmations:
+      trip_delete: "この旅を削除しますか？"
+      activity_delete: "この活動を削除しますか？"
+      packing_item_delete: "この持ち物を削除しますか？"
+    trips:
+      form:
+        title_label: "旅のタイトル"
+        theme_color: "テーマカラー"
+      new:
+        title: "新しい旅を作成"
+      edit:
+        title: "旅を編集"
+    activities:
+      new:
+        title: "活動を追加"
+        description: "旅程に表示する基本情報を入力してください。"
+      edit:
+        title: "活動を編集"
+        description: "内容を修正して保存してください。"
+      show:
+        title: "活動詳細"
+    profiles:
+      edit:
+        title: "プロフィール編集"
+        description: "アカウント情報を更新します"
