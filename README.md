@@ -93,6 +93,7 @@ TripPlan は、旅行計画に必要な **旅程・持ち物・メモ** を一�
 ## 仕様・設計ドキュメント
 
 - 企画・方針：[`docs/planning.md`](docs/planning.md)
+- 企画書（Google Drive）：`https://drive.google.com/file/d/1AJZWPAOBj5Tu3yYhDVU8bT7gcwuZjHjc/view?usp=sharing`
 - アーキテクチャ/技術選定：[`docs/architecture.md`](docs/architecture.md)
 - DB設計：[`docs/database.md`](docs/database.md)
 
