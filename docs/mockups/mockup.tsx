@@ -123,6 +123,7 @@ const INITIAL_ACTIVITIES = [
   { id: 506, tripId: 5, date: '2023-09-16', time: '15:30–17:30', category: 'sightseeing', title: '北村韓屋村', location: '北村', cost: '0', memo: '写真スポット' }
 ];
 
+// ... (Helper functions and components remain the same) ...
 // --- ヘルパー関数 ---
 const getDaysArray = (start, end) => {
   const arr = [];
@@ -322,6 +323,7 @@ const SideMenu = ({ isOpen, onClose, currentUser, onNavigate, onLogout }) => {
   );
 };
 
+// ... (LandingPage, LoginPage, SignupPage, ResetPasswordPage, TripsIndexPage, NewTripPage components remain the same) ...
 // --- ページコンポーネント ---
 
 const LandingPage = ({ onLogin, onSignup, onDemo, currentUser, onNavigateToTrips, onMenuOpen }) => (
@@ -409,7 +411,6 @@ const LandingPage = ({ onLogin, onSignup, onDemo, currentUser, onNavigateToTrips
   </div>
 );
 
-// ... (LoginPage, SignupPage, ResetPasswordPage, TripsIndexPage, NewTripPage, NewActivityPage components remain the same) ...
 const LoginPage = ({ onLoginSuccess, onNavigateToSignup, onNavigateToReset, onBack }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -487,7 +488,7 @@ const SignupPage = ({ onSignupSuccess, onNavigateToLogin, onBack }) => {
     else if (!/\S+@\S+\.\S+/.test(form.email)) newErrors.email = '有効なメールアドレスを入力してください';
     
     if (!form.password) newErrors.password = 'パスワードを入力してください';
-    else if (form.password.length < 8) newErrors.password = '8文字以上で入力してください';
+    else if (form.password.length < 12) newErrors.password = '12文字以上で入力してください';
     
     if (form.password !== form.passwordConfirm) newErrors.passwordConfirm = 'パスワードが一致しません';
 
@@ -540,7 +541,7 @@ const SignupPage = ({ onSignupSuccess, onNavigateToLogin, onBack }) => {
                   type="password"
                   value={form.password}
                   onChange={(e) => setForm({...form, password: e.target.value})}
-                  placeholder="8文字以上、英数字を含む"
+                  placeholder="12文字以上、英数字を含む"
                   className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${
                     errors.password ? 'border-red-500' : 'border-gray-300'
                   }`}
@@ -548,7 +549,7 @@ const SignupPage = ({ onSignupSuccess, onNavigateToLogin, onBack }) => {
                 {errors.password && (
                   <p className="text-sm text-red-500 mt-1">{errors.password}</p>
                 )}
-                <p className="text-xs text-gray-500 mt-1">8文字以上、英字と数字を含めてください</p>
+                <p className="text-xs text-gray-500 mt-1">12文字以上、英字と数字を含めてください</p>
               </div>
 
               {/* パスワード（確認） */}
@@ -1071,6 +1072,10 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNaviga
     const newErrors = {};
     if (!formData.title) newErrors.title = 'タイトルは必須です';
     if (!formData.date) newErrors.date = '日付は必須です';
+    // Validate date is within trip range
+    else if (selectedTrip && (formData.date < selectedTrip.startDate || formData.date > selectedTrip.endDate)) {
+       newErrors.date = `旅行期間中（${selectedTrip.startDate} 〜 ${selectedTrip.endDate}）の日付を指定してください`;
+    }
     if (formData.cost && parseInt(formData.cost) < 0) newErrors.cost = '費用には0以上の整数を入力してください';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -1171,7 +1176,14 @@ const NewActivityPage = ({ initialData, selectedTrip, onSave, onCancel, onNaviga
                 </div>
                 <div>
                   <label className="block text-sm font-semibold text-gray-900 mb-2">日付 <span className="text-red-500">*</span></label>
-                  <input type="date" value={formData.date} onChange={(e) => handleChange('date', e.target.value)} className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.date ? 'border-red-500' : 'border-gray-300'}`} />
+                  <input 
+                    type="date" 
+                    value={formData.date} 
+                    onChange={(e) => handleChange('date', e.target.value)} 
+                    min={selectedTrip?.startDate}
+                    max={selectedTrip?.endDate}
+                    className={`w-full px-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 ${errors.date ? 'border-red-500' : 'border-gray-300'}`} 
+                  />
                   {errors.date && <p className="text-sm text-red-500 mt-1">{errors.date}</p>}
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1389,25 +1401,25 @@ const TripDetailPageContent = ({ selectedTrip, sampleActivities, onBack, onEdit,
                   </div>
                   <div className="space-y-4">
                     {dayActivities.length > 0 ? dayActivities.map((activity, idx) => (
-                      <div key={idx} onClick={() => onEditActivity(activity)} className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-4 border border-gray-200 rounded-2xl hover:shadow-md cursor-pointer transition-all">
-                        <div className="flex items-center gap-2 sm:w-32 sm:block sm:flex-shrink-0 text-gray-700 font-medium">
-                          <Clock size={16} className="inline sm:mr-2" />{activity.time}
+                      <div key={idx} onClick={() => onEditActivity(activity)} className="flex items-center justify-between gap-3 p-4 border border-gray-200 rounded-2xl hover:shadow-md cursor-pointer transition-all">
+                        {/* コンテンツ部分（レスポンシブで縦・横切り替え） */}
+                        <div className="flex-1 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                          <div className="flex items-center gap-2 sm:w-32 sm:block sm:flex-shrink-0 text-gray-700 font-medium">
+                            <Clock size={16} className="inline sm:mr-2" />{activity.time}
+                          </div>
+                          <div className="flex-1">
+                             <div className="flex items-center gap-2 sm:hidden mb-1">
+                                 <span className="font-semibold">{activity.title}</span>
+                             </div>
+                             <h3 className="hidden sm:block font-semibold text-gray-900 mb-1">{activity.title}</h3>
+                             <p className="text-sm text-gray-600 flex items-center gap-2"><MapPin size={14} />{activity.location}</p>
+                          </div>
+                          <div className="flex-shrink-0 text-left sm:text-right mt-1 sm:mt-0">
+                            <p className="font-semibold text-gray-900 flex items-center gap-1"><DollarSign size={16} className="hidden" />{activity.cost ? `¥${Number(activity.cost).toLocaleString()}` : '¥0'}</p>
+                          </div>
                         </div>
-                        {/* アイコン表示部分を削除 */}
-                        {/* <div className="hidden sm:block flex-shrink-0"><CategoryIcon category={activity.category} /></div> */}
-                        <div className="flex-1">
-                           <div className="flex items-center gap-2 sm:hidden mb-1">
-                               {/* アイコン表示部分を削除 */}
-                               {/* <CategoryIcon category={activity.category} /> */}
-                               <span className="font-semibold">{activity.title}</span>
-                           </div>
-                           <h3 className="hidden sm:block font-semibold text-gray-900 mb-1">{activity.title}</h3>
-                           <p className="text-sm text-gray-600 flex items-center gap-2"><MapPin size={14} />{activity.location}</p>
-                        </div>
-                        <div className="flex-shrink-0 text-left sm:text-right mt-2 sm:mt-0">
-                          <p className="font-semibold text-gray-900 flex items-center gap-1"><DollarSign size={16} className="hidden" />{activity.cost ? `¥${Number(activity.cost).toLocaleString()}` : '¥0'}</p>
-                        </div>
-                        <ChevronRight size={20} className="text-gray-400 self-center hidden sm:block" />
+                        {/* 矢印アイコン（常に表示） */}
+                        <ChevronRight size={20} className="text-gray-400 flex-shrink-0" />
                       </div>
                     )) : <div className="py-6 flex flex-col items-center justify-center text-gray-400"><p className="text-sm">予定はまだありません。『+この日の活動を追加』から登録しましょう。</p></div>}
                   </div>
@@ -1836,7 +1848,7 @@ const TripPlanApp = () => {
   };
 
   const handleDeleteTrip = (tripId) => {
-    openConfirmModal('この旅を削除しますか？取り消すことはできません。', () => {
+    openConfirmModal('この旅を削除しますか？', () => { // Updated confirmation message
       setTrips(trips.filter(t => t.id !== tripId));
       setCurrentPage('trips');
       showFlash('旅を削除しました', 'error');
@@ -2026,7 +2038,7 @@ const TripPlanApp = () => {
         <ActivityDetailPage
           selectedActivity={selectedActivity}
           selectedTrip={selectedTrip}
-          onBack={() => setCurrentPage('activity-detail')}
+          onBack={() => setCurrentPage('trip-detail')} // Fixed navigation logic
           onEdit={() => handleEditActivityStart(selectedActivity)}
           onNavigateToTrips={() => setCurrentPage('trips')}
           onDelete={() => {

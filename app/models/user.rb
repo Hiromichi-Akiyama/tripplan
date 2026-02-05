@@ -7,6 +7,20 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :trips, dependent: :destroy
 
+  # Password policy
+  # - Devise handles: required + length (config.password_length)
+  # - Here we enforce: includes at least 1 letter and 1 digit
+  PASSWORD_COMPLEXITY_REGEX = /\A(?=.*[A-Za-z])(?=.*\d).+\z/
+
+  validates :password,
+            format: {
+              with: PASSWORD_COMPLEXITY_REGEX,
+              message: "は英字を1文字以上、数字を1文字以上含めてください"
+            },
+            if: -> {
+              password_required? && password.present? && password.length >= Devise.password_length.min
+            }
+
   def demo?
     demo
   end

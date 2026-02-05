@@ -61,7 +61,7 @@ class Trip < ApplicationRecord
     return if start_date.blank? || end_date.blank?
 
     if end_date < start_date
-      errors.add(:end_date, "終了日は開始日以降の日付を選択してください")
+      errors.add(:end_date, "は開始日以降の日付を選択してください")
     end
   end
 

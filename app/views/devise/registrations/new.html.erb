@@ -9,7 +9,8 @@
       <h1 class="tp-auth-title">新規登録</h1>
       <p class="tp-auth-subtitle">アカウントを作成して旅行の計画を始めましょう</p>
 
-      <%= form_with model: resource, as: resource_name, url: registration_path(resource_name) do |form| %>
+      <%# HTML5 validationを無効化し、Rails側のエラー表示に統一する %>
+      <%= form_with model: resource, as: resource_name, url: registration_path(resource_name), html: { novalidate: true } do |form| %>
         <% email_error = resource.errors[:email].present? %>
         <% password_error = resource.errors[:password].present? %>
         <% confirmation_error = resource.errors[:password_confirmation].present? %>
@@ -29,12 +30,12 @@
             <label class="tp-auth-label" for="user_password">パスワード <span class="tp-auth-required">*</span></label>
             <%= form.password_field :password,
               autocomplete: "new-password",
-              placeholder: "8文字以上、英数字を含む",
+              placeholder: "12文字以上、英数字を含む",
               class: ["tp-auth-input", ("tp-auth-input-error" if password_error)].compact.join(" ") %>
             <% if password_error %>
               <p class="tp-auth-error"><%= resource.errors.full_messages_for(:password).first %></p>
             <% end %>
-            <p class="tp-auth-help">8文字以上、英字と数字を含めてください</p>
+            <p class="tp-auth-help">12文字以上、英字と数字を含めてください</p>
           </div>
 
           <div class="tp-auth-field">
