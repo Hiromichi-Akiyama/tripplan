@@ -1,0 +1,17 @@
+owner_trip:
+  user: owner
+  title: オーナーの旅
+  destination: 東京
+  start_date: 2026-01-01
+  end_date: 2026-01-05
+  color: "#3b82f6"
+  notes: owner trip
+
+other_trip:
+  user: other
+  title: 他ユーザーの旅
+  destination: 大阪
+  start_date: 2026-02-01
+  end_date: 2026-02-03
+  color: "#22c55e"
+  notes: other trip

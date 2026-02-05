@@ -48,15 +48,15 @@ RSpec.describe User, type: :model do
       end
 
       it 'passwordが数字のみでは登録できない' do
-        @user.password = '12345678'
-        @user.password_confirmation = '12345678'
+        @user.password = '123456789101112'
+        @user.password_confirmation = '123456789101112'
         @user.valid?
         expect(@user.errors.full_messages).to include("パスワードは英字を1文字以上、数字を1文字以上含めてください")
       end
 
       it 'passwordが英字のみでは登録できない' do
-        @user.password = 'abcdefgh'
-        @user.password_confirmation = 'abcdefgh'
+        @user.password = 'abcdefghijklmno'
+        @user.password_confirmation = 'abcdefghijklmno'
         @user.valid?
         expect(@user.errors.full_messages).to include("パスワードは英字を1文字以上、数字を1文字以上含めてください")
       end

@@ -29,7 +29,7 @@ class TripsController < ApplicationController
       redirect_to trip_path(@trip), notice: I18n.t("flash.trips.created")
     else
       flash.now[:alert] = I18n.t("flash.trips.invalid")
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -52,9 +52,9 @@ class TripsController < ApplicationController
         @default_tab = Trip::TAB_MEMO
         prepare_itinerary
         prepare_packing_items_by_category
-        render :show, status: :unprocessable_entity
+        render :show, status: :unprocessable_content
       else
-        render :edit, status: :unprocessable_entity
+        render :edit, status: :unprocessable_content
       end
     end
   end
