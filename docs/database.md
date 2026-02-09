@@ -16,17 +16,7 @@ ER図（画像/URL）と合わせて、マイグレーション・モデル実�
 
 ## ER Diagram
 
-> ここに ER 図を貼ってください（画像 or 外部URL）。
-
-例（画像を置く場合）：
-```md
-![ER Diagram](./images/er_diagram.png)
-```
-
-例（dbdiagram の URL を置く場合）：
-```md
-ER: https://dbdiagram.io/...
-```
+![ER Diagram](./images/er-diagram.png)
 
 ---
 
